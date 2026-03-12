@@ -1,78 +1,66 @@
 import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
-import { useAuthStore } from '../store/authStore'
+import { Link, useNavigate } from 'react-router-dom'
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react'
-import toast from 'react-hot-toast'
 
 export default function LoginPage() {
-  const { login } = useAuthStore()
   const navigate = useNavigate()
-  const [form, setForm] = useState({ email: '', password: '' })
-  const [show, setShow] = useState(false)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [showPass, setShowPass] = useState(false)
+  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setError('')
     setLoading(true)
-    try {
-      const user = await login(form.email, form.password)
-      toast.success(`Bem-vindo, ${user.full_name.split(' ')[0]}!`)
+    await new Promise(r => setTimeout(r, 800))
+    if (email === 'alexandra@alcancari.pt' && password === 'password') {
       navigate('/dashboard')
-    } catch (err) {
-      toast.error('Email ou palavra-passe incorretos')
-    } finally {
-      setLoading(false)
+    } else {
+      setError('Email ou palavra-passe incorretos.')
     }
+    setLoading(false)
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-50 to-sand-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[#f0f7f6] flex flex-col items-center justify-center px-4">
       <div className="w-full max-w-md">
-        <Link to="/" className="inline-flex items-center gap-2 text-teal-600 text-sm mb-8 hover:text-teal-800 transition-colors">
+        <Link to="/" className="flex items-center gap-2 text-teal-600 text-sm font-medium mb-8 hover:text-teal-700">
           <ArrowLeft size={16} /> Voltar ao site
         </Link>
-
-        <div className="bg-white rounded-4xl shadow-xl p-8 border border-sand-100">
+        <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
           <div className="text-center mb-8">
-            <div className="w-14 h-14 bg-teal-600 rounded-2xl flex items-center justify-center text-white font-display font-bold text-2xl mx-auto mb-4">
-              A
+            <div className="w-14 h-14 bg-teal-700 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <span className="text-white font-display font-bold text-xl">A</span>
             </div>
-            <h1 className="font-display text-2xl text-teal-800">Área Clínica</h1>
-            <p className="text-gray-500 text-sm mt-1">Acesso para profissionais Alcançari</p>
+            <h1 className="font-display text-2xl text-teal-900 font-bold">Área Clínica</h1>
+            <p className="text-gray-400 text-sm mt-1">Acesso para profissionais Alcançari</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Email</label>
-              <input
-                type="email"
-                value={form.email}
-                onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-                required
-                className="w-full border border-sand-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 transition-shadow"
+              <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5 block">Email</label>
+              <input type="email" value={email} onChange={e => setEmail(e.target.value)} required
                 placeholder="nome@alcancari.pt"
-              />
+                className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 transition-all" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Palavra-passe</label>
+              <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5 block">Palavra-passe</label>
               <div className="relative">
-                <input
-                  type={show ? 'text' : 'password'}
-                  value={form.password}
-                  onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
-                  required
-                  className="w-full border border-sand-200 rounded-xl px-4 py-3 pr-12 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 transition-shadow"
-                />
-                <button type="button" onClick={() => setShow(!show)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
-                  {show ? <EyeOff size={16} /> : <Eye size={16} />}
+                <input type={showPass ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} required
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 transition-all pr-12" />
+                <button type="button" onClick={() => setShowPass(s => !s)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                  {showPass ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
             </div>
 
+            {error && <p className="text-red-500 text-sm bg-red-50 px-4 py-3 rounded-xl">{error}</p>}
+
             <button type="submit" disabled={loading}
-              className="w-full btn-primary py-3 mt-2 disabled:opacity-60 disabled:cursor-not-allowed">
-              {loading ? 'A entrar...' : 'Entrar'}
+              className="w-full bg-teal-700 hover:bg-teal-800 text-white font-semibold py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-70 mt-2">
+              {loading ? <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> A entrar...</> : 'Entrar'}
             </button>
           </form>
         </div>

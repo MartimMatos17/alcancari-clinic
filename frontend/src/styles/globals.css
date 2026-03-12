@@ -1,63 +1,32 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background-color: #fdf9f3;
-    color: #1a2e30;
-    -webkit-font-smoothing: antialiased;
-  }
-  h1, h2, h3, h4 {
-    font-family: 'Playfair Display', serif;
-  }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background-color: #fdf9f3;
+  color: #1a2e30;
 }
 
-@layer components {
-  .btn-primary {
-    @apply bg-teal-600 hover:bg-teal-700 text-white font-body font-medium px-6 py-3 rounded-full transition-all duration-200 shadow-sm hover:shadow-md active:scale-95;
-  }
-  .btn-outline {
-    @apply border-2 border-teal-600 text-teal-700 hover:bg-teal-50 font-body font-medium px-6 py-3 rounded-full transition-all duration-200;
-  }
-  .card {
-    @apply bg-white rounded-3xl shadow-sm border border-sand-100 overflow-hidden;
-  }
-  .section-title {
-    @apply font-display text-3xl md:text-4xl text-teal-800 leading-tight;
-  }
-  .gradient-text {
-    @apply bg-gradient-to-r from-teal-600 to-teal-400 bg-clip-text text-transparent;
-  }
-  .wave-divider {
-    position: relative;
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      right: 0;
-      height: 60px;
-      background: url("data:image/svg+xml,...") no-repeat bottom;
-      background-size: cover;
-    }
-  }
+h1, h2, h3, h4 {
+  font-family: 'Playfair Display', serif;
 }
 
-/* Smooth page transitions */
-.page-enter { animation: fadeUp 0.4s ease forwards; }
+.btn-primary {
+  @apply bg-teal-600 hover:bg-teal-700 text-white font-medium px-6 py-3 rounded-full transition-all duration-200 shadow-sm hover:shadow-md;
+}
 
-/* Calendar custom styles */
-.rbc-calendar { font-family: 'DM Sans', sans-serif !important; }
-.rbc-header { background: #f0fafa; font-weight: 600; color: #0f5a60; }
-.rbc-event { border-radius: 8px !important; border: none !important; }
-.rbc-today { background: #f0fafa !important; }
+.btn-outline {
+  @apply border-2 border-teal-600 text-teal-700 hover:bg-teal-50 font-medium px-6 py-3 rounded-full transition-all duration-200;
+}
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #f7f0e3; }
-::-webkit-scrollbar-thumb { background: #5ec8cb; border-radius: 3px; }
+.card {
+  @apply bg-white rounded-3xl shadow-sm border border-yellow-100 overflow-hidden;
+}
+
+.section-title {
+  @apply text-3xl md:text-4xl text-teal-800 leading-tight;
+  font-family: 'Playfair Display', serif;
+}
