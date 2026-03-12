@@ -1,0 +1,55 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: alcancari_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: alcancari
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: alcancari_dev_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+
+  backend:
+    build: ./backend
+    container_name: alcancari_api
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      PORT: 4000
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: alcancari
+      DB_USER: postgres
+      DB_PASSWORD: alcancari_dev_password
+      JWT_SECRET: dev_secret_change_in_production
+      FRONTEND_URL: http://localhost:5173
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+      - ./backend/uploads:/app/uploads
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    container_name: alcancari_web
+    environment:
+      VITE_API_URL: http://localhost:4000/api
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
