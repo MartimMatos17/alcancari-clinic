@@ -1,65 +1,59 @@
-const router = require('express').Router();
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const { body, validationResult } = require('express-validator');
-const { query } = require('../db');
-const { auth } = require('../middleware/auth');
+const express = require('express')
+const router = express.Router()
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const db = require('../db')
 
 // POST /api/auth/login
-router.post('/login', [
-  body('email').isEmail(),
-  body('password').notEmpty()
-], async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
-
-  const { email, password } = req.body;
+router.post('/login', async (req, res) => {
   try {
-    const { rows } = await query('SELECT * FROM users WHERE email = $1 AND is_active = true', [email]);
-    if (!rows[0]) return res.status(401).json({ error: 'Invalid credentials' });
+    const { email, password } = req.body
+    if (!email || !password)
+      return res.status(400).json({ error: 'Email e palavra-passe obrigatórios' })
 
-    const valid = await bcrypt.compare(password, rows[0].password_hash);
-    if (!valid) return res.status(401).json({ error: 'Invalid credentials' });
+    const result = await db.query('SELECT * FROM users WHERE email = $1', [email])
+    const user = result.rows[0]
+    if (!user)
+      return res.status(401).json({ error: 'Credenciais inválidas' })
+
+    const valid = await bcrypt.compare(password, user.password_hash)
+    if (!valid)
+      return res.status(401).json({ error: 'Credenciais inválidas' })
 
     const token = jwt.sign(
-      { id: rows[0].id, role: rows[0].role },
+      { id: user.id, email: user.email, role: user.role, name: user.name },
       process.env.JWT_SECRET,
-      { expiresIn: '7d' }
-    );
+      { expiresIn: '8h' }
+    )
 
-    const { password_hash, ...user } = rows[0];
-    res.json({ token, user });
+    await db.query('UPDATE users SET last_login = NOW() WHERE id = $1', [user.id])
+
+    res.json({
+      token,
+      user: { id: user.id, name: user.name, email: user.email, role: user.role }
+    })
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err)
+    res.status(500).json({ error: 'Erro interno' })
   }
-});
+})
 
-// POST /api/auth/register (admin only in production)
-router.post('/register', [
-  body('email').isEmail(),
-  body('password').isLength({ min: 8 }),
-  body('full_name').notEmpty(),
-  body('role').isIn(['admin', 'therapist', 'receptionist', 'parent'])
-], async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
-
-  const { email, password, full_name, role, phone } = req.body;
-  try {
-    const hash = await bcrypt.hash(password, 12);
-    const { rows } = await query(
-      'INSERT INTO users (email, password_hash, full_name, role, phone) VALUES ($1,$2,$3,$4,$5) RETURNING id, email, full_name, role',
-      [email, hash, full_name, role, phone]
-    );
-    const token = jwt.sign({ id: rows[0].id, role: rows[0].role }, process.env.JWT_SECRET, { expiresIn: '7d' });
-    res.status(201).json({ token, user: rows[0] });
-  } catch (err) {
-    if (err.code === '23505') return res.status(409).json({ error: 'Email already registered' });
-    res.status(500).json({ error: err.message });
-  }
-});
+// POST /api/auth/logout
+router.post('/logout', (req, res) => {
+  res.json({ message: 'Sessão terminada' })
+})
 
 // GET /api/auth/me
-router.get('/me', auth, (req, res) => res.json(req.user));
+router.get('/me', require('../middleware/auth'), async (req, res) => {
+  try {
+    const result = await db.query(
+      'SELECT id, name, email, role, created_at, last_login FROM users WHERE id = $1',
+      [req.user.id]
+    )
+    res.json(result.rows[0])
+  } catch (err) {
+    res.status(500).json({ error: 'Erro interno' })
+  }
+})
 
-module.exports = router;
+module.exports = router

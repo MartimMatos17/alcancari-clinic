@@ -1,24 +1,16 @@
-const jwt = require('jsonwebtoken');
-const { query } = require('../db');
+const jwt = require('jsonwebtoken')
 
-const auth = async (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  if (!token) return res.status(401).json({ error: 'No token provided' });
+module.exports = (req, res, next) => {
+  const header = req.headers.authorization
+  if (!header || !header.startsWith('Bearer '))
+    return res.status(401).json({ error: 'Token em falta' })
 
+  const token = header.split(' ')[1]
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const { rows } = await query('SELECT id, email, role, full_name FROM users WHERE id = $1 AND is_active = true', [decoded.id]);
-    if (!rows[0]) return res.status(401).json({ error: 'User not found' });
-    req.user = rows[0];
-    next();
+    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    req.user = decoded
+    next()
   } catch (err) {
-    return res.status(401).json({ error: 'Invalid token' });
+    return res.status(401).json({ error: 'Token inválido ou expirado' })
   }
-};
-
-const requireRole = (...roles) => (req, res, next) => {
-  if (!roles.includes(req.user?.role)) return res.status(403).json({ error: 'Forbidden' });
-  next();
-};
-
-module.exports = { auth, requireRole };
+}
