@@ -1,30 +1,29 @@
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
 import api from '../lib/api'
 
-export const useAuthStore = create(
-  persist(
-    (set, get) => ({
-      user: null,
-      token: null,
+export const useAuthStore = create((set) => ({
+  user: JSON.parse(localStorage.getItem('user') || 'null'),
+  token: localStorage.getItem('token'),
+  loading: false,
+  error: null,
 
-      login: async (email, password) => {
-        const res = await api.post('/auth/login', { email, password })
-        set({ user: res.data.user, token: res.data.token })
-        api.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`
-        return res.data.user
-      },
+  login: async (email, password) => {
+    set({ loading: true, error: null })
+    try {
+      const res = await api.post('/auth/login', { email, password })
+      localStorage.setItem('token', res.data.token)
+      localStorage.setItem('user', JSON.stringify(res.data.user))
+      set({ user: res.data.user, token: res.data.token, loading: false })
+      return true
+    } catch (err) {
+      set({ error: err.response?.data?.error || 'Erro ao entrar', loading: false })
+      return false
+    }
+  },
 
-      logout: () => {
-        set({ user: null, token: null })
-        delete api.defaults.headers.common['Authorization']
-      },
-
-      init: () => {
-        const token = get().token
-        if (token) api.defaults.headers.common['Authorization'] = `Bearer ${token}`
-      },
-    }),
-    { name: 'alcancari-auth', partialize: s => ({ token: s.token, user: s.user }) }
-  )
-)
+  logout: () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    set({ user: null, token: null })
+  },
+}))

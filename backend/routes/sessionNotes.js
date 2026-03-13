@@ -6,24 +6,24 @@ const auth = require('../middleware/auth')
 // GET /api/session-notes
 router.get('/', auth, async (req, res) => {
   try {
-    const { patient_id, therapist_id, status } = req.query
+    const { patient_id, therapist_id, appointment_id } = req.query
     let query = `
-      SELECT s.*, 
-        p.name as patient_name, p.date_of_birth,
-        u.name as therapist_name,
-        a.scheduled_at
-      FROM session_notes s
-      LEFT JOIN patients p ON s.patient_id = p.id
-      LEFT JOIN users u ON s.therapist_id = u.id
-      LEFT JOIN appointments a ON s.appointment_id = a.id
+      SELECT 
+        sn.*,
+        p.full_name as patient_name, p.date_of_birth,
+        u.full_name as therapist_name,
+        a.start_time as appointment_time, a.unit
+      FROM session_notes sn
+      LEFT JOIN patients p ON sn.patient_id = p.id
+      LEFT JOIN users u ON sn.therapist_id = u.id
+      LEFT JOIN appointments a ON sn.appointment_id = a.id
       WHERE 1=1
     `
     const params = []
-    if (patient_id) { params.push(patient_id); query += ` AND s.patient_id = $${params.length}` }
-    if (therapist_id) { params.push(therapist_id); query += ` AND s.therapist_id = $${params.length}` }
-    if (status) { params.push(status); query += ` AND s.status = $${params.length}` }
-    query += ' ORDER BY s.created_at DESC'
-
+    if (patient_id) { params.push(patient_id); query += ` AND sn.patient_id = $${params.length}` }
+    if (therapist_id) { params.push(therapist_id); query += ` AND sn.therapist_id = $${params.length}` }
+    if (appointment_id) { params.push(appointment_id); query += ` AND sn.appointment_id = $${params.length}` }
+    query += ' ORDER BY sn.created_at DESC'
     const result = await db.query(query, params)
     res.json(result.rows)
   } catch (err) {
@@ -36,13 +36,14 @@ router.get('/', auth, async (req, res) => {
 router.get('/:id', auth, async (req, res) => {
   try {
     const result = await db.query(`
-      SELECT s.*, p.name as patient_name, u.name as therapist_name
-      FROM session_notes s
-      LEFT JOIN patients p ON s.patient_id = p.id
-      LEFT JOIN users u ON s.therapist_id = u.id
-      WHERE s.id = $1
+      SELECT sn.*, p.full_name as patient_name, u.full_name as therapist_name, a.start_time, a.unit
+      FROM session_notes sn
+      LEFT JOIN patients p ON sn.patient_id = p.id
+      LEFT JOIN users u ON sn.therapist_id = u.id
+      LEFT JOIN appointments a ON sn.appointment_id = a.id
+      WHERE sn.id = $1
     `, [req.params.id])
-    if (!result.rows[0]) return res.status(404).json({ error: 'Sumário não encontrado' })
+    if (!result.rows[0]) return res.status(404).json({ error: 'Sumario nao encontrado' })
     res.json(result.rows[0])
   } catch (err) {
     res.status(500).json({ error: 'Erro interno' })
@@ -52,14 +53,12 @@ router.get('/:id', auth, async (req, res) => {
 // POST /api/session-notes
 router.post('/', auth, async (req, res) => {
   try {
-    const { patient_id, appointment_id, service, objectives, content, evolution, next_session, session_date, session_time } = req.body
+    const { appointment_id, patient_id, content, objectives, evolution, next_steps } = req.body
+    if (!content) return res.status(400).json({ error: 'Conteudo obrigatorio' })
     const result = await db.query(`
-      INSERT INTO session_notes 
-        (patient_id, therapist_id, appointment_id, service, objectives, content, evolution, next_session, session_date, session_time, status)
-      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,
-        CASE WHEN $6 IS NOT NULL AND $6 != '' THEN 'done' ELSE 'pending' END)
-      RETURNING *
-    `, [patient_id, req.user.id, appointment_id, service, objectives, content, evolution, next_session, session_date, session_time])
+      INSERT INTO session_notes (appointment_id, patient_id, therapist_id, content, objectives, evolution, next_steps)
+      VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *
+    `, [appointment_id, patient_id, req.user.id, content, objectives, evolution, next_steps])
     res.status(201).json(result.rows[0])
   } catch (err) {
     console.error(err)
@@ -70,17 +69,24 @@ router.post('/', auth, async (req, res) => {
 // PUT /api/session-notes/:id
 router.put('/:id', auth, async (req, res) => {
   try {
-    const { objectives, content, evolution, next_session } = req.body
+    const { content, objectives, evolution, next_steps } = req.body
     const result = await db.query(`
-      UPDATE session_notes SET
-        objectives=$1, content=$2, evolution=$3, next_session=$4,
-        status=CASE WHEN $2 IS NOT NULL AND $2 != '' THEN 'done' ELSE 'pending' END,
-        updated_at=NOW()
-      WHERE id=$5 AND therapist_id=$6
-      RETURNING *
-    `, [objectives, content, evolution, next_session, req.params.id, req.user.id])
-    if (!result.rows[0]) return res.status(404).json({ error: 'Sumário não encontrado ou sem permissão' })
+      UPDATE session_notes 
+      SET content=$1, objectives=$2, evolution=$3, next_steps=$4, updated_at=NOW()
+      WHERE id=$5 AND therapist_id=$6 RETURNING *
+    `, [content, objectives, evolution, next_steps, req.params.id, req.user.id])
+    if (!result.rows[0]) return res.status(404).json({ error: 'Sumario nao encontrado ou sem permissao' })
     res.json(result.rows[0])
+  } catch (err) {
+    res.status(500).json({ error: 'Erro interno' })
+  }
+})
+
+// DELETE /api/session-notes/:id
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    await db.query('DELETE FROM session_notes WHERE id=$1 AND therapist_id=$2', [req.params.id, req.user.id])
+    res.json({ message: 'Sumario eliminado' })
   } catch (err) {
     res.status(500).json({ error: 'Erro interno' })
   }
