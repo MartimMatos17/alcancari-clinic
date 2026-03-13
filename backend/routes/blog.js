@@ -1,68 +1,75 @@
-const router = require('express').Router();
-const { query } = require('../db');
-const { auth, requireRole } = require('../middleware/auth');
+const express = require('express')
+const router = express.Router()
+const db = require('../db')
+const auth = require('../middleware/auth')
 
-// GET /api/blog (public)
+// GET /api/blog (público)
 router.get('/', async (req, res) => {
   try {
-    const { rows } = await query(
-      `SELECT bp.id, bp.title, bp.slug, bp.excerpt, bp.cover_image_url, bp.published_at, bp.tags, bp.views,
-              u.full_name as author_name, u.avatar_url as author_avatar
-       FROM blog_posts bp
-       LEFT JOIN users u ON bp.author_id = u.id
-       WHERE bp.published = true
-       ORDER BY bp.published_at DESC`
-    );
-    res.json(rows);
-  } catch (err) { res.status(500).json({ error: err.message }); }
-});
+    const { category, search, limit = 10, offset = 0 } = req.query
+    let query = `SELECT * FROM blog_posts WHERE published = true`
+    const params = []
+    if (category) { params.push(category); query += ` AND category = $${params.length}` }
+    if (search) { params.push('%' + search + '%'); query += ` AND (title ILIKE $${params.length} OR content ILIKE $${params.length})` }
+    query += ` ORDER BY created_at DESC LIMIT $${params.length + 1} OFFSET $${params.length + 2}`
+    params.push(limit, offset)
+    const result = await db.query(query, params)
+    const count = await db.query('SELECT COUNT(*) FROM blog_posts WHERE published = true')
+    res.json({ posts: result.rows, total: parseInt(count.rows[0].count) })
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: 'Erro interno' })
+  }
+})
 
-// GET /api/blog/:slug (public)
-router.get('/:slug', async (req, res) => {
+// GET /api/blog/:id (público)
+router.get('/:id', async (req, res) => {
   try {
-    await query('UPDATE blog_posts SET views = views + 1 WHERE slug=$1', [req.params.slug]);
-    const { rows } = await query(
-      `SELECT bp.*, u.full_name as author_name, u.avatar_url as author_avatar
-       FROM blog_posts bp LEFT JOIN users u ON bp.author_id = u.id
-       WHERE bp.slug=$1 AND bp.published=true`,
-      [req.params.slug]
-    );
-    if (!rows[0]) return res.status(404).json({ error: 'Post not found' });
-    res.json(rows[0]);
-  } catch (err) { res.status(500).json({ error: err.message }); }
-});
+    const result = await db.query('SELECT * FROM blog_posts WHERE id = $1 AND published = true', [req.params.id])
+    if (!result.rows[0]) return res.status(404).json({ error: 'Post não encontrado' })
+    await db.query('UPDATE blog_posts SET views = views + 1 WHERE id = $1', [req.params.id])
+    res.json(result.rows[0])
+  } catch (err) {
+    res.status(500).json({ error: 'Erro interno' })
+  }
+})
 
-// POST /api/blog (admin)
-router.post('/', auth, requireRole('admin'), async (req, res) => {
-  const { title, slug, excerpt, content, cover_image_url, tags, published } = req.body;
+// POST /api/blog (privado)
+router.post('/', auth, async (req, res) => {
   try {
-    const { rows } = await query(
-      `INSERT INTO blog_posts (title, slug, excerpt, content, cover_image_url, tags, published, author_id, published_at)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8, $7 ? NOW() : NULL) RETURNING *`,
-      [title, slug, excerpt, content, cover_image_url, tags || [], published, req.user.id]
-    );
-    res.status(201).json(rows[0]);
-  } catch (err) { res.status(500).json({ error: err.message }); }
-});
+    const { title, content, category, image_url, published } = req.body
+    const result = await db.query(`
+      INSERT INTO blog_posts (title, content, category, image_url, published, author_id)
+      VALUES ($1,$2,$3,$4,$5,$6) RETURNING *
+    `, [title, content, category, image_url, published || false, req.user.id])
+    res.status(201).json(result.rows[0])
+  } catch (err) {
+    res.status(500).json({ error: 'Erro interno' })
+  }
+})
 
-// PUT /api/blog/:id (admin)
-router.put('/:id', auth, requireRole('admin'), async (req, res) => {
-  const { title, slug, excerpt, content, cover_image_url, tags, published } = req.body;
+// PUT /api/blog/:id (privado)
+router.put('/:id', auth, async (req, res) => {
   try {
-    const { rows } = await query(
-      `UPDATE blog_posts SET title=$1,slug=$2,excerpt=$3,content=$4,cover_image_url=$5,tags=$6,published=$7,
-       published_at=CASE WHEN $7 AND published_at IS NULL THEN NOW() ELSE published_at END, updated_at=NOW()
-       WHERE id=$8 RETURNING *`,
-      [title, slug, excerpt, content, cover_image_url, tags, published, req.params.id]
-    );
-    res.json(rows[0]);
-  } catch (err) { res.status(500).json({ error: err.message }); }
-});
+    const { title, content, category, image_url, published } = req.body
+    const result = await db.query(`
+      UPDATE blog_posts SET title=$1, content=$2, category=$3, image_url=$4, published=$5, updated_at=NOW()
+      WHERE id=$6 RETURNING *
+    `, [title, content, category, image_url, published, req.params.id])
+    res.json(result.rows[0])
+  } catch (err) {
+    res.status(500).json({ error: 'Erro interno' })
+  }
+})
 
-// DELETE /api/blog/:id (admin)
-router.delete('/:id', auth, requireRole('admin'), async (req, res) => {
-  await query('DELETE FROM blog_posts WHERE id=$1', [req.params.id]);
-  res.status(204).send();
-});
+// DELETE /api/blog/:id (privado)
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    await db.query('DELETE FROM blog_posts WHERE id = $1', [req.params.id])
+    res.json({ message: 'Post eliminado' })
+  } catch (err) {
+    res.status(500).json({ error: 'Erro interno' })
+  }
+})
 
-module.exports = router;
+module.exports = router
