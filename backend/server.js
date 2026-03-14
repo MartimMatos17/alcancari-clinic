@@ -20,6 +20,7 @@ app.use('/api/calendar',      require('./routes/calendar'))
 app.use('/api/session-notes', require('./routes/sessionNotes'))
 app.use('/api/users',         require('./routes/users'))
 app.use('/api/media',         require('./routes/media'))
+app.use('/api/stats',            require('./routes/stats'))
 app.use('/api/parents',           require('./routes/parents'))
 app.use('/api/appointment-requests', require('./routes/appointmentRequests'))
 
