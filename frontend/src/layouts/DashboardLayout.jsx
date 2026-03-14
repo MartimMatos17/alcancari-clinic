@@ -1,22 +1,23 @@
 import { useState } from 'react'
 import { Link, useLocation, useNavigate, Outlet } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { LayoutDashboard, Calendar, Users, FileText, LogOut, Menu, X, ChevronRight, Bell, Settings, ClipboardList } from 'lucide-react'
+import { LayoutDashboard, Calendar, Users, FileText, LogOut, Menu, X, ChevronRight, Bell, ClipboardList, Inbox } from 'lucide-react'
 import { useAuthStore } from '../store/authStore'
 
 const NAV_ADMIN = [
-  { path: '/dashboard', label: 'Dashboard', icon: <LayoutDashboard size={18} />, exact: true },
+  { path: '/dashboard',           label: 'Dashboard',  icon: <LayoutDashboard size={18} />, exact: true },
   { path: '/dashboard/calendario', label: 'Calendário', icon: <Calendar size={18} /> },
-  { path: '/dashboard/pacientes', label: 'Pacientes', icon: <Users size={18} /> },
-  { path: '/dashboard/notas', label: 'Sumários', icon: <FileText size={18} /> },
-  { path: '/dashboard/equipa', label: 'Equipa', icon: <ClipboardList size={18} /> },
+  { path: '/dashboard/pacientes',  label: 'Pacientes',  icon: <Users size={18} /> },
+  { path: '/dashboard/notas',      label: 'Sumários',   icon: <FileText size={18} /> },
+  { path: '/dashboard/pedidos',    label: 'Marcações',  icon: <Inbox size={18} /> },
+  { path: '/dashboard/equipa',     label: 'Equipa',     icon: <ClipboardList size={18} /> },
 ]
 
 const NAV_THERAPIST = [
-  { path: '/dashboard', label: 'A minha agenda', icon: <LayoutDashboard size={18} />, exact: true },
-  { path: '/dashboard/calendario', label: 'Calendário', icon: <Calendar size={18} /> },
-  { path: '/dashboard/pacientes', label: 'Os meus pacientes', icon: <Users size={18} /> },
-  { path: '/dashboard/notas', label: 'Sumários', icon: <FileText size={18} /> },
+  { path: '/dashboard',            label: 'A minha agenda',   icon: <LayoutDashboard size={18} />, exact: true },
+  { path: '/dashboard/calendario', label: 'Calendário',       icon: <Calendar size={18} /> },
+  { path: '/dashboard/pacientes',  label: 'Os meus pacientes', icon: <Users size={18} /> },
+  { path: '/dashboard/notas',      label: 'Sumários',         icon: <FileText size={18} /> },
 ]
 
 export default function DashboardLayout() {
@@ -27,18 +28,13 @@ export default function DashboardLayout() {
 
   const isAdmin = user?.role === 'admin'
   const NAV = isAdmin ? NAV_ADMIN : NAV_THERAPIST
-
   const isActive = (path, exact) => exact ? location.pathname === path : location.pathname.startsWith(path)
 
-  const handleLogout = () => {
-    logout()
-    navigate('/login')
-  }
+  const handleLogout = () => { logout(); navigate('/login') }
 
   const initials = user?.full_name
     ? user.full_name.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase()
     : '?'
-
   const firstName = user?.full_name?.split(' ')[0] || 'Utilizador'
   const roleLabel = isAdmin ? 'Administrador' : 'Terapeuta'
 
@@ -65,8 +61,7 @@ export default function DashboardLayout() {
 
       <nav className="flex-1 p-4 space-y-1 mt-2">
         {NAV.map(item => (
-          <Link key={item.path} to={item.path}
-            onClick={() => setOpen(false)}
+          <Link key={item.path} to={item.path} onClick={() => setOpen(false)}
             className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
               isActive(item.path, item.exact)
                 ? 'bg-teal-700 text-white shadow-md shadow-teal-200'
@@ -99,13 +94,10 @@ export default function DashboardLayout() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
-
-      {/* Sidebar desktop */}
       <aside className="hidden lg:flex flex-col w-64 bg-white border-r border-gray-100 fixed top-0 left-0 bottom-0 z-30">
         <SidebarContent />
       </aside>
 
-      {/* Mobile overlay */}
       <AnimatePresence>
         {open && (
           <>
@@ -124,7 +116,6 @@ export default function DashboardLayout() {
         )}
       </AnimatePresence>
 
-      {/* Main */}
       <div className="flex-1 lg:ml-64 flex flex-col min-h-screen">
         <header className="lg:hidden bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between sticky top-0 z-20">
           <button onClick={() => setOpen(true)} className="p-2 hover:bg-gray-100 rounded-xl">
