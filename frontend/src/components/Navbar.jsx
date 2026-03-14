@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, Phone, Mail, MapPin, ChevronDown } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
+import LanguageToggle from './LanguageToggle'
 
 const SERVICES = [
   { label: 'Fisioterapia',         href: '/servicos/fisioterapia' },
@@ -13,19 +15,12 @@ const SERVICES = [
   { label: 'Acupuntura',           href: '/servicos/acupuntura' },
 ]
 
-const NAV = [
-  { label: 'Início',   href: '/' },
-  { label: 'A Clínica', href: '/sobre' },
-  { label: 'Blog',     href: '/blog' },
-  { label: 'FAQ',      href: '/faq' },
-  { label: 'Contacto', href: '/contacto' },
-]
-
 export default function Navbar() {
-  const [open, setOpen]         = useState(false)
+  const [open, setOpen] = useState(false)
   const [servOpen, setServOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const location = useLocation()
+  const { t } = useTranslation()
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20)
@@ -62,7 +57,6 @@ export default function Navbar() {
       <header className={`sticky top-0 z-40 bg-white transition-shadow ${scrolled ? 'shadow-md' : 'shadow-sm'}`}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-6">
 
-          {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 flex-shrink-0">
             <div className="w-9 h-9 bg-teal-700 rounded-xl flex items-center justify-center font-display font-bold text-white text-lg">A</div>
             <span className="font-display font-semibold text-teal-900 text-lg">Alcançari</span>
@@ -70,12 +64,11 @@ export default function Navbar() {
 
           {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-6">
-            <Link to="/" className={linkClass('/')}>Início</Link>
+            <Link to="/" className={linkClass('/')}>{t('nav.home')}</Link>
 
-            {/* Serviços dropdown */}
             <div className="relative" onMouseEnter={() => setServOpen(true)} onMouseLeave={() => setServOpen(false)}>
               <button className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-teal-600 ${location.pathname.startsWith('/servicos') ? 'text-teal-700' : 'text-gray-600'}`}>
-                Serviços <ChevronDown size={14} className={`transition-transform ${servOpen ? 'rotate-180' : ''}`} />
+                {t('nav.services')} <ChevronDown size={14} className={`transition-transform ${servOpen ? 'rotate-180' : ''}`} />
               </button>
               <AnimatePresence>
                 {servOpen && (
@@ -89,7 +82,7 @@ export default function Navbar() {
                       </Link>
                     ))}
                     <div className="border-t border-gray-100 mt-1 pt-1">
-                      <Link to="/servicos" className="block px-4 py-2.5 text-sm text-teal-600 font-semibold hover:bg-teal-50 transition-colors">
+                      <Link to="/servicos" className="block px-4 py-2.5 text-sm text-teal-600 font-semibold hover:bg-teal-50">
                         Ver todos →
                       </Link>
                     </div>
@@ -98,23 +91,23 @@ export default function Navbar() {
               </AnimatePresence>
             </div>
 
-            {NAV.slice(1).map(n => (
-              <Link key={n.href} to={n.href} className={linkClass(n.href)}>{n.label}</Link>
-            ))}
+            <Link to="/sobre" className={linkClass('/sobre')}>{t('nav.about')}</Link>
+            <Link to="/blog" className={linkClass('/blog')}>{t('nav.blog')}</Link>
+            <Link to="/faq" className={linkClass('/faq')}>{t('nav.faq')}</Link>
+            <Link to="/contacto" className={linkClass('/contacto')}>{t('nav.contact')}</Link>
           </nav>
 
-          {/* CTA */}
           <div className="hidden lg:flex items-center gap-3">
+            <LanguageToggle />
             <Link to="/dashboard" className="text-sm text-gray-500 hover:text-teal-600 font-medium transition-colors">
-              Área Clínica
+              {t('nav.area')}
             </Link>
             <Link to="/marcacao"
               className="bg-teal-700 hover:bg-teal-800 text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-all shadow-sm hover:shadow-md">
-              Marcar Consulta
+              {t('nav.book')}
             </Link>
           </div>
 
-          {/* Mobile menu button */}
           <button onClick={() => setOpen(!open)} className="lg:hidden p-2 hover:bg-gray-100 rounded-xl">
             {open ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -126,11 +119,11 @@ export default function Navbar() {
             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}
               className="lg:hidden border-t border-gray-100 bg-white overflow-hidden">
               <div className="px-4 py-4 space-y-1">
-                <Link to="/" className="block px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-teal-50 hover:text-teal-700 rounded-xl">Início</Link>
+                <Link to="/" className="block px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-teal-50 hover:text-teal-700 rounded-xl">{t('nav.home')}</Link>
                 <div>
                   <button onClick={() => setServOpen(!servOpen)}
                     className="w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-teal-50 rounded-xl">
-                    Serviços <ChevronDown size={14} className={servOpen ? 'rotate-180' : ''} />
+                    {t('nav.services')} <ChevronDown size={14} className={servOpen ? 'rotate-180' : ''} />
                   </button>
                   {servOpen && (
                     <div className="pl-4 space-y-1 mt-1">
@@ -142,15 +135,15 @@ export default function Navbar() {
                     </div>
                   )}
                 </div>
-                {NAV.slice(1).map(n => (
-                  <Link key={n.href} to={n.href} className="block px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-teal-50 hover:text-teal-700 rounded-xl">
-                    {n.label}
-                  </Link>
-                ))}
+                <Link to="/sobre" className="block px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-teal-50 rounded-xl">{t('nav.about')}</Link>
+                <Link to="/blog" className="block px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-teal-50 rounded-xl">{t('nav.blog')}</Link>
+                <Link to="/faq" className="block px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-teal-50 rounded-xl">{t('nav.faq')}</Link>
+                <Link to="/contacto" className="block px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-teal-50 rounded-xl">{t('nav.contact')}</Link>
                 <div className="pt-3 space-y-2 border-t border-gray-100">
-                  <Link to="/dashboard" className="block px-3 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-50 rounded-xl">Área Clínica</Link>
+                  <div className="px-3"><LanguageToggle /></div>
+                  <Link to="/dashboard" className="block px-3 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-50 rounded-xl">{t('nav.area')}</Link>
                   <Link to="/marcacao" className="block bg-teal-700 text-white text-sm font-semibold px-4 py-3 rounded-xl text-center">
-                    Marcar Consulta
+                    {t('nav.book')}
                   </Link>
                 </div>
               </div>
