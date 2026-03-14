@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import PublicLayout from './layouts/PublicLayout'
 import DashboardLayout from './layouts/DashboardLayout'
+import ParentLayout from './layouts/ParentLayout'
 import ProtectedRoute from './components/ProtectedRoute'
 import HomePage from './pages/HomePage'
 import ServicesPage from './pages/ServicesPage'
@@ -19,6 +20,7 @@ import PatientsPage from './pages/dashboard/PatientsPage'
 import SessionNotesPage from './pages/dashboard/SessionNotesPage'
 import RequestsPage from './pages/dashboard/RequestsPage'
 import TeamPage from './pages/dashboard/TeamPage'
+import ParentHome from './pages/parent/ParentHome'
 
 export default function App() {
   return (
@@ -36,7 +38,13 @@ export default function App() {
           <Route path="/privacidade" element={<PrivacyPage />} />
           <Route path="/faq" element={<FAQPage />} />
         </Route>
-        <Route element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
+
+        {/* Dashboard — admin e terapeutas */}
+        <Route element={
+          <ProtectedRoute roles={['admin', 'therapist']}>
+            <DashboardLayout />
+          </ProtectedRoute>
+        }>
           <Route path="/dashboard" element={<DashboardHome />} />
           <Route path="/dashboard/calendario" element={<CalendarPage />} />
           <Route path="/dashboard/pacientes" element={<PatientsPage />} />
@@ -44,6 +52,16 @@ export default function App() {
           <Route path="/dashboard/pedidos" element={<RequestsPage />} />
           <Route path="/dashboard/equipa" element={<TeamPage />} />
         </Route>
+
+        {/* Área da família — pais */}
+        <Route element={
+          <ProtectedRoute roles={['parent']}>
+            <ParentLayout />
+          </ProtectedRoute>
+        }>
+          <Route path="/familia" element={<ParentHome />} />
+        </Route>
+
         <Route path="/login" element={<LoginPage />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
