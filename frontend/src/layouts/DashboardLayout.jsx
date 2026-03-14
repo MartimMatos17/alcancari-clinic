@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Link, useLocation, useNavigate, Outlet } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { LayoutDashboard, Calendar, Users, FileText, LogOut, Menu, X, ChevronRight, Bell, ClipboardList, Inbox } from 'lucide-react'
+import { LayoutDashboard, Calendar, Users, FileText, LogOut, Menu, X, ChevronRight, ClipboardList, Inbox } from 'lucide-react'
+import NotificationBell from '../components/NotificationBell'
 import { useAuthStore } from '../store/authStore'
 
 const NAV_ADMIN = [
@@ -123,7 +124,7 @@ export default function DashboardLayout() {
           </button>
           <p className="font-display font-bold text-teal-900 text-sm">Alcançari</p>
           <button className="p-2 hover:bg-gray-100 rounded-xl relative">
-            <Bell size={18} className="text-gray-600" />
+            <NotificationBell />
           </button>
         </header>
 
@@ -133,7 +134,7 @@ export default function DashboardLayout() {
           </p>
           <div className="flex items-center gap-3">
             <button className="p-2 hover:bg-gray-100 rounded-xl relative">
-              <Bell size={18} className="text-gray-600" />
+              <NotificationBell />
             </button>
             <Link to="/" className="text-xs text-gray-400 hover:text-teal-600 transition-colors font-medium px-3 py-1.5 hover:bg-teal-50 rounded-lg">
               ← Voltar ao site

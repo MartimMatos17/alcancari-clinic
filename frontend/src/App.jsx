@@ -18,6 +18,7 @@ import CalendarPage from './pages/dashboard/CalendarPage'
 import PatientsPage from './pages/dashboard/PatientsPage'
 import SessionNotesPage from './pages/dashboard/SessionNotesPage'
 import RequestsPage from './pages/dashboard/RequestsPage'
+import TeamPage from './pages/dashboard/TeamPage'
 
 export default function App() {
   return (
@@ -41,6 +42,7 @@ export default function App() {
           <Route path="/dashboard/pacientes" element={<PatientsPage />} />
           <Route path="/dashboard/notas" element={<SessionNotesPage />} />
           <Route path="/dashboard/pedidos" element={<RequestsPage />} />
+          <Route path="/dashboard/equipa" element={<TeamPage />} />
         </Route>
         <Route path="/login" element={<LoginPage />} />
         <Route path="*" element={<Navigate to="/" />} />
