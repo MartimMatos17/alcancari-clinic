@@ -76,3 +76,14 @@ router.put('/:id', auth, async (req, res) => {
 })
 
 module.exports = router
+
+// DELETE /api/session-notes/:id
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    await db.query('DELETE FROM session_notes WHERE id = $1', [req.params.id])
+    res.json({ message: 'Sumário eliminado' })
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: 'Erro interno' })
+  }
+})
