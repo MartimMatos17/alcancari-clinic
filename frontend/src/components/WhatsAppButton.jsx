@@ -39,15 +39,16 @@ export default function WhatsAppButton() {
                 </p>
               </div>
             </div>
-            <div className="p-4 flex gap-2">
-              
-                href="https://wa.me/351934779548?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20vossos%20serviços."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 bg-[#25D366] hover:bg-[#20bc5a] text-white text-sm font-semibold py-3 rounded-xl text-center transition-colors">
-                💬 Iniciar conversa
-              </a>
-            </div>
+           <div className="p-4 flex gap-2">
+  <a
+    href="https://wa.me/351934779548?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20vossos%20serviços."
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex-1 bg-[#25D366] hover:bg-[#20bc5a] text-white text-sm font-semibold py-3 rounded-xl text-center transition-colors"
+  >
+    💬 Iniciar conversa
+  </a>
+</div>
           </motion.div>
         )}
       </AnimatePresence>

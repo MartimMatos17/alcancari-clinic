@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import PublicLayout from './layouts/PublicLayout'
 import DashboardLayout from './layouts/DashboardLayout'
+import ProtectedRoute from './components/ProtectedRoute'
 import HomePage from './pages/HomePage'
 import ServicesPage from './pages/ServicesPage'
 import ServiceDetailPage from './pages/ServiceDetailPage'
@@ -9,6 +10,8 @@ import BlogPage from './pages/BlogPage'
 import BlogPostPage from './pages/BlogPostPage'
 import ContactPage from './pages/ContactPage'
 import AppointmentPage from './pages/AppointmentPage'
+import PrivacyPage from './pages/PrivacyPage'
+import FAQPage from './pages/FAQPage'
 import LoginPage from './pages/LoginPage'
 import DashboardHome from './pages/dashboard/DashboardHome'
 import CalendarPage from './pages/dashboard/CalendarPage'
@@ -28,8 +31,10 @@ export default function App() {
           <Route path="/blog/:id" element={<BlogPostPage />} />
           <Route path="/contacto" element={<ContactPage />} />
           <Route path="/marcacao" element={<AppointmentPage />} />
+          <Route path="/privacidade" element={<PrivacyPage />} />
+          <Route path="/faq" element={<FAQPage />} />
         </Route>
-        <Route element={<DashboardLayout />}>
+        <Route element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
           <Route path="/dashboard" element={<DashboardHome />} />
           <Route path="/dashboard/calendario" element={<CalendarPage />} />
           <Route path="/dashboard/pacientes" element={<PatientsPage />} />
