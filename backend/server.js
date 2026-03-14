@@ -20,6 +20,8 @@ app.use('/api/calendar',      require('./routes/calendar'))
 app.use('/api/session-notes', require('./routes/sessionNotes'))
 app.use('/api/users',         require('./routes/users'))
 app.use('/api/media',         require('./routes/media'))
+app.use('/api/parents',           require('./routes/parents'))
+app.use('/api/appointment-requests', require('./routes/appointmentRequests'))
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok', time: new Date() }))
 app.use((req, res) => res.status(404).json({ error: 'Rota nao encontrada' }))
