@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { Calendar, FileText, ArrowRight, Clock, MapPin } from 'lucide-react'
 import api from '../../lib/api'
 import { useAuthStore } from '../../store/authStore'
+import { useTranslation } from 'react-i18next'
 
 const EVOLUTION_COLORS = {
   'Muito Positiva': 'bg-green-100 text-green-700',
@@ -15,6 +16,9 @@ const EVOLUTION_COLORS = {
 
 export default function ParentHome() {
   const { user } = useAuthStore()
+  const { t, i18n } = useTranslation()
+  const lang = i18n.language?.substring(0,2) || 'pt'
+
   const [children, setChildren] = useState([])
   const [selected, setSelected] = useState(null)
   const [appointments, setAppointments] = useState([])
@@ -24,7 +28,11 @@ export default function ParentHome() {
 
   const firstName = user?.full_name?.split(' ')[0] || ''
   const hour = new Date().getHours()
-  const greeting = hour < 12 ? 'Bom dia' : hour < 19 ? 'Boa tarde' : 'Boa noite'
+  const greeting = hour < 12
+    ? t('parent.greeting_morning')
+    : hour < 19
+    ? t('parent.greeting_afternoon')
+    : t('parent.greeting_evening')
 
   useEffect(() => {
     api.get('/parents/me').then(res => {
@@ -59,14 +67,17 @@ export default function ParentHome() {
 
   return (
     <div className="space-y-8">
+
+      {/* Saudação */}
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
         <p className="text-gray-400 text-sm capitalize">
-          {new Date().toLocaleDateString('pt-PT', { weekday: 'long', day: 'numeric', month: 'long' })}
+          {new Date().toLocaleDateString(lang === 'en' ? 'en-GB' : 'pt-PT', { weekday: 'long', day: 'numeric', month: 'long' })}
         </p>
         <h1 className="font-display text-3xl text-teal-900 font-bold mt-1">{greeting}, {firstName} 👋</h1>
-        <p className="text-gray-400 text-sm mt-1">Acompanhe o progresso do seu filho</p>
+        <p className="text-gray-400 text-sm mt-1">{t('parent.sub')}</p>
       </motion.div>
 
+      {/* Seletor de filho */}
       {children.length > 1 && (
         <div className="flex gap-3 flex-wrap">
           {children.map(c => (
@@ -79,7 +90,7 @@ export default function ParentHome() {
               </div>
               <div className="text-left">
                 <p className="font-semibold text-gray-700 text-sm">{c.full_name}</p>
-                <p className="text-gray-400 text-xs">{c.appointment_count} consultas</p>
+                <p className="text-gray-400 text-xs">{c.appointment_count} {lang === 'en' ? 'appointments' : 'consultas'}</p>
               </div>
             </button>
           ))}
@@ -88,11 +99,12 @@ export default function ParentHome() {
 
       {selected && (
         <>
+          {/* Cards resumo */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             {[
-              { label: 'Próximas consultas',   value: upcoming.length, icon: <Calendar size={20} />, color: 'bg-teal-50 text-teal-600' },
-              { label: 'Consultas realizadas', value: past.length,     icon: <Clock size={20} />,    color: 'bg-blue-50 text-blue-600' },
-              { label: 'Sumários disponíveis', value: notes.length,    icon: <FileText size={20} />, color: 'bg-purple-50 text-purple-600' },
+              { label: t('parent.upcoming'),    value: upcoming.length, icon: <Calendar size={20} />, color: 'bg-teal-50 text-teal-600' },
+              { label: t('parent.past'),         value: past.length,     icon: <Clock size={20} />,    color: 'bg-blue-50 text-blue-600' },
+              { label: t('parent.notes_count'),  value: notes.length,    icon: <FileText size={20} />, color: 'bg-purple-50 text-purple-600' },
             ].map((s, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}
                 className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
@@ -103,90 +115,106 @@ export default function ParentHome() {
             ))}
           </div>
 
+          {/* Tabs */}
           <div className="flex gap-2">
-            {[{ key: 'appointments', label: 'Consultas' }, { key: 'notes', label: 'Sumários' }].map(t => (
-              <button key={t.key} onClick={() => setTab(t.key)}
+            {[
+              { key: 'appointments', label: t('parent.tab_appointments') },
+              { key: 'notes',        label: t('parent.tab_notes') },
+            ].map(tab_item => (
+              <button key={tab_item.key} onClick={() => setTab(tab_item.key)}
                 className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
-                  tab === t.key ? 'bg-teal-700 text-white shadow-md' : 'bg-white text-gray-500 border border-gray-200 hover:border-teal-300'
+                  tab === tab_item.key ? 'bg-teal-700 text-white shadow-md' : 'bg-white text-gray-500 border border-gray-200 hover:border-teal-300'
                 }`}>
-                {t.label}
+                {tab_item.label}
               </button>
             ))}
           </div>
 
+          {/* Consultas */}
           {tab === 'appointments' && (
             <div className="space-y-4">
               {upcoming.length > 0 && (
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">Próximas</p>
+                  <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">{t('parent.next_label')}</p>
                   <div className="space-y-3">
                     {upcoming.map((a, i) => (
                       <motion.div key={a.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
                         className="bg-white rounded-2xl border-2 border-teal-100 shadow-sm p-5 space-y-2">
                         <div className="flex gap-2 flex-wrap">
                           <span className="text-xs bg-teal-50 text-teal-600 border border-teal-200 px-2.5 py-1 rounded-full font-medium">
-                            {a.service_name || 'Consulta'}
+                            {a.service_name || (lang === 'en' ? 'Appointment' : 'Consulta')}
                           </span>
                           <span className="text-xs bg-green-50 text-green-600 border border-green-200 px-2.5 py-1 rounded-full font-medium">
-                            Confirmada
+                            {t('parent.confirmed')}
                           </span>
                         </div>
                         <p className="font-semibold text-gray-800">
-                          {new Date(a.start_time).toLocaleDateString('pt-PT', { weekday: 'long', day: 'numeric', month: 'long' })}
+                          {new Date(a.start_time).toLocaleDateString(lang === 'en' ? 'en-GB' : 'pt-PT', { weekday: 'long', day: 'numeric', month: 'long' })}
                         </p>
                         <div className="flex items-center gap-4 text-sm text-gray-500">
-                          <span className="flex items-center gap-1.5"><Clock size={13} className="text-teal-400" />
-                            {new Date(a.start_time).toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' })}
+                          <span className="flex items-center gap-1.5">
+                            <Clock size={13} className="text-teal-400" />
+                            {new Date(a.start_time).toLocaleTimeString(lang === 'en' ? 'en-GB' : 'pt-PT', { hour: '2-digit', minute: '2-digit' })}
                           </span>
-                          <span className="flex items-center gap-1.5"><MapPin size={13} className="text-teal-400" />
+                          <span className="flex items-center gap-1.5">
+                            <MapPin size={13} className="text-teal-400" />
                             {a.unit === 'leça_palmeira' ? 'Leça da Palmeira' : 'São Mamede'}
                           </span>
                         </div>
-                        {a.therapist_name && <p className="text-gray-400 text-xs">Terapeuta: {a.therapist_name}</p>}
+                        {a.therapist_name && (
+                          <p className="text-gray-400 text-xs">{t('parent.therapist')}: {a.therapist_name}</p>
+                        )}
                       </motion.div>
                     ))}
                   </div>
                 </div>
               )}
+
               {past.length > 0 && (
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">Histórico</p>
+                  <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">{t('parent.history_label')}</p>
                   <div className="space-y-3">
                     {past.slice(0,5).map((a) => (
                       <div key={a.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex items-center justify-between">
                         <div>
                           <p className="font-medium text-gray-700 text-sm">
-                            {new Date(a.start_time).toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' })}
+                            {new Date(a.start_time).toLocaleDateString(lang === 'en' ? 'en-GB' : 'pt-PT', { day: 'numeric', month: 'long', year: 'numeric' })}
                           </p>
-                          <p className="text-xs text-gray-400 mt-0.5">{a.service_name || 'Consulta'} · {new Date(a.start_time).toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' })}</p>
+                          <p className="text-xs text-gray-400 mt-0.5">
+                            {a.service_name || (lang === 'en' ? 'Appointment' : 'Consulta')} · {new Date(a.start_time).toLocaleTimeString(lang === 'en' ? 'en-GB' : 'pt-PT', { hour: '2-digit', minute: '2-digit' })}
+                          </p>
                         </div>
                         {a.note_id
-                          ? <button onClick={() => setTab('notes')} className="text-xs text-teal-600 font-semibold flex items-center gap-1">Ver sumário <ArrowRight size={12} /></button>
-                          : <span className="text-xs text-gray-300">Sem sumário</span>
+                          ? <button onClick={() => setTab('notes')} className="text-xs text-teal-600 font-semibold flex items-center gap-1 hover:gap-2 transition-all">
+                              {t('parent.see_note')} <ArrowRight size={12} />
+                            </button>
+                          : <span className="text-xs text-gray-300">{t('parent.no_note')}</span>
                         }
                       </div>
                     ))}
                   </div>
                 </div>
               )}
+
               {appointments.length === 0 && (
                 <div className="text-center py-16 bg-white rounded-2xl border border-gray-100">
                   <p className="text-4xl mb-3">📅</p>
-                  <p className="text-gray-400">Sem consultas registadas</p>
+                  <p className="text-gray-400">{t('parent.no_appointments')}</p>
                   <Link to="/marcacao" className="mt-4 inline-flex items-center gap-2 text-teal-600 font-semibold text-sm">
-                    Marcar consulta <ArrowRight size={14} />
+                    {t('nav.book')} <ArrowRight size={14} />
                   </Link>
                 </div>
               )}
             </div>
           )}
 
+          {/* Sumários */}
           {tab === 'notes' && (
             <div className="space-y-4">
               {notes.length === 0 ? (
                 <div className="text-center py-16 bg-white rounded-2xl border border-gray-100">
                   <p className="text-4xl mb-3">📝</p>
-                  <p className="text-gray-400">Sem sumários disponíveis</p>
+                  <p className="text-gray-400">{t('parent.no_notes')}</p>
                 </div>
               ) : notes.map((n, i) => (
                 <motion.div key={n.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
@@ -194,9 +222,9 @@ export default function ParentHome() {
                   <div className="flex items-center justify-between flex-wrap gap-3">
                     <div>
                       <p className="font-semibold text-gray-700">
-                        {new Date(n.start_time || n.created_at).toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' })}
+                        {new Date(n.start_time || n.created_at).toLocaleDateString(lang === 'en' ? 'en-GB' : 'pt-PT', { day: 'numeric', month: 'long', year: 'numeric' })}
                       </p>
-                      {n.therapist_name && <p className="text-gray-400 text-xs mt-0.5">Terapeuta: {n.therapist_name}</p>}
+                      {n.therapist_name && <p className="text-gray-400 text-xs mt-0.5">{t('parent.therapist')}: {n.therapist_name}</p>}
                     </div>
                     {n.evolution && (
                       <span className={`text-xs px-3 py-1.5 rounded-full font-semibold ${EVOLUTION_COLORS[n.evolution] || 'bg-gray-100 text-gray-600'}`}>
@@ -206,13 +234,13 @@ export default function ParentHome() {
                   </div>
                   {n.content && (
                     <div className="bg-gray-50 rounded-xl p-4">
-                      <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Sessão</p>
+                      <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">{t('parent.session')}</p>
                       <p className="text-gray-600 text-sm leading-relaxed">{n.content}</p>
                     </div>
                   )}
                   {n.next_steps && (
                     <div className="bg-teal-50 rounded-xl p-4">
-                      <p className="text-xs font-semibold text-teal-500 uppercase tracking-wide mb-2">Próximos passos</p>
+                      <p className="text-xs font-semibold text-teal-500 uppercase tracking-wide mb-2">{t('parent.next_steps')}</p>
                       <p className="text-teal-700 text-sm leading-relaxed">{n.next_steps}</p>
                     </div>
                   )}
@@ -223,11 +251,12 @@ export default function ParentHome() {
         </>
       )}
 
+      {/* CTA */}
       <div className="bg-teal-800 rounded-3xl p-8 text-center space-y-4">
-        <h3 className="font-display text-2xl text-white">Precisa de marcar consulta?</h3>
-        <p className="text-teal-200 text-sm">Faça o pedido online e confirmamos em breve.</p>
+        <h3 className="font-display text-2xl text-white">{t('parent.book_cta')}</h3>
+        <p className="text-teal-200 text-sm">{t('parent.book_sub')}</p>
         <Link to="/marcacao" className="inline-flex items-center gap-2 bg-white text-teal-700 font-semibold px-8 py-3 rounded-full hover:bg-teal-50 transition-colors">
-          Marcar consulta <ArrowRight size={16} />
+          {t('nav.book')} <ArrowRight size={16} />
         </Link>
       </div>
     </div>
