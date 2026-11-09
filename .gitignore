@@ -1,0 +1,26 @@
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+coverage/
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
+
+# Editors
+.idea/
+.vscode/
+
+# Temporary files
+*.tmp
+*.bak
