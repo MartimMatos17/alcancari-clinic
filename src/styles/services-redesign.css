@@ -469,3 +469,67 @@
     padding: 20px 0;
   }
 }
+
+
+/* REFINAMENTO VISUAL DOS SERVIÇOS */
+
+.services-design .sv-overview-hero h1 {
+  letter-spacing: -.055em;
+  text-wrap: balance;
+}
+
+.services-design .sv-overview-hero__visual .sv-photo__frame {
+  overflow: hidden;
+  box-shadow: 0 25px 65px rgba(28, 69, 59, .12);
+}
+
+.services-design .sv-directory a {
+  border-radius: 999px;
+  transition:
+    background .2s ease,
+    border-color .2s ease,
+    transform .2s ease;
+}
+
+.services-design .sv-directory a:hover {
+  transform: translateY(-2px);
+}
+
+.services-design .sv-collection__grid > :nth-child(even) {
+  margin-top: 45px;
+}
+
+.services-design .sv-card .sv-photo__frame {
+  overflow: hidden;
+  border-radius: 18px;
+}
+
+.services-design .sv-card__arrow {
+  box-shadow: 0 6px 20px rgba(20, 55, 45, .12);
+}
+
+.services-design .sv-card h3 {
+  text-wrap: balance;
+}
+
+.services-design .sv-card__link:focus-visible,
+.services-design .sv-directory a:focus-visible {
+  outline: 3px solid #28584c;
+  outline-offset: 5px;
+}
+
+@media (max-width: 760px) {
+  .services-design .sv-collection__grid > :nth-child(even) {
+    margin-top: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .services-design .sv-directory a {
+    transition: none;
+  }
+
+  .services-design .sv-directory a:hover {
+    transform: none;
+  }
+}

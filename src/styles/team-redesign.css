@@ -699,3 +699,70 @@
     width: 100%;
   }
 }
+
+/* REFINAMENTO VISUAL DA EQUIPA */
+
+.alc-team__intro h2 {
+  letter-spacing: -.05em;
+  text-wrap: balance;
+}
+
+.alc-team__grid {
+  gap: clamp(16px, 2vw, 28px);
+}
+
+.alc-team__card {
+  border-radius: 24px;
+  box-shadow: 0 5px 20px rgba(20, 70, 80, .045);
+}
+
+.alc-team__photo {
+  background: #e9f1ee;
+}
+
+.alc-team__photo img {
+  display: block;
+}
+
+.alc-team__card-info {
+  padding: clamp(18px, 2vw, 26px);
+}
+
+.alc-team__card-info h3 {
+  letter-spacing: -.025em;
+  text-wrap: balance;
+}
+
+.alc-team__search-box,
+.alc-team__filter select {
+  min-height: 52px;
+  border-radius: 14px;
+  background: #f8fbfa;
+}
+
+.alc-team__filter select:focus-visible {
+  outline: 3px solid #147c91;
+  outline-offset: 3px;
+}
+
+.alc-team__card-action {
+  min-height: 30px;
+}
+
+@media (max-width: 560px) {
+  .alc-team__photo {
+    aspect-ratio: 4 / 4.5;
+  }
+
+  .alc-team__card-info {
+    padding: 22px;
+  }
+
+  .alc-team__card-info h3 {
+    margin-bottom: 16px;
+  }
+
+  .alc-team__toolbar--search .alc-team__count {
+    text-align: left;
+  }
+}
