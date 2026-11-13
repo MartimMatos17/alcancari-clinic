@@ -66,7 +66,7 @@ export default function Layout() {
           >
             {isPublicAsset(site.brand.logo) ? (
               <img
-                src={site.brand.logo}
+                src="/images/branding/logotipo-alcancari-pequeno.webp"
                 alt={site.brand.logoAlt}
                 width="475"
                 height="433"

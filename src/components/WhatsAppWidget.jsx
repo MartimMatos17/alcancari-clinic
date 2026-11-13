@@ -180,7 +180,11 @@ export default function WhatsAppWidget({
 
                   <span className="alc-contact__option-copy">
                     <strong>Telefonar</strong>
-                    <small>934 779 548</small>
+                    <small>
+  {phoneValue
+    .replace(/^\+351/, '')
+    .replace(/(\d{3})(\d{3})(\d{3})/, '$1 $2 $3')}
+</small>
                   </span>
 
                   <span className="alc-contact__arrow" aria-hidden="true">
