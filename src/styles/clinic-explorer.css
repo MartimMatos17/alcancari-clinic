@@ -1,0 +1,215 @@
+
+/* ALCANÇARI — EXPLORADOR DA CLÍNICA */
+
+.alc-discover {
+  padding: 105px 0;
+  background: #eff6f3;
+  color: #173f4a;
+}
+
+.alc-discover__heading {
+  max-width: 760px;
+  margin-bottom: 48px;
+}
+
+.alc-discover__heading h2 {
+  margin: 17px 0;
+  font-size: clamp(2.8rem, 5vw, 5rem);
+  line-height: 1.08;
+  letter-spacing: -.045em;
+}
+
+.alc-discover__heading h2 em {
+  color: #147c91;
+  font-weight: 400;
+}
+
+.alc-discover__heading > p:last-child {
+  color: #627a7c;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.alc-discover__layout {
+  display: grid;
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+.alc-discover__options {
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.alc-discover__option {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  width: 100%;
+  min-height: 85px;
+  padding: 20px 24px;
+  border: 1px solid #dbe8e3;
+  border-radius: 17px;
+  background: #fff;
+  color: #254c55;
+  font: inherit;
+  font-size: 18px;
+  font-weight: 650;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background .2s ease,
+    color .2s ease,
+    transform .2s ease;
+}
+
+.alc-discover__option:hover {
+  background: #e0f0ed;
+}
+
+.alc-discover__option.is-active {
+  background: #147c91;
+  border-color: #147c91;
+  color: #fff;
+}
+
+.alc-discover__option-number {
+  font-size: 12px;
+  font-weight: 700;
+  opacity: .7;
+}
+
+.alc-discover__option-arrow {
+  margin-left: auto;
+  font-size: 23px;
+}
+
+.alc-discover__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 375px;
+  overflow: hidden;
+  padding: clamp(26px, 4vw, 45px);
+  border-radius: 25px;
+  background: #173f4a;
+  color: #fff;
+}
+
+.alc-discover__panel-top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  color: #acd3d2;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .13em;
+}
+
+.alc-discover__symbol {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  color: rgba(255, 255, 255, .055);
+  font-family: Georgia, serif;
+  font-size: clamp(180px, 25vw, 360px);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.alc-discover__panel-content {
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+  margin-top: 95px;
+}
+
+.alc-discover__panel-content h3 {
+  font-size: clamp(2rem, 3.5vw, 3.6rem);
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+.alc-discover__panel-content p {
+  max-width: 410px;
+  margin-top: 18px;
+  color: #d0e5e2;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.alc-discover__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 28px;
+  padding: 14px 20px;
+  border-radius: 40px;
+  background: #e5f4ee;
+  color: #173f4a;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.alc-discover__link:hover {
+  background: #fff;
+}
+
+.alc-discover button:focus-visible,
+.alc-discover a:focus-visible {
+  outline: 3px solid #147c91;
+  outline-offset: 4px;
+}
+
+@media (max-width: 800px) {
+  .alc-discover {
+    padding: 65px 0;
+  }
+
+  .alc-discover__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .alc-discover__options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto;
+  }
+
+  .alc-discover__option {
+    min-height: 75px;
+    padding: 17px;
+    font-size: 15px;
+  }
+
+  .alc-discover__panel {
+    min-height: 340px;
+  }
+}
+
+@media (max-width: 480px) {
+  .alc-discover__options {
+    grid-template-columns: 1fr;
+  }
+
+  .alc-discover__option {
+    min-height: 62px;
+  }
+
+  .alc-discover__panel {
+    min-height: 330px;
+    padding: 25px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alc-discover__option {
+    transition: none;
+  }
+}

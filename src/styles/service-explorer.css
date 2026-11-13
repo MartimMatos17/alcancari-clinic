@@ -1,0 +1,233 @@
+
+/* EXPLORADOR INTERATIVO — ALCANÇARI */
+
+.sv-explorer {
+  padding-top: 85px;
+  padding-bottom: 95px;
+}
+
+.sv-explorer__intro {
+  display: grid;
+  grid-template-columns: 1fr .8fr;
+  align-items: end;
+  gap: 45px;
+  margin-bottom: 35px;
+}
+
+.sv-explorer__intro h2 {
+  margin-top: 16px;
+  color: #173f4a;
+  font-size: clamp(2.3rem, 4vw, 4rem);
+  line-height: 1.12;
+}
+
+.sv-explorer__intro h2 em {
+  color: #147c91;
+  font-weight: 400;
+}
+
+.sv-explorer__intro > p {
+  max-width: 440px;
+  color: #62777b;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.sv-explorer__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #dce8e5;
+}
+
+.sv-explorer__filter {
+  padding: 12px 20px;
+  min-height: 45px;
+  border: 1px solid #c5dcd8;
+  border-radius: 50px;
+  background: #fff;
+  color: #31565c;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+  transition:
+    background .2s ease,
+    color .2s ease,
+    transform .2s ease;
+}
+
+.sv-explorer__filter:hover {
+  background: #e5f2ee;
+}
+
+.sv-explorer__filter.is-active {
+  background: #147c91;
+  border-color: #147c91;
+  color: #fff;
+}
+
+.sv-explorer__filter:focus-visible,
+.sv-explorer__card:focus-visible {
+  outline: 3px solid #147c91;
+  outline-offset: 4px;
+}
+
+.sv-explorer__count {
+  margin: 22px 0;
+  color: #6a7d80;
+  font-size: 13px;
+}
+
+.sv-explorer__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.sv-explorer__card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 210px;
+  padding: 26px;
+  background: #edf6f3;
+  border: 1px solid rgba(20, 90, 100, .08);
+  border-radius: 22px;
+  color: #173f4a;
+  text-decoration: none;
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease;
+}
+
+.sv-explorer__card:nth-child(3n + 2) {
+  background: #f8f1e9;
+}
+
+.sv-explorer__card:nth-child(3n + 3) {
+  background: #eef1f7;
+}
+
+.sv-explorer__card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 35px rgba(22, 78, 87, .1);
+}
+
+.sv-explorer__number {
+  color: #147c91;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .1em;
+}
+
+.sv-explorer__card > div {
+  margin-top: 23px;
+}
+
+.sv-explorer__card h3 {
+  font-size: clamp(1.25rem, 1.8vw, 1.65rem);
+  line-height: 1.25;
+}
+
+.sv-explorer__card p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  margin-top: 10px;
+  color: #64777b;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.sv-explorer__arrow {
+  align-self: flex-end;
+  margin-top: auto;
+  padding-top: 15px;
+  color: #147c91;
+}
+
+.sv-explorer__note {
+  max-width: 760px;
+  margin-top: 25px;
+  color: #718184;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+@media (max-width: 900px) {
+  .sv-explorer__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 650px) {
+  .sv-explorer {
+    padding-top: 55px;
+    padding-bottom: 60px;
+  }
+
+  .sv-explorer__intro {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .sv-explorer__filters {
+    gap: 8px;
+  }
+
+  .sv-explorer__filter {
+    padding-inline: 15px;
+    font-size: 12px;
+  }
+
+  .sv-explorer__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sv-explorer__card {
+    min-height: 165px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sv-explorer__filter,
+  .sv-explorer__card {
+    transition: none;
+  }
+
+  .sv-explorer__card:hover {
+    transform: none;
+  }
+}
+
+/* Integração com a grelha original de serviços */
+
+.sv-collection .sv-explorer {
+  padding-top: 38px;
+  padding-bottom: 25px;
+}
+
+.sv-collection .sv-explorer__intro {
+  margin-bottom: 28px;
+}
+
+.sv-collection .sv-explorer__intro h2 {
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+}
+
+.sv-collection .sv-explorer__count {
+  margin-bottom: 8px;
+}
+
+.sv-collection .sv-explorer__note {
+  margin-top: 5px;
+  margin-bottom: 30px;
+}
+
+@media (max-width: 650px) {
+  .sv-collection .sv-explorer {
+    padding-top: 20px;
+  }
+}

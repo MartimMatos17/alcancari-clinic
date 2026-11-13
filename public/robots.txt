@@ -1,0 +1,3 @@
+# Versão de preparação. Rever antes de qualquer publicação autorizada.
+User-agent: *
+Disallow: /

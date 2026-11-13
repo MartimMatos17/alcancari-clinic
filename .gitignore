@@ -2,6 +2,7 @@
 .env
 .env.*
 !.env.example
+!.env.*.example
 
 # Dependencies
 node_modules/
@@ -10,6 +11,22 @@ node_modules/
 dist/
 build/
 coverage/
+.vite/
+.cache/
+*.tsbuildinfo
+
+# Runtime uploads and private operational backups
+/uploads/
+/backups/
+/dumps/
+/test-results/
+/playwright-report/
+
+# Private keys and certificate bundles (public certificates may remain tracked)
+*.key
+*.pem
+*.p12
+*.pfx
 
 # macOS
 .DS_Store
@@ -24,3 +41,7 @@ coverage/
 # Temporary files
 *.tmp
 *.bak
+
+# Local Python import tooling
+__pycache__/
+*.pyc

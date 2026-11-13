@@ -1,0 +1,5 @@
+import posts from 'virtual:instagram-feed'
+export default function InstagramFeed() {
+  if (!posts.length) return null
+  return <section className="instagram-feed" aria-labelledby="instagram-feed-title"><div className="blog-library__heading"><h2 id="instagram-feed-title">No Instagram da Alcançari</h2><a className="blog-read" href="https://www.instagram.com/clinica.alcancari/" target="_blank" rel="noopener noreferrer">Ver perfil ↗</a></div><div className="blog-grid">{posts.map(post => <article className="blog-card" key={post.id}><a className="blog-card__image" href={post.url} target="_blank" rel="noopener noreferrer" aria-label="Ver publicação original no Instagram"><img src={post.image} alt="Fotografia da publicação no Instagram da Clínica Alcançari" loading="lazy" width="640" height="640" /></a><div className="blog-card__body"><time dateTime={post.date}>{new Intl.DateTimeFormat('pt-PT', { dateStyle: 'long', timeZone: 'Europe/Lisbon' }).format(new Date(post.date))}</time><p className="instagram-caption">{post.caption}</p><a className="blog-read" href={post.url} target="_blank" rel="noopener noreferrer">Ver no Instagram ↗</a></div></article>)}</div></section>
+}

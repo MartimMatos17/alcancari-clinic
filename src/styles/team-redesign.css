@@ -1,0 +1,701 @@
+
+/* ALCANÇARI — EQUIPA E PERFIS */
+
+.alc-team,
+.alc-profile {
+  --team-teal: #147c91;
+  --team-dark: #173f4a;
+  --team-muted: #64777b;
+  color: var(--team-dark);
+}
+
+.alc-team__eyebrow {
+  color: var(--team-teal);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+.alc-team__section {
+  padding-top: 85px;
+  padding-bottom: 110px;
+}
+
+.alc-team__intro {
+  display: grid;
+  grid-template-columns: 1fr .65fr;
+  align-items: end;
+  gap: 55px;
+  margin-bottom: 50px;
+}
+
+.alc-team__intro h2 {
+  margin-top: 16px;
+  font-size: clamp(2.8rem, 4.5vw, 4.8rem);
+  line-height: 1.08;
+}
+
+.alc-team__intro h2 em,
+.alc-team__contact h2 em {
+  color: var(--team-teal);
+  font-weight: 400;
+}
+
+.alc-team__intro > p {
+  max-width: 360px;
+  color: var(--team-muted);
+  line-height: 1.8;
+}
+
+/* FILTROS */
+
+.alc-team__toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 25px;
+  padding: 20px 0 35px;
+  border-top: 1px solid #dce6e2;
+}
+
+.alc-team__filter {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.alc-team__filter label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.alc-team__filter select {
+  width: min(100%, 310px);
+  min-width: 260px;
+  padding: 14px 40px 14px 16px;
+  border: 1px solid #c9dcd9;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--team-dark);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.alc-team__count {
+  color: var(--team-muted);
+  font-size: 14px;
+}
+
+.alc-team__count strong {
+  color: var(--team-dark);
+}
+
+/* CARTÕES DA EQUIPA */
+
+.alc-team__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.alc-team__card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #e0e9e5;
+  border-radius: 22px;
+  background: #f2f7f5;
+  color: var(--team-dark);
+  text-decoration: none;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.alc-team__card:nth-child(4n + 2) {
+  background: #f8f1e9;
+}
+
+.alc-team__card:nth-child(4n + 3) {
+  background: #f0f1f7;
+}
+
+.alc-team__card:nth-child(4n + 4) {
+  background: #eef3ed;
+}
+
+.alc-team__card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(20, 70, 80, .1);
+}
+
+.alc-team__card:focus-visible,
+.alc-profile a:focus-visible {
+  outline: 3px solid var(--team-teal);
+  outline-offset: 4px;
+}
+
+.alc-team__photo {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  background: #e2eae7;
+  overflow: hidden;
+}
+
+.alc-team__photo .media-frame,
+.alc-team__photo .media-placeholder {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+}
+
+.alc-team__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  transition: transform .35s ease;
+}
+
+.alc-team__card:hover img {
+  transform: scale(1.035);
+}
+
+.alc-team__number {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  display: grid;
+  place-items: center;
+  width: 39px;
+  height: 39px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.94);
+  color: var(--team-dark);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.alc-team__card-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  padding: 23px;
+}
+
+.alc-team__role {
+  color: var(--team-teal);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .05em;
+}
+
+.alc-team__card-info h3 {
+  margin: 13px 0 25px;
+  font-size: clamp(1.25rem, 1.7vw, 1.55rem);
+  line-height: 1.24;
+}
+
+.alc-team__card-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+  color: var(--team-teal);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.alc-team__empty {
+  padding: 50px 25px;
+  text-align: center;
+  border-radius: 20px;
+  background: #f1f6f4;
+  color: var(--team-muted);
+}
+
+/* CONTACTOS */
+
+.alc-team__contact {
+  background: #e9f4f3;
+}
+
+.alc-team__contact-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 35px;
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.alc-team__contact h2 {
+  margin: 17px 0;
+  font-size: clamp(2.3rem, 4vw, 4rem);
+  line-height: 1.1;
+}
+
+.alc-team__contact-inner > div > p:last-child {
+  max-width: 500px;
+  color: var(--team-muted);
+}
+
+.alc-team__button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 14px;
+  padding: 17px 24px;
+  border-radius: 50px;
+  background: var(--team-teal);
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.alc-team__button:hover {
+  background: var(--team-dark);
+}
+
+/* PERFIL INDIVIDUAL */
+
+.alc-profile__article {
+  padding-top: 65px;
+  padding-bottom: 65px;
+}
+
+.alc-profile__layout {
+  display: grid;
+  grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr);
+  align-items: start;
+  gap: clamp(40px, 6vw, 90px);
+}
+
+.alc-profile__sidebar {
+  position: sticky;
+  top: 30px;
+  min-width: 0;
+}
+
+.alc-profile__portrait {
+  max-width: 440px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #e9f2ef;
+}
+
+.alc-profile__portrait .media-frame {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+}
+
+.alc-profile__portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+.alc-profile__identity {
+  padding: 24px 5px 0;
+}
+
+.alc-profile__identity h2 {
+  margin: 12px 0 8px;
+  font-size: clamp(1.7rem, 2.4vw, 2.4rem);
+}
+
+.alc-profile__identity > p:last-child {
+  color: var(--team-muted);
+}
+
+.alc-profile__content > h2 {
+  margin: 14px 0 32px;
+  font-size: clamp(2rem, 3vw, 3rem);
+  line-height: 1.17;
+}
+
+.alc-profile__biography {
+  max-width: 740px;
+  overflow-wrap: anywhere;
+}
+
+.alc-profile__biography p,
+.alc-profile__biography li {
+  color: #50666a;
+  line-height: 1.9;
+}
+
+.alc-profile__biography h2,
+.alc-profile__biography h3 {
+  margin-top: 32px;
+  margin-bottom: 13px;
+  color: var(--team-dark);
+}
+
+.alc-profile__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 38px;
+  color: var(--team-teal);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* OUTROS PROFISSIONAIS */
+
+.alc-profile__others {
+  padding-bottom: 100px;
+}
+
+.alc-profile__others-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 25px;
+  margin-bottom: 32px;
+}
+
+.alc-profile__others-heading h2 {
+  margin-top: 15px;
+  font-size: clamp(2rem, 3.3vw, 3.4rem);
+}
+
+.alc-profile__all {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  color: var(--team-teal);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.alc-profile__others-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.alc-profile__other-card {
+  overflow: hidden;
+  background: #f1f6f4;
+  border-radius: 20px;
+  transition: transform .2s ease;
+}
+
+.alc-profile__other-card:hover {
+  transform: translateY(-4px);
+}
+
+.alc-profile__other-image {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #e2ece8;
+}
+
+.alc-profile__other-image .media-frame,
+.alc-profile__other-image .media-placeholder {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+}
+
+.alc-profile__other-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+.alc-profile__other-card > div:last-child {
+  padding: 22px;
+}
+
+.alc-profile__other-card small {
+  color: var(--team-teal);
+}
+
+.alc-profile__other-card h3 {
+  margin: 9px 0 18px;
+  font-size: 1.4rem;
+}
+
+.alc-profile__other-card span {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--team-teal);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 1100px) {
+  .alc-team__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 800px) {
+  .alc-team__intro,
+  .alc-profile__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .alc-team__grid,
+  .alc-profile__others-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .alc-profile__sidebar {
+    position: static;
+    max-width: 500px;
+  }
+
+  .alc-profile__portrait {
+    margin-left: 0;
+  }
+
+  .alc-team__contact-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 560px) {
+  .alc-team__section {
+    padding-top: 50px;
+    padding-bottom: 70px;
+  }
+
+  .alc-team__intro {
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+
+  .alc-team__toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .alc-team__filter,
+  .alc-team__filter select {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .alc-team__grid,
+  .alc-profile__others-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .alc-team__photo {
+    aspect-ratio: 4 / 4;
+  }
+
+  .alc-team__contact-inner {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  .alc-profile__article {
+    padding-top: 35px;
+  }
+
+  .alc-profile__others-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .alc-profile__others {
+    padding-bottom: 70px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alc-team__card,
+  .alc-team__photo img,
+  .alc-profile__other-card {
+    transition: none;
+  }
+
+  .alc-team__card:hover,
+  .alc-team__card:hover img,
+  .alc-profile__other-card:hover {
+    transform: none;
+  }
+}
+
+
+/* PESQUISA DE PROFISSIONAIS */
+
+.alc-team__toolbar--search {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 18px 24px;
+  margin-bottom: 36px;
+}
+
+.alc-team__search {
+  flex: 1 1 280px;
+  min-width: 0;
+}
+
+.alc-team__toolbar--search .alc-team__filter {
+  flex: 0 1 290px;
+  min-width: 0;
+}
+
+.alc-team__search label {
+  display: block;
+  margin-bottom: 10px;
+  color: #31555c;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.alc-team__search-box {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-height: 52px;
+  padding: 0 17px;
+  border: 1px solid #d2e3de;
+  border-radius: 13px;
+  background: #f7fbf9;
+  color: #147c91;
+}
+
+.alc-team__search-box:focus-within {
+  outline: 2px solid #147c91;
+  outline-offset: 2px;
+}
+
+.alc-team__search-box input {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #173f4a;
+  font: inherit;
+  font-size: 14px;
+}
+
+.alc-team__toolbar--search .alc-team__count {
+  flex: 0 0 100%;
+  margin: 0;
+  text-align: right;
+}
+
+.alc-team__empty--search {
+  padding: 65px 25px;
+  text-align: center;
+}
+
+.alc-team__empty--search h3 {
+  font-size: 23px;
+  margin-bottom: 12px;
+}
+
+.alc-team__empty--search p {
+  color: #687c80;
+  line-height: 1.7;
+}
+
+.alc-team__empty--search button {
+  margin-top: 22px;
+  padding: 13px 21px;
+  border: none;
+  border-radius: 50px;
+  background: #147c91;
+  color: white;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* CONTACTO NO PERFIL */
+
+.alc-profile__contact-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 38px 0;
+  padding: 28px;
+  border-radius: 20px;
+  background: #eaf5f2;
+}
+
+.alc-profile__contact-box h3 {
+  margin: 10px 0;
+  color: #173f4a;
+  font-size: clamp(20px, 2vw, 27px);
+}
+
+.alc-profile__contact-box p:not(.alc-team__eyebrow) {
+  max-width: 360px;
+  color: #5c777b;
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.alc-profile__whatsapp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  gap: 10px;
+  padding: 15px 20px;
+  border-radius: 50px;
+  background: #147c91;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.alc-profile__whatsapp:hover {
+  background: #173f4a;
+}
+
+.alc-team__empty--search button:focus-visible,
+.alc-profile__whatsapp:focus-visible {
+  outline: 3px solid #147c91;
+  outline-offset: 4px;
+}
+
+@media (max-width: 700px) {
+  .alc-team__toolbar--search {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .alc-team__search,
+  .alc-team__toolbar--search .alc-team__filter {
+    flex: none;
+    width: 100%;
+  }
+
+  .alc-profile__contact-box {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 23px;
+  }
+
+  .alc-profile__whatsapp {
+    width: 100%;
+  }
+}

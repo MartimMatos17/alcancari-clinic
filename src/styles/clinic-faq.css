@@ -1,0 +1,165 @@
+
+.alc-faq {
+  padding: 100px 0;
+  background: #fbfcfa;
+  color: #173f4a;
+}
+
+.alc-faq__heading {
+  display: grid;
+  grid-template-columns: 1.3fr .7fr;
+  align-items: end;
+  gap: 45px;
+  margin-bottom: 45px;
+}
+
+.alc-faq__heading h2 {
+  margin-top: 18px;
+  font-size: clamp(2.5rem, 4.5vw, 4.7rem);
+  line-height: 1.1;
+  letter-spacing: -.04em;
+}
+
+.alc-faq__heading h2 em {
+  color: #147c91;
+  font-weight: 400;
+}
+
+.alc-faq__heading > p {
+  color: #687c80;
+  line-height: 1.8;
+}
+
+.alc-faq__content {
+  max-width: 940px;
+  margin: auto;
+}
+
+.alc-faq__search {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 23px;
+  margin-bottom: 25px;
+  border: 1px solid #d6e6e2;
+  border-radius: 17px;
+  background: #eff7f4;
+}
+
+.alc-faq__search span {
+  color: #147c91;
+  font-size: 28px;
+}
+
+.alc-faq__search input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #173f4a;
+  font: inherit;
+  font-size: 15px;
+}
+
+.alc-faq__search:focus-within {
+  outline: 2px solid #147c91;
+  outline-offset: 2px;
+}
+
+.alc-faq__item {
+  border-bottom: 1px solid #d9e6e2;
+}
+
+.alc-faq__item h3 {
+  margin: 0;
+}
+
+.alc-faq__item button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  width: 100%;
+  padding: 25px 6px;
+  border: none;
+  background: transparent;
+  color: #173f4a;
+  font: inherit;
+  font-size: clamp(15px, 1.7vw, 19px);
+  font-weight: 650;
+  text-align: left;
+  cursor: pointer;
+}
+
+.alc-faq__item button:hover {
+  color: #147c91;
+}
+
+.alc-faq__item button span:last-child {
+  color: #147c91;
+  font-size: 29px;
+  font-weight: 400;
+}
+
+.alc-faq__item button:focus-visible {
+  outline: 3px solid #147c91;
+  outline-offset: -3px;
+  border-radius: 8px;
+}
+
+.alc-faq__answer {
+  padding: 0 45px 25px 6px;
+}
+
+.alc-faq__answer p {
+  color: #62777b;
+  font-size: 15px;
+  line-height: 1.85;
+}
+
+.alc-faq__answer a,
+.alc-faq__empty a,
+.alc-faq__footer a {
+  display: inline-block;
+  margin-top: 13px;
+  color: #147c91;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.alc-faq__empty {
+  padding: 30px 10px;
+  color: #62777b;
+}
+
+.alc-faq__footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-top: 40px;
+  padding: 25px;
+  border-radius: 18px;
+  background: #e9f4f2;
+}
+
+.alc-faq__footer a {
+  margin: 0;
+}
+
+@media (max-width: 750px) {
+  .alc-faq {
+    padding: 65px 0;
+  }
+
+  .alc-faq__heading {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .alc-faq__item button {
+    padding: 21px 0;
+  }
+}

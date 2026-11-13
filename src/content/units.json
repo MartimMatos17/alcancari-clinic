@@ -1,0 +1,110 @@
+[
+  {
+    "id": "leca-da-palmeira",
+    "name": "Unidade Leça da Palmeira",
+    "address": "Rua Francisco Sá Carneiro 307",
+    "postalCode": "4450-676 Leça da Palmeira",
+    "mapUrl": "https://share.google/uKmmqASgN1R2jHLiG",
+    "hours": [
+      "Segunda à Sexta: 09:00 às 20:00",
+      "Sábado: 09:00 às 14:00",
+      "Domingo: Fechado"
+    ],
+    "blocks": [
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Leça da Palmeira"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Rua Francisco Sá Carneiro 307, 4450-676 Leça da Palmeira"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Unidade Leça da Palmeira"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Atendimento"
+      },
+      {
+        "type": "paragraph",
+        "text": "Segunda à Sexta: 09:00 às 20:00"
+      },
+      {
+        "type": "paragraph",
+        "text": "Sábado: 09:00 às 14:00"
+      },
+      {
+        "type": "paragraph",
+        "text": "Domingo: Fechado"
+      }
+    ],
+    "source": {
+      "url": "https://alcancari.com/unidade-leca-da-palmeira/",
+      "retrievedAt": "2026-11-12",
+      "wordpressId": 120
+    },
+    "image": null,
+    "confirmed": true,
+    "published": true
+  },
+  {
+    "id": "sao-mamede-de-infesta",
+    "name": "Unidade São Mamede de Infesta",
+    "address": "Avenida Conde 5981",
+    "postalCode": "4465-098 São Mamede de Infesta",
+    "mapUrl": "https://share.google/r2tUq4DczlteffNE0",
+    "hours": [
+      "Segunda à Sexta: 09:00 às 20:00",
+      "Sábado: 09:00 às 14:00",
+      "Domingo: Fechado"
+    ],
+    "blocks": [
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "São Mamede de infesta"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Avenida Conde 5981, 4465-098 São Mamede de Infesta"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Unidade São Mamede de infesta"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Atendimento"
+      },
+      {
+        "type": "paragraph",
+        "text": "Segunda à Sexta: 09:00 às 20:00"
+      },
+      {
+        "type": "paragraph",
+        "text": "Sábado: 09:00 às 14:00"
+      },
+      {
+        "type": "paragraph",
+        "text": "Domingo: Fechado"
+      }
+    ],
+    "source": {
+      "url": "https://alcancari.com/unidade-sao-mamede-de-infesta/",
+      "retrievedAt": "2026-11-12",
+      "wordpressId": 122
+    },
+    "image": null,
+    "confirmed": true,
+    "published": true
+  }
+]

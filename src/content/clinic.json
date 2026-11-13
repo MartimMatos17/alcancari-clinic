@@ -1,0 +1,57 @@
+{
+  "intro": "É um espaço criado e desenvolvido a pensar nas crianças e nas suas respectivas famílias, cujo principal objetivo é a prestação de serviços terapêuticos inseridos nos mais variados contextos de vida onde a criança se insere, nomeadamente, em casa, na creche/jardim de infância, escolas e outros.",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "A Alcançari tem uma equipa multidisciplinar preparada para ouvir e compreender as suas dúvidas, para as enquadrar numa avaliação especializada, para em conjunto, delinear um plano terapêutico consoante as suas necessidades, prioridades e expectativas."
+    },
+    {
+      "type": "paragraph",
+      "text": "O objetivo da intervenção passa sempre por ajudar a criança a ter um melhor desempenho nas atividades de vida diária, no brincar, nas aprendizagens escolares, na comunicação e na interação social."
+    }
+  ],
+  "practicalBlocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Unidades"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Galeria"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Rua Francisco Sá Carneiro 307, 4450-676 Leça da Palmeira"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Avenida Conde 5981, 4465-098 São Mamede de Infesta"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Atendimento"
+    },
+    {
+      "type": "paragraph",
+      "text": "Segunda à Sexta: 09:00 às 20:00"
+    },
+    {
+      "type": "paragraph",
+      "text": "Sábado: Conforme marcação"
+    },
+    {
+      "type": "paragraph",
+      "text": "Domingo: Fechado"
+    }
+  ],
+  "source": {
+    "url": "https://alcancari.com/",
+    "retrievedAt": "2026-11-12",
+    "wordpressId": 84
+  }
+}

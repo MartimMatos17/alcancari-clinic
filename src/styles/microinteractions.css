@@ -1,0 +1,87 @@
+
+/* ALCANÇARI — MICROINTERAÇÕES */
+
+/* Revelação suave ao fazer scroll */
+
+@media (prefers-reduced-motion: no-preference) {
+  .alc-reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .alc-reveal.alc-revealed {
+    animation: alc-reveal-in .65s ease-out both;
+  }
+
+  @keyframes alc-reveal-in {
+    from {
+      opacity: .5;
+      transform: translateY(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Cartões com interação discreta */
+
+.alc-home-service-card,
+.alc-home-news-card,
+.alc-team__card,
+.alc-profile__other-card,
+.sv-card__link {
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease;
+}
+
+@media (hover: hover) {
+  .alc-home-service-card:hover,
+  .alc-home-news-card:hover,
+  .alc-team__card:hover,
+  .alc-profile__other-card:hover {
+    transform: translateY(-5px);
+  }
+}
+
+/* Fotografias */
+
+.alc-home-service-image img,
+.alc-home-news-image img,
+.alc-team__photo img {
+  transition: transform .45s ease;
+}
+
+@media (hover: hover) {
+  .alc-home-service-card:hover img,
+  .alc-home-news-card:hover img,
+  .alc-team__card:hover img {
+    transform: scale(1.035);
+  }
+}
+
+/* Foco acessível */
+
+.alc-home-service-card:focus-visible,
+.alc-home-news-card:focus-visible,
+.alc-team__card:focus-visible,
+.alc-profile__other-card:focus-visible {
+  outline: 3px solid #147c91;
+  outline-offset: 5px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alc-home-service-card,
+  .alc-home-news-card,
+  .alc-team__card,
+  .alc-profile__other-card,
+  .sv-card__link,
+  .alc-home-service-image img,
+  .alc-home-news-image img,
+  .alc-team__photo img {
+    transition: none;
+  }
+}

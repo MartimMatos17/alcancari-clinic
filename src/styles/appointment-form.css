@@ -1,0 +1,125 @@
+
+/* ALCANÇARI — PEDIDO DE MARCAÇÃO */
+
+.alc-appointment__type {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.alc-appointment__type legend,
+.alc-appointment__preference legend {
+  width: 100%;
+  margin-bottom: 12px;
+  color: #2b4e58;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.alc-appointment__choice {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 70px;
+  padding: 15px;
+  border: 1px solid #dce7e7;
+  border-radius: 15px;
+  background: #f9fcfc;
+  color: #315660;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+
+.alc-appointment__choice.is-selected {
+  border-color: #147c91;
+  background: #e9f5f5;
+}
+
+.alc-appointment__choice input,
+.alc-appointment__preference input {
+  flex-shrink: 0;
+  accent-color: #147c91;
+  width: 17px;
+  height: 17px;
+}
+
+.alc-appointment__fields {
+  display: grid;
+  gap: 19px;
+  padding: 24px;
+  border: 1px solid #dcebe7;
+  border-radius: 19px;
+  background: #f3f9f7;
+  min-width: 0;
+}
+
+.alc-appointment__preference {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 25px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.alc-appointment__preference label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #315660;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.alc-appointment__summary {
+  padding: 19px;
+  border-radius: 14px;
+  background: #e2f0ed;
+  overflow-wrap: anywhere;
+}
+
+.alc-appointment__summary strong {
+  display: block;
+  color: #173f4a;
+  font-size: 13px;
+}
+
+.alc-appointment__summary p {
+  margin: 9px 0;
+  color: #315d65;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.alc-appointment__summary small {
+  display: block;
+  color: #627b7b;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+  .alc-appointment__type {
+    grid-template-columns: 1fr;
+  }
+
+  .alc-appointment__choice {
+    min-height: 58px;
+  }
+
+  .alc-appointment__fields {
+    padding: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alc-appointment__choice {
+    transition: none;
+  }
+}

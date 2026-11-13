@@ -1,0 +1,792 @@
+[
+  {
+    "slug": "fisioterapia",
+    "title": "Fisioterapia",
+    "summary": "Trabalhamos de forma integrada, com conhecimento e empatia, na avaliação e acompanhamento de bebés, crianças e adolescentes com alterações no movimento, na postura ou no desenvolvimento motor.",
+    "blocks": [
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Fisioterapia"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Áreas de Intervenção"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Alterações Neuromotoras",
+          "Alterações",
+          "Neuromusculares",
+          "Intervenção em Pré-Termo"
+        ]
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Bronquiolite e Atelectasias",
+          "Fibrose Quística",
+          "Pneumonia e Pneumopatias"
+        ]
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Torcicolos Congénitos e Posturais",
+          "Fraturas",
+          "Alterações Posturais"
+        ]
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Paralisia Cerebral",
+          "Espinha Bífida",
+          "Atraso do Desenvolvimento"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Fisioterapia Pediátrica"
+      },
+      {
+        "type": "paragraph",
+        "text": "Centrada na criança e na família, a fisioterapia baseia a sua intervenção no domínio do conhecimento científico infantil e das suas situações patológicas que podem ocorrer nos primeiros anos de vida. Como existe uma grande diversidade anatómica e fisiológica nos órgãos e sistemas dos mais pequenos, o foco da fisioterapia pediátrica é adaptada a cada criança, à sua faixa etária e ao seu desenvolvimento."
+      },
+      {
+        "type": "paragraph",
+        "text": "É uma especialidade que tem como objetivo promover, prevenir e restaurar a capacidade funcional e de movimento, quando esta se encontra alterada ou em risco de vir a estar diminuída devido à existência de uma lesão ou patologia."
+      },
+      {
+        "type": "paragraph",
+        "text": "Um ponto a ressaltar é que o fisioterapeuta pode exercer as suas funções além de ambientes diretamente ligados à saúde, podendo atuar em associações, escolas e creches, por exemplo."
+      }
+    ],
+    "status": "complete",
+    "source": {
+      "url": "https://alcancari.com/fisioterapia/",
+      "retrievedAt": "2026-11-12",
+      "wordpressId": 96
+    },
+    "image": null,
+    "confirmed": true,
+    "published": true
+  },
+  {
+    "slug": "acupuntura",
+    "title": "Acupuntura",
+    "summary": "Trabalhamos de forma integrada, com conhecimento e empatia, na avaliação e acompanhamento de pessoas com alterações físicas, emocionais ou energéticas, promovendo o equilíbrio e o bem-estar.",
+    "blocks": [
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Acupuntura"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Áreas de Intervenção"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Problemas digestivos: obstipação, diarreia, gastralgias, cólicas, refluxo, vómitos",
+          "Infeções de repetição: otites, amigdalites"
+        ]
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Problemas Respiratórios: sinusite, rinite, resfriados frequentes, tosse, asma",
+          "Problemas de pele: eczema, psoríase, dermatite atópica",
+          "Enurese noturna"
+        ]
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Problemas de sono",
+          "Acne",
+          "Hiperatividade e falta de concentração e foco"
+        ]
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Questões desenvolvimento: Perturbação do espetro do autismo, paralisia cerebral",
+          "Falta de apetite, desmotivação, apatia"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Acupuntura"
+      },
+      {
+        "type": "paragraph",
+        "text": "A Medicina Tradicional Chinesa pode ser aplicada em todas as faixas etárias criando sinergias positivas com outras terapias convencionais."
+      },
+      {
+        "type": "paragraph",
+        "text": "Especialmente nas crianças deve-se ter em atenção inúmeras circunstâncias uma vez que a criança não é um adulto em ponto pequeno."
+      },
+      {
+        "type": "paragraph",
+        "text": "As técnicas utilizadas podem ter uma abordagem diferente adaptadas e ajustadas à sua idade e sensibilidade. Exemplo disso é o Tui Na pediátrico e o Shonishin (técnica japonesa) ambas técnicas manuais."
+      },
+      {
+        "type": "paragraph",
+        "text": "A acupuntura pediátrica não deve ser vista com receio uma vez que o profissional habilitado deve recorrer a esta técnica quando as condições existentes são favoráveis, podendo ainda recorrer à substituição por acupuntura por laser ou cromoterapia."
+      }
+    ],
+    "status": "complete",
+    "source": {
+      "url": "https://alcancari.com/acupunctura/",
+      "retrievedAt": "2026-11-12",
+      "wordpressId": 98
+    },
+    "image": null,
+    "confirmed": true,
+    "published": true
+  },
+  {
+    "slug": "psicologia",
+    "title": "Psicologia",
+    "summary": "Trabalhamos de forma integrada, com conhecimento e empatia, na avaliação e acompanhamento de crianças, adolescentes e adultos, promovendo o equilíbrio emocional, o autoconhecimento e o bem-estar psicológico.",
+    "blocks": [
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Psicologia"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Áreas de intervenção"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Perturbação do Espetro do Autismo",
+          "Perturbação de Hiperatividade e Défice de Atenção"
+        ]
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Perturbações Globais do Desenvolvimento",
+          "Perturbações Disruptivas do Comportamento"
+        ]
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Perturbações Emocionais (ansiedade, fobias, luto)",
+          "Perturbações do Humor (depressão, bipolaridade)"
+        ]
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Perturbações alimentares"
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "A Psicologia Clínica avalia e intervém num vasto leque de problemáticas de ordem psicológica, emocional e desenvolvimental. A prática clínica incide na idade pediátrica e tem como objetivo ajudar as crianças e as suas famílias a superarem obstáculos que possam estar a comprometer a progressão harmoniosa nas diferentes etapas desenvolvimentais."
+      },
+      {
+        "type": "paragraph",
+        "text": "Privilegia um atendimento personalizado, que permite avaliar com eficácia o crescimento, o desenvolvimento e as situações clínicas inerentes à criança procurando sempre que a criança ultrapasse as fragilidades e cresça saudável e feliz."
+      }
+    ],
+    "status": "complete",
+    "source": {
+      "url": "https://alcancari.com/psicologia/",
+      "retrievedAt": "2026-11-12",
+      "wordpressId": 100
+    },
+    "image": null,
+    "confirmed": true,
+    "published": true
+  },
+  {
+    "slug": "terapia-da-fala",
+    "title": "Terapia da Fala",
+    "summary": "Trabalhamos de forma integrada, com conhecimento e empatia, na avaliação e acompanhamento de crianças e adolescentes com dificuldades na comunicação, linguagem, fala, promovendo uma comunicação eficaz e confiante.",
+    "blocks": [
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Terapia da Fala"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Áreas de intervenção"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Comunicação",
+          "Linguagem"
+        ]
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Fala/Articulação Verbal",
+          "Voz"
+        ]
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Motricidade Orofacial",
+          "Fluência Verbal"
+        ]
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Leitura e Escrita",
+          "Alterações da Alimentação e Deglutição"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Terapia da Fala"
+      },
+      {
+        "type": "paragraph",
+        "text": "O Terapeuta da Fala (TF) é o profissional responsável pela prevenção, avaliação, diagnóstico e intervenção ao nível da comunicação humana e das respetivas perturbações associadas."
+      },
+      {
+        "type": "paragraph",
+        "text": "O TF desempenha, ainda, um papel fundamental nas funções associadas à compreensão e expressão da linguagem oral e escrita, bem como, nas restantes formas de comunicação não verbal. Para além destas áreas, pode ainda realizar intervenção ao nível da motricidade orofacial e deglutição."
+      },
+      {
+        "type": "paragraph",
+        "text": "Nos âmbitos de avaliação e intervenção, pode realizar um trabalho individual ou com a colaboração de outros profissionais num contexto multidisciplinar."
+      }
+    ],
+    "status": "complete",
+    "source": {
+      "url": "https://alcancari.com/terapia-da-fala/",
+      "retrievedAt": "2026-11-12",
+      "wordpressId": 102
+    },
+    "image": null,
+    "confirmed": true,
+    "published": true
+  },
+  {
+    "slug": "terapia-ocupacional",
+    "title": "Terapia Ocupacional",
+    "summary": "Trabalhamos de forma integrada, com conhecimento e empatia, na avaliação e acompanhamento de crianças e adolescentes, apoiando o desenvolvimento da autonomia, das competências funcionais e da participação nas atividades do dia a dia.",
+    "blocks": [
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Terapia Ocupacional"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Áreas de intervenção"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Perturbação do Espetro do Autismo",
+          "Perturbação de Hiperatividade e Défice de Atenção"
+        ]
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Perturbações do Processamento Sensorial",
+          "Perturbações Globais de Desenvolvimento"
+        ]
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Dispraxias",
+          "Perturbação da Coordenação Motora",
+          "Entre outras"
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "A vida de uma criança é composta por várias ocupações ou atividades diárias. Estas ocupações incluem brincar, comer, vestir, escrever, aprender e socializar. A Terapia Ocupacional (TO), na vertente pediátrica, avalia e intervém com crianças – e respetivas famílias – com o objetivo de otimizar a participação da criança nessas atividades ao longo do dia."
+      },
+      {
+        "type": "paragraph",
+        "text": "O TO avalia o contexto, os pontos fortes da criança e as suas dificuldades, de forma a delinear uma intervenção que promova o desenvolvimento saudável das competências necessárias ao sucesso nas ocupações."
+      },
+      {
+        "type": "paragraph",
+        "text": "O TO usa preferencialmente o brincar como forma de proporcionar à criança desafios adequados, estimulando o seu desenvolvimento e melhorando o seu desempenho funcional. Desta forma, a TO é quase sempre divertida para a criança, sendo, muitas vezes vista como um momento de brincadeira."
+      },
+      {
+        "type": "paragraph",
+        "text": "Assim, as atividades selecionadas durante as sessões são bastante variáveis, atrativas e dependentes da motivação intrínseca da criança. A sala terapêutica é composta por múltiplos materiais, adequados as diferentes faixas etárias, permitindo desafiar a criança em todas as áreas do seu desenvolvimento."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Objetivos da Terapia Ocupacional"
+      },
+      {
+        "type": "paragraph",
+        "text": "O objetivo principal da Terapia Ocupacional é permitir que as crianças participem nas atividades da vida diária. Esse resultado é alcançado através do trabalho que é realizado com a criança, família e comunidade para melhorar a capacidade de se envolver nas ocupações que desejam e precisam, ou através da modificação do ambiente para melhor apoiar o desenvolvimento da criança."
+      },
+      {
+        "type": "paragraph",
+        "text": "A prática da Terapia Ocupacional enfatiza a natureza ocupacional dos humanos e a importância da identidade ocupacional. Fornece suporte prático para capacitar as crianças, e respetivas famílias, a facilitar a recuperação e superar as barreiras que as impedem de fazer as atividades (ou ocupações) que são importantes para elas. Para além disso, também utiliza a ocupação para manter a saúde ou prevenir a deterioração de determinada patologia."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Áreas de intervenção"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Perturbação do Espetro do Autismo (PEA)"
+      },
+      {
+        "type": "paragraph",
+        "text": "É uma perturbação do neurodesenvolvimento que surge, geralmente, antes dos 3 anos de idade. É caracterizada por défices persistentes na comunicação e interação social, bem como, padrões restritos e repetitivos de comportamento, interesses ou atividades, que causam dificuldades significativas no funcionamento da criança."
+      },
+      {
+        "type": "paragraph",
+        "text": "As primeiras preocupações dos pais relativamente ao desenvolvimento dos seus filhos surgem entre os 12 e os 18 meses, período em que é expectável que as competências de comunicação e de interação se expandam e que a linguagem se desenvolva. Muitas vezes estas preocupações podem ser passageiras, mas noutras situações persistem podendo ser indicadoras de dificuldades específicas a nível do neurodesenvolvimento."
+      },
+      {
+        "type": "heading",
+        "level": 3,
+        "text": "Sinais de Alerta:"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Ausência/inconsistência de resposta ao nome"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Contacto ocular pouco ajustado para iniciar e manter interações"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Dificuldades no envolvimento durante as interações e falta de intenção comunicativa"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Falha no uso de gestos – dificuldades no apontar"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Ausência de sorriso social"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Interesse social reduzido – tendência a isolar-se de pares e colegas"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Ausência de jogo simbólico (brincar ao faz de conta)"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Apresenta ações repetitivas com determinados brinquedos"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Dificuldades em reconhecer e compreender emoções, bem como, na expressão de afetos"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Interesses sensoriais específicos (ex.: em luzes ou brilhos)"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Comportamentos motores repetitivos e/ou maneirismos motores"
+      },
+      {
+        "type": "heading",
+        "level": 3,
+        "text": "Intervenção da Terapia Ocupacional na PEA:"
+      },
+      {
+        "type": "paragraph",
+        "text": "O principal foco é a remoção de barreiras que possam condicionar o atingir de marcos desenvolvimentais, a qualidade de vida e a independência."
+      },
+      {
+        "type": "paragraph",
+        "text": "► Treino de atividades de vida diária, como o uso de casa de banho, vestir-se, escovar os dentes, pentear cabelos, calçar sapatos, e outras competências de autocuidado"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Autorregulação"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Consciência corporal e relação com os outros"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Brincar funcional e resolução de problemas"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Manutenção das competências sociais – reciprocidade"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Integração dos sentidos, realizado através da abordagem de integração sensorial com objetivo de diminuição de estereotipias"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Educação Terapêutica com cuidadores e comunidade, como por exemplo a delineação de uma rotina estruturada"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Perturbação de Hiperatividade e Défice de Atenção (PHDA)"
+      },
+      {
+        "type": "paragraph",
+        "text": "É uma das perturbações do neurodesenvolvimento que surge antes dos 12 anos. É caracterizada como um padrão persistente de desatenção e/ou hiperatividade-impulsividade que interfere no funcionamento e no desenvolvimento em pelo menos dois contextos da vida da criança, por exemplo casa e infantário/escola. Manifesta-se em três subtipos distintos: combinada, predominantemente hiperativa/impulsiva ou predominantemente desatenta."
+      },
+      {
+        "type": "paragraph",
+        "text": "A PHDA não é uma dificuldade ao nível cognitivo, mas sobretudo do comportamento, relacionando-se com o autocontrolo e a inibição do mesmo. Não interfere com a capacidade para aprender, mas sim com a disponibilidade para tal."
+      },
+      {
+        "type": "heading",
+        "level": 3,
+        "text": "Sinais de Alerta:"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Levanta-se com frequência da cadeira e agita os pés e mãos quando está sentado"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Tem dificuldade em esperar pela sua vez e interrompe as atividades dos outros"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Tem dificuldade em manter a atenção e seguir instruções"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Desorganização excessiva"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Dificuldade em concluir tarefas"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Fala excessivamente"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Frequentemente responde antes da questão ter sido terminada"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Comete erros por descuido"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Esquece-se com frequência das atividades quotidianas"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Frequentemente evita/ não gosta de atividades que exigem esforço mental prolongado, por exemplo realizar as tarefas escolares"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Frequentemente perde coisas que são importantes, por exemplo material escolar"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Frequentemente parece não ouvir quando alguém esta a falar com ele"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Intervenção da Terapia Ocupacional na PHDA:"
+      },
+      {
+        "type": "paragraph",
+        "text": "O principal foco é possibilitar o envolvimento em atividades, minimizando o comprometimento funcional causado pela patologia, com recurso a abordagens farmacológicas e não farmacológicas."
+      },
+      {
+        "type": "paragraph",
+        "text": "► Prescrição de atividades que ajudem o corpo da criança a desfrutar de sensações sensoriais necessárias antes de se terem que focar para aprender."
+      },
+      {
+        "type": "paragraph",
+        "text": "► Quando está perante um projeto com várias etapas, uma criança com PHDA pode ter tendência a “desligar-se”. Os Terapeutas Ocupacionais ajudam a contrariar esta propensão ao ensiná-la a fasear cada atividade/tarefa e ao manter uma automotivação em cada etapa."
+      },
+      {
+        "type": "paragraph",
+        "text": "► As crianças com PHDA beneficiam de regras, objetivos claros e definição de responsabilidades. É por isso que alguns Terapeutas Ocupacionais usam tabelas que discriminem atividades em tarefas e que reforcem o que é esperado em cada uma delas. Isso irá permitir à criança entender perfeitamente o que é esperado delas numa dada atividade."
+      },
+      {
+        "type": "paragraph",
+        "text": "► As crianças com PHDA estão sujeitas a “burnouts” ou sobrecargas sensoriais, especialmente ao lidar com tarefas ou expectativas inapropriadas para si. Os Terapeutas Ocupacionais aprendem a antecipar estas sobrecargas e umas das formas de “responderem” a esse problema é introduzindo “zonas de tranquilidade”, ou sítios específicos onde as crianças podem ir quando se sentem frustradas, sobrecarregadas ou quando sentem que estão prestes a explodir."
+      },
+      {
+        "type": "paragraph",
+        "text": "► Educação Terapêutica junto dos pais e comunidade para fornecer estratégias para ajudar estas crianças a atingirem o seu potencial."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Perturbação da Modulação Sensorial"
+      },
+      {
+        "type": "paragraph",
+        "text": "Quando uma criança não consegue controlar a reação aos acontecimentos sensoriais pode surgir a disfunção sensorial. Dizemos que uma criança tem uma perturbação de modulação sensorial quando tem uma reatividade excessiva ou insuficiente aos estímulos sensoriais, ou tem uma capacidade muito reduzida de manter o alerta. Esta perturbação manifesta-se quando a criança tem dificuldade em ter uma resposta apropriada em relação à intensidade, natureza ou grau do estímulo sensorial."
+      },
+      {
+        "type": "paragraph",
+        "text": "Em termos de problemas de modulação sensorial, as crianças podem ser hipersensíveis, hiposensíveis ou manifestar comportamentos de procura sensorial. As crianças hipersensíveis manifestam reações exageradas aos estímulos sensoriais; as hiposensíveis não respondem ou têm respostas diminuídas aos estímulos. As crianças com comportamentos de procura sensorial, anseiam por grandes quantidades de informação para ativar os sistemas sensoriais."
+      },
+      {
+        "type": "heading",
+        "level": 3,
+        "text": "Sinais de Alerta:"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Constantemente a mexer em tudo, gostam de se sujar para além da idade expectável, adoram atividades intensas com areia, espumas, etc. (procura sensorial tátil)"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Gostam de ouvir música alta, fazem barulhos com todo o tipo de objetos e frequentemente falam muito alto (procura sensorial auditiva)"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Procuram todo o tipo de movimento e estão sempre em movimento (procura sensorial vestibular)"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Sentem-se incomodadas em espaços com muitos elementos e cores. Mostram-se sensíveis, perturbadas com luzes e pedem muitas vezes óculos escuros (hipersensível visual)"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Não gostam de lavar os dentes, são esquisitas em relação à textura e sabor dos alimentos (hipersensível gustativo)"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Podem reagir mal a cheiros que os outros não notam, podendo ter vómitos perante cheiros mais intensos (hipersensível olfativo)"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Não gostam de atividades físicas motoras (hipersensível propriocetivo)"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Podem aparecer arranhados e com pequenas feridas sem que se tenham dado por isso. Mostram pouca sensibilidade à dor (hiposensibilidade tátil)"
+      },
+      {
+        "type": "paragraph",
+        "text": "► São descoordenadas e desajeitadas no meio dos outros, esbarram com as coisas e pessoas. Têm pouco equilíbrio (hiposensivel vestibular)"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Dispraxia"
+      },
+      {
+        "type": "paragraph",
+        "text": "É a dificuldade em planear, sequenciar e executar uma ação motora não familiar, ou uma série de ações motoras. Estas crianças, parecem descoordenadas nas áreas motoras globais, finas e orais. Sentem-se inseguras em relação ao seu corpo no espaço, e têm dificuldade em calcular a distância dos objetos e das pessoas."
+      },
+      {
+        "type": "paragraph",
+        "text": "Muitas vezes, a dispraxia vem associada a dificuldades na ideação. Quando existe esta dificuldade, a criança tem poucas ideias novas sobre o que fazer, e pode preferir realizar só as tarefas que conhece, sendo inflexível na utilização de novas estratégias."
+      },
+      {
+        "type": "paragraph",
+        "text": "Algumas crianças apresentam as competências motoras de base, como andar e manter posturas adequadas à idade. No entanto, o desempenho de tarefas motoras mais complexas está comprometido especialmente quando é necessária a sequenciação e adaptação ao timing dos movimentos."
+      },
+      {
+        "type": "heading",
+        "level": 3,
+        "text": "Sinais de Alerta:"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Dificuldades a trepar, correr, andar de triciclo ou contornar obstáculos"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Manifestam pouca noção do que podem fazer ou como entreter-se"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Têm dificuldade em aprender a vestir-se e despir-se"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Dificuldades a comer, podem ser trapalhonas, sujarem-se e não usarem corretamente os talheres – são descoordenadas e desajeitadas"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Mostram dificuldades em atividades motoras finas, como pintar, manipular objetos pequenos"
+      },
+      {
+        "type": "paragraph",
+        "text": "► Dificuldades em atividades que necessitam de antecipação de movimentos em sequência, como por exemplo, correr e dar um pontapé numa bola"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Intervenção em casos de Dispraxia:"
+      },
+      {
+        "type": "paragraph",
+        "text": "A intervenção em casos de dispraxia poderá envolver vários profissionais de saúde, cujo objetivo será auxiliar a criança a progredir a nível motor (equilíbrio, tónus muscular, postura, coordenação, etc.), a nível da linguagem, e a nível psicológico. Desta forma, irá ser proporcionada maior autonomia e segurança à criança."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Galeria"
+      }
+    ],
+    "status": "complete",
+    "source": {
+      "url": "https://alcancari.com/terapia-ocupacional/",
+      "retrievedAt": "2026-11-12",
+      "wordpressId": 104
+    },
+    "image": null,
+    "confirmed": true,
+    "published": true
+  },
+  {
+    "slug": "floortime",
+    "title": "Floortime",
+    "summary": "Trabalhamos de forma integrada, com conhecimento e empatia, na avaliação e acompanhamento do desenvolvimento emocional e relacional, promovendo a comunicação, o vínculo e o crescimento através da interação e do brincar.",
+    "blocks": [
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Floortime"
+      },
+      {
+        "type": "paragraph",
+        "text": "Consiste num modelo de avaliação e intervenção que associa a abordagem Floortime com o envolvimento e participação da família, com diferentes especialidades terapêuticas e a articulação e integração nas estruturas educacionais."
+      },
+      {
+        "type": "paragraph",
+        "text": "Este modelo utiliza a aprendizagem com base na experiência emocional e motivadora para melhorar competências sociais, linguagem, independência e apoio do funcionamento cognitivo de nível superior."
+      },
+      {
+        "type": "paragraph",
+        "text": "A intervenção é promovida através do desenvolvimento de situações de jogo e aprendizagem, sendo a interação com a criança orientada terapeuticamente, o meio para as encaminhar pela “escada do desenvolvimento”."
+      }
+    ],
+    "status": "complete",
+    "source": {
+      "url": "https://alcancari.com/floortime/",
+      "retrievedAt": "2026-11-12",
+      "wordpressId": 106
+    },
+    "image": null,
+    "confirmed": true,
+    "published": true
+  },
+  {
+    "slug": "integracao-sensorial",
+    "title": "Integração Sensorial",
+    "summary": "Trabalhamos de forma integrada, com conhecimento e empatia, na avaliação e acompanhamento de crianças com desafios na forma como percebem e respondem aos estímulos sensoriais, promovendo a autorregulação, a atenção e o bem-estar no quotidiano.",
+    "blocks": [
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Integração Sensorial"
+      },
+      {
+        "type": "paragraph",
+        "text": "Os pressupostos da Integração Sensorial remete-nos para o facto de que a aprendizagem está dependente da capacidade para receber e processar a informação do corpo, do movimento e do ambiente, e de usar essa informação para planear e organizar o comportamento."
+      },
+      {
+        "type": "paragraph",
+        "text": "O cérebro tem que ter a capacidade para receber a informação, organizá-la, decidir qual é a relevante e qual não é, e usar essa informação para formar perceções, organizar o comportamento e a aprendizagem."
+      },
+      {
+        "type": "paragraph",
+        "text": "Oferece-nos, igualmente, uma forma de descrever diferenças individuais, preferências e tolerâncias sensoriais da criança, que estão relacionadas com comportamentos funcionais, tais como o brincar, aprender ou interação social."
+      }
+    ],
+    "status": "complete",
+    "source": {
+      "url": "https://alcancari.com/integracao-sensorial/",
+      "retrievedAt": "2026-11-12",
+      "wordpressId": 108
+    },
+    "image": null,
+    "confirmed": true,
+    "published": true
+  },
+  {
+    "slug": "intervencao-em-grupo",
+    "title": "Intervenção em grupo",
+    "summary": "Trabalhamos de forma integrada, com conhecimento e empatia, na avaliação e acompanhamento de grupos, promovendo a aprendizagem, a interação e o desenvolvimento social e emocional de cada participante.",
+    "blocks": [],
+    "status": "summary-only",
+    "source": {
+      "url": "https://alcancari.com/servicos/",
+      "retrievedAt": "2026-11-12",
+      "wordpressId": 94
+    },
+    "image": null,
+    "confirmed": true,
+    "published": true
+  },
+  {
+    "slug": "formacao",
+    "title": "Formação",
+    "summary": "Trabalhamos de forma integrada, com conhecimento e empatia, na conceção e dinamização de formações, partilhando saberes e competências para capacitar profissionais e famílias na promoção do bem-estar e do desenvolvimento das pessoas, quer internas quer externas.",
+    "blocks": [],
+    "status": "summary-only",
+    "source": {
+      "url": "https://alcancari.com/servicos/",
+      "retrievedAt": "2026-11-12",
+      "wordpressId": 94
+    },
+    "image": null,
+    "confirmed": true,
+    "published": true
+  }
+]
