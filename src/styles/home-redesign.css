@@ -653,3 +653,231 @@
     transform: none;
   }
 }
+
+/* =========================================
+   ALCANÇARI — REFINAMENTO PREMIUM DA HOME
+   ========================================= */
+
+/* HERO */
+
+.alc-home-hero {
+  isolation: isolate;
+  background:
+    radial-gradient(
+      circle at 90% 15%,
+      rgba(196, 231, 224, .65),
+      transparent 35%
+    ),
+    linear-gradient(125deg, #f1f8f5, #e7f3f1);
+}
+
+.alc-home-hero-grid {
+  min-height: 650px;
+  gap: clamp(35px, 5vw, 85px);
+  padding-top: clamp(65px, 7vw, 105px);
+  padding-bottom: clamp(65px, 7vw, 105px);
+}
+
+.alc-home-hero-copy h1 {
+  max-width: 720px;
+  font-size: clamp(3.2rem, 5.5vw, 6rem);
+  line-height: 1.04;
+  letter-spacing: -.057em;
+  text-wrap: balance;
+}
+
+.alc-home-hero-description {
+  max-width: 540px;
+  font-size: clamp(1rem, 1.35vw, 1.16rem);
+  line-height: 1.9;
+}
+
+.alc-home-hero-visual {
+  min-width: 0;
+}
+
+.alc-home-photo-shape {
+  background: #cce9e3;
+  filter: blur(1px);
+}
+
+.alc-home-hero-photo {
+  border-radius: 46% 46% 28px 28px;
+  box-shadow:
+    0 35px 75px rgba(19, 74, 82, .14),
+    0 8px 20px rgba(19, 74, 82, .06);
+}
+
+.alc-home-hero-photo img {
+  display: block;
+  transition: transform .7s ease;
+}
+
+@media (hover: hover) {
+  .alc-home-hero-visual:hover .alc-home-hero-photo img {
+    transform: scale(1.035);
+  }
+}
+
+.alc-home-photo-label {
+  right: 0;
+  bottom: 5px;
+  border: 1px solid #edf3f0;
+  box-shadow: 0 15px 35px rgba(20, 60, 70, .12);
+}
+
+/* BOTÕES */
+
+.alc-home-button {
+  transition:
+    background .25s ease,
+    transform .25s ease,
+    box-shadow .25s ease;
+}
+
+@media (hover: hover) {
+  .alc-home-button-primary:hover {
+    box-shadow: 0 12px 26px rgba(20, 124, 145, .2);
+  }
+}
+
+/* SECÇÕES */
+
+.alc-home-about h2,
+.alc-home-section-heading h2,
+.alc-home-units h2,
+.alc-home-cta h2 {
+  text-wrap: balance;
+}
+
+.alc-home-about-content p {
+  max-width: 660px;
+}
+
+/* CARTÕES */
+
+.alc-home-service-card,
+.alc-home-news-card {
+  box-shadow: 0 4px 15px rgba(20, 70, 80, .035);
+}
+
+.alc-home-service-info h3,
+.alc-home-news-content h3 {
+  letter-spacing: -.025em;
+}
+
+.alc-home-service-card:focus-visible,
+.alc-home-news-card:focus-visible {
+  outline: 3px solid #147c91;
+  outline-offset: 5px;
+}
+
+/* UNIDADES */
+
+.alc-home-units {
+  background:
+    linear-gradient(135deg, #e8f4f0 0%, #f1f7f4 100%);
+}
+
+.alc-home-unit-names span {
+  transition:
+    background .2s ease,
+    border-color .2s ease;
+}
+
+/* CONTACTOS */
+
+.alc-home-cta {
+  background:
+    radial-gradient(
+      circle at 95% 10%,
+      rgba(197, 229, 222, .7),
+      transparent 35%
+    ),
+    #eaf5f3;
+}
+
+/* TABLET */
+
+@media (max-width: 1000px) {
+  .alc-home-hero-grid {
+    min-height: 0;
+  }
+}
+
+/* TELEMÓVEL */
+
+@media (max-width: 760px) {
+  .alc-home-hero-grid {
+    gap: 35px;
+    padding-top: 55px;
+    padding-bottom: 65px;
+  }
+
+  .alc-home-hero-copy h1 {
+    max-width: 650px;
+    font-size: clamp(2.8rem, 8vw, 4.5rem);
+  }
+
+  .alc-home-hero-visual {
+    width: 100%;
+    max-width: 480px;
+  }
+
+  .alc-home-hero-photo {
+    border-radius: 43% 43% 22px 22px;
+  }
+
+  .alc-home-photo-label {
+    bottom: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .alc-home-hero-copy h1 {
+    font-size: clamp(2.65rem, 10vw, 3.6rem);
+    line-height: 1.08;
+  }
+
+  .alc-home-hero-description {
+    font-size: 15px;
+    line-height: 1.85;
+  }
+
+  .alc-home-actions {
+    align-items: stretch;
+  }
+
+  .alc-home-actions .alc-home-button {
+    flex: 1 1 170px;
+    padding-inline: 15px;
+    text-align: center;
+  }
+
+  .alc-home-service-card,
+  .alc-home-news-card {
+    border-radius: 20px;
+  }
+
+  .alc-home-service-info h3 {
+    font-size: 1.35rem;
+  }
+
+  .alc-home-hero-foot {
+    margin-top: 40px;
+  }
+}
+
+/* ACESSIBILIDADE */
+
+@media (prefers-reduced-motion: reduce) {
+  .alc-home-hero-photo img,
+  .alc-home-button,
+  .alc-home-unit-names span {
+    transition: none;
+  }
+
+  .alc-home-hero-visual:hover .alc-home-hero-photo img {
+    transform: none;
+  }
+}

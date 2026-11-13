@@ -168,8 +168,8 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
-{/* Experiência interativa */}
-<ClinicExplorer />
+      {/* Experiência interativa */}
+      <ClinicExplorer />
       {/* Unidades */}
       <section className="alc-home-units">
         <div className="container-shell alc-home-units-grid">
@@ -264,9 +264,10 @@ export default function HomePage() {
         )}
       </section>
 
+            {/* Perguntas frequentes */}
+      <ClinicFAQ />
+
       {/* Contactos */}
-      {/* Perguntas frequentes */}
-<ClinicFAQ />
       <section className="alc-home-cta">
         <div className="container-shell alc-home-cta-inner">
           <div>
