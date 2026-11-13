@@ -22,13 +22,13 @@ const selections = {
 }
 
 const illustrations = new Set([
-  'fisioterapia-10727039.jpg', 'fisioterapia-0197c4d5.jpg', 'fisioterapia-ce39101f.jpg',
-  'acupunctura-4c035b65.jpg', 'acupunctura-0946c68f.jpg', 'acupunctura-7776195e.jpg',
-  'psicologia-d66a81e8.jpg', 'psicologia-77aed2ed.jpg', 'formacao-29ddf704.jpg',
-  'terapia-ocupacional-6d2ba1fe.jpg', 'terapia-ocupacional-5a9b80e3.jpg',
-  'terapia-ocupacional-da46f9d8.jpg', 'terapia-ocupacional-5068fb03.jpg',
-  'terapia-ocupacional-888a9ea4.jpg', 'terapia-ocupacional-89e09fd1.jpg',
-  'terapia-ocupacional-e559e890.jpg', 'terapia-ocupacional-6bf441ee.jpg',
+  'fisioterapia-10727039.webp', 'fisioterapia-0197c4d5.webp', 'fisioterapia-ce39101f.webp',
+  'acupunctura-4c035b65.webp', 'acupunctura-0946c68f.webp', 'acupunctura-7776195e.webp',
+  'psicologia-d66a81e8.webp', 'psicologia-77aed2ed.webp', 'formacao-29ddf704.webp',
+  'terapia-ocupacional-6d2ba1fe.webp', 'terapia-ocupacional-5a9b80e3.webp',
+  'terapia-ocupacional-da46f9d8.webp', 'terapia-ocupacional-5068fb03.webp',
+  'terapia-ocupacional-888a9ea4.webp', 'terapia-ocupacional-89e09fd1.webp',
+  'terapia-ocupacional-e559e890.webp', 'terapia-ocupacional-6bf441ee.webp',
 ])
 
 export function serviceImageCaption(image) {
