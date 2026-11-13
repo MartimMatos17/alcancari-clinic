@@ -1,0 +1,35 @@
+name: Verificacao do website
+
+on:
+  push:
+    branches:
+      - main
+      - refactor/public-website
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validar:
+    name: Testes e build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Obter codigo
+        uses: actions/checkout@v4
+
+      - name: Preparar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Executar testes
+        run: npm run check
+
+      - name: Compilar website
+        run: npm run build

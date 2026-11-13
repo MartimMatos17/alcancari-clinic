@@ -1,20 +1,103 @@
-# Clínica Alcançari — website público
 
-Website institucional em React, Vite e Tailwind CSS, com JavaScript. Funciona
-sem API, autenticação, Docker, Express ou PostgreSQL. Não foi publicado.
+<div align="center">
 
-## Executar na raiz
+# Clínica Alcançari
 
-Requisitos: Node.js 22.12 ou superior; recomenda-se Node.js 24 (`.nvmrc`), e npm 10
-ou superior. Não é necessário criar `.env` nem configurar credenciais.
+### Website Institucional
+
+**Um espaço digital pensado para acolher, informar e aproximar.**
+
+Website desenvolvido com React, Vite e JavaScript, com foco na experiência de utilização, acessibilidade, desempenho e apresentação dos serviços da Clínica Alcançari.
+
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![CSS](https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=css&logoColor=white)
+
+**Estado:** Em desenvolvimento · Ainda não publicado
+
+</div>
+
+---
+
+## Sobre o projeto
+
+O projeto consiste na modernização do website institucional da Clínica Alcançari, com uma experiência responsiva e uma arquitetura frontend de manutenção simples.
+
+O objetivo é facilitar o acesso à informação sobre os serviços, os profissionais, as unidades e os contactos da clínica.
+
+## Funcionalidades
+
+| Área | Funcionalidades |
+|---|---|
+| Página inicial | Apresentação da clínica e navegação interativa |
+| Serviços | Nove áreas de intervenção, categorias e páginas de detalhe |
+| Equipa | Perfis profissionais, pesquisa e filtros |
+| Unidades | Fotografias, informações e localização |
+| Novidades | Publicações, pesquisa e categorias |
+| Contactos | Formulário de contacto e pedido de marcação |
+| WhatsApp | Contacto rápido e mensagens personalizadas |
+| Pesquisa global | Pesquisa de conteúdos do website |
+| Acessibilidade | Navegação responsiva, foco por teclado e suporte para redução de movimento |
+
+As informações apresentadas são institucionais. O formulário não confirma automaticamente marcações nem deve ser utilizado para transmitir dados clínicos sensíveis.
+
+## Tecnologias
+
+- React — interface e componentes reutilizáveis
+- Vite — desenvolvimento e compilação
+- React Router — navegação e rotas
+- JavaScript — funcionalidades interativas
+- CSS — design responsivo e animações
+- Formspree — receção de pedidos de contacto, quando configurado
+- WebP — otimização das fotografias
+
+## Estrutura do projeto
+
+```text
+alcancari-clinic/
+├── public/
+│   └── images/
+│       ├── branding/
+│       ├── clinica/
+│       ├── equipa/
+│       ├── servicos/
+│       ├── unidades/
+│       └── blog/
+├── src/
+│   ├── components/
+│   ├── content/
+│   ├── hooks/
+│   ├── lib/
+│   ├── pages/
+│   └── styles/
+├── scripts/
+├── tests/
+├── index.html
+├── package.json
+└── vite.config.js
+```
+
+## Executar localmente
+
+### Requisitos
+
+- Node.js compatível com a versão indicada no projeto
+- npm
+
+### Instalação
 
 ```bash
+git clone https://github.com/MartimMatos17/alcancari-clinic.git
+cd alcancari-clinic
+git switch refactor/public-website
 npm ci
 npm run dev
 ```
 
-O Vite apresenta o endereço local no terminal. O servidor fica limitado a
-`127.0.0.1`. Para verificar e compilar:
+O Vite apresenta o endereço local da aplicação no terminal.
+
+### Testes e compilação
 
 ```bash
 npm run check
@@ -22,119 +105,52 @@ npm run build
 npm run preview
 ```
 
-`npm run check` executa os testes nativos de Node.js. O build gera apenas `dist/`
-e verifica os ficheiros públicos, sinais de configuração privada e um orçamento
-de 500 KiB para o JavaScript total. `npm run preview` permite testar esse build
-localmente; não publica o website.
+O build de produção é gerado na pasta `dist/`.
 
-## Estrutura
+## Configuração
 
-```text
-src/
-  components/        # Navegação, estrutura, contactos e elementos reutilizáveis
-  content/           # Configuração, textos importados, proveniência, rotas e imagens
-  hooks/             # Metadados por página
-  lib/               # Validação de contactos, imagens e publicação
-  pages/             # Páginas institucionais
-  App.jsx            # Rotas públicas e redirecionamentos de URLs antigas
-  main.jsx           # Arranque e tratamento de erros
-  styles.css         # Tailwind e apresentação responsiva
-public/
-  brand/             # Pasta anterior preservada
-  images/            # branding/, equipa/, servicos/, unidades/, clinica/, blog/
-  favicon.svg        # Monograma anterior preservado; HTML usa o favicon recuperado
-  robots.txt         # Indexação bloqueada nesta fase
-scripts/             # Verificação do build público
-tests/               # Testes de validação e segurança do build
-docs/                # Conteúdos, recuperação e segurança
-```
+O website pode ser executado localmente sem credenciais para explorar as páginas institucionais.
 
-## Páginas e conteúdo
+O envio de pedidos através do formulário depende da configuração de um endpoint Formspree.
 
-Páginas: Início, Clínica, Serviços, Equipa, Unidades, Blog/Novidades, Contactos e
-Privacidade. As antigas URLs `/sobre`, `/contacto`, `/marcacao`, `/blog` e `/faq`
-continuam a encaminhar para páginas públicas adequadas. Endereços clínicos ou
-inexistentes mostram a página 404, sem pedidos à API.
+As credenciais privadas e os ficheiros `.env` não devem ser adicionados ao repositório. Variáveis incluídas no código cliente não devem conter segredos.
 
-Em 12 de novembro de 2026 foram importados os conteúdos públicos de
-[alcancari.com](https://alcancari.com/), a fonte indicada pelo responsável:
+## Desempenho
 
-- Nove serviços: sete páginas integrais e duas apresentações sem página própria.
-- Apresentação da clínica e 16 perfis completos do Corpo Clínico.
-- Duas unidades, moradas, horários, mapas e contactos oficiais.
-- Doze entradas do blog, com os excertos existentes na origem. Os artigos
-  integrais não estavam disponíveis e não foram inventados.
+As imagens públicas foram convertidas e otimizadas para WebP.
 
-São 47 páginas locais, incluindo detalhes de profissionais, unidades, serviços e
-publicações. As URLs anteriores do WordPress têm redirecionamentos locais.
-A equipa pode ser filtrada por especialidade; os textos longos usam um componente
-de leitura reutilizável e os serviços extensos incluem índice de secções.
+| Indicador | Resultado da otimização |
+|---|---|
+| Imagens convertidas | 88 |
+| Build anterior | Aproximadamente 34 MB |
+| Build otimizado | Aproximadamente 12 MB |
+| Redução | Aproximadamente 65% |
 
-`src/content/site.js` reúne os dados; as coleções estão em JSON por domínio.
-Os textos de origem, URLs, hashes e lacunas estão documentados em
-[CONTENT.md](docs/CONTENT.md). Foram recuperadas 111 imagens distintas do site público, incluindo logótipos,
-11 retratos e fotografias das unidades. [MEDIA.md](docs/MEDIA.md) contém o
-inventário, resoluções e lacunas. Só os cinco perfis sem fotografia pública
-continuam com espaços reservados. Não há imagens remotas em execução.
+Estes valores representam o tamanho dos ficheiros gerados, não o tráfego descarregado por cada visitante.
 
-A aplicação é inteiramente estática. Telefone, WhatsApp, email, mapas e redes
-sociais abrem pelos links oficiais; não há formulários de envio ou API.
-Os dados do WordPress foram lidos apenas durante a importação e estão guardados
-localmente. O frontend funciona sem o WordPress, backend ou base de dados.
+## Segurança e privacidade
 
-## Validação
+- Website institucional sem base de dados de pacientes
+- Sem autenticação de utilizadores finais
+- Ficheiros privados excluídos do build público
+- Formulários sujeitos a validação
+- Informação de privacidade disponível no website
+- Dependências verificadas durante o desenvolvimento
 
-A reorganização passou 11 testes e o build **antes** da importação. A versão
-com conteúdos e imagens passou 22 testes, o build com política de ficheiros públicos e
-120 verificações de páginas/redirecionamentos no Chrome, com inspeção a 1440,
-390 e 320 px. Os textos integrais foram comparados também com o DOM renderizado.
-Sem erros de execução, recursos falhados ou pedidos externos. Ver
-[VALIDATION.md](docs/VALIDATION.md) para cobertura e limites.
+A revisão de segurança e privacidade para produção ainda está em curso. Um build aprovado não equivale a uma auditoria completa.
 
-O teste de navegador é opcional e requer Chrome instalado, perfil temporário
-isolado e depuração local na porta 9223, além de `npm run preview -- --port 5173`.
-Depois, executar `node scripts/check-browser.mjs`. Não instala dependências.
-Capturas e relatório ficam em `test-results/`, ignorado pelo Git.
+## Estado do projeto
 
-## Dependências
+O website encontra-se em desenvolvimento.
 
-Produção: React e React DOM para a interface; React Router para navegação entre
-páginas, URLs diretas e redirecionamentos públicos. Desenvolvimento: Vite,
-plugin React, Tailwind CSS e integração Tailwind/Vite. Não existe gestor de
-estado, cliente HTTP, biblioteca de animações, calendário, editor ou gráficos.
-As versões estão fixadas e o `package-lock.json` da raiz deve ser versionado.
+Antes da publicação serão realizadas verificações finais de conteúdos, contactos, privacidade, formulários, acessibilidade, desempenho e configuração do alojamento.
 
-## Segurança e arquivo
+---
 
-- A configuração Vite não expõe variáveis de ambiente ao cliente (`envPrefix: []`).
-- Não existem cookies da aplicação, armazenamento local, analytics ou embeds externos.
-- O código legado, ficheiros privados e dependências antigas foram preservados
-  localmente em `backups/2026-11-09-public-refactor/local-worktree/`, fora do build
-  e ignorados pelo Git. Este diretório local contém o `.env` antigo: não o partilhar.
-- Existe uma cópia separada e sanitizada de recuperação com manifesto e hashes,
-  sem segredos, dados de execução ou dependências.
-- A referência Git local `archive/pre-public-website-2026-11-09` aponta para o
-  commit original; as alterações não commitadas da Fase 0 estão na cópia sanitizada.
-- O estado anterior a esta importação foi preservado e verificado em
-  `backups/2026-11-12-content-import/`, incluindo o estado Git inicial.
-- Nenhum commit, push, merge, force push, deploy ou alteração de domínio foi feito.
+<div align="center">
 
-Detalhes e recuperação em [REFACTOR.md](docs/REFACTOR.md). A referência Git antiga
-continua a ter o histórico previamente exposto; não é um arquivo sanitizado.
-A rotação de credenciais e a limpeza do histórico da
-[Fase 0](docs/SECURITY_PHASE_0.md) continuam pendentes. Essa documentação descreve
-a estrutura anterior e foi preservada sem alterações.
+**Desenvolvido para a Clínica Alcançari**
 
-## Antes de uma eventual publicação
+*Tecnologia ao serviço de uma experiência mais simples e próxima.*
 
-Confirmar textos, contactos, serviços, equipa e unidades; integrar o logótipo e
-as fotografias reais; validar os conteúdos clínicos antes de os disponibilizar.
-Confirmar a política de privacidade e os requisitos do alojamento. Só depois de
-uma autorização de publicação: configurar `site.url`, rever `indexingEnabled`,
-`index.html` e `robots.txt`, gerar sitemap e configurar o fallback das rotas SPA.
-Nunca carregar o repositório completo, `backups/` ou `node_modules/`: o único
-artefacto público é `dist/`. Não foi configurado qualquer domínio ou alojamento.
-
-Os metadados iniciais estão em `index.html` e os metadados de cada página são
-atualizados no navegador. A pré-renderização/SSR, um sitemap com domínio real e
-os testes no alojamento final ficam para a preparação da publicação.
+</div>
