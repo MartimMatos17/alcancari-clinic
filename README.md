@@ -26,6 +26,20 @@ O projeto consiste na modernização do website institucional da Clínica Alcan�
 
 O objetivo é facilitar o acesso à informação sobre os serviços, os profissionais, as unidades e os contactos da clínica.
 
+## Visão geral
+
+### Página inicial
+
+![Página inicial da Clínica Alcançari](assets/readme/homepage.png)
+
+### Serviços
+
+![Serviços da Clínica Alcançari](assets/readme/servicos.png)
+
+### Equipa
+
+![Equipa da Clínica Alcançari](assets/readme/equipa.png)
+
 ## Funcionalidades
 
 | Área | Funcionalidades |
