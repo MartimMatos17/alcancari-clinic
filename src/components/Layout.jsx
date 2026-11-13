@@ -128,7 +128,7 @@ export default function Layout() {
       </header>
 
       <main id="conteudo" ref={main} tabIndex={-1}>
-                <ScrollReveal />
+  <ScrollReveal />
         <Suspense
           fallback={
             <p

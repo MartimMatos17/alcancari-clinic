@@ -421,3 +421,91 @@
     transform: none;
   }
 }
+
+
+/* =========================================
+   ALCANÇARI — REFINAMENTO DO CABEÇALHO
+   ========================================= */
+
+.site-header.alc-layout-header {
+  background: rgba(255, 255, 255, 0.98);
+  border-bottom: 1px solid #e4ece8;
+}
+
+.alc-layout-nav {
+  min-height: 104px;
+  gap: clamp(14px, 2vw, 30px);
+}
+
+.alc-layout-brand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.alc-layout-brand img {
+  display: block;
+  width: auto;
+  height: 90px;
+  max-height: 90px;
+  max-width: 190px;
+  object-fit: contain;
+  transition: transform 0.25s ease;
+}
+
+@media (hover: hover) {
+  .alc-layout-brand:hover img {
+    transform: scale(1.035);
+  }
+}
+
+.alc-layout-links {
+  gap: clamp(12px, 1.4vw, 24px);
+}
+
+.alc-layout-links .alc-layout-link {
+  font-size: 14px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.alc-layout-links .alc-layout-contact {
+  min-height: 49px;
+  padding: 13px 23px;
+  font-size: 14px;
+  box-shadow: 0 5px 16px rgba(20, 124, 145, 0.12);
+}
+
+@media (max-width: 1050px) {
+  .alc-layout-nav {
+    min-height: 88px;
+    gap: 14px;
+  }
+
+  .alc-layout-brand img {
+    height: 76px;
+    max-height: 76px;
+    max-width: 160px;
+  }
+}
+
+@media (max-width: 560px) {
+  .alc-layout-nav {
+    min-height: 78px;
+    gap: 10px;
+  }
+
+  .alc-layout-brand img {
+    height: 66px;
+    max-height: 66px;
+    max-width: 130px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alc-layout-brand img {
+    transition: none;
+  }
+}
