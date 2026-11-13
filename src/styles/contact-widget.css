@@ -300,3 +300,47 @@
   height: 100%;
   object-fit: contain;
 }
+
+
+/* ALCANÇARI — CONTACTOS EM ECRÃS PEQUENOS */
+
+@media (max-width: 600px) {
+  .alc-contact-widget {
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    gap: 10px;
+  }
+
+  .alc-contact__toggle {
+    width: 48px;
+    height: 48px;
+    box-shadow: 0 5px 18px rgba(18, 115, 67, .22);
+  }
+
+  .alc-contact__toggle svg {
+    width: 25px;
+    height: 25px;
+  }
+
+  .alc-contact__panel {
+    width: min(350px, calc(100vw - 24px));
+    max-height: calc(100dvh - 85px);
+    overscroll-behavior: contain;
+  }
+}
+
+@media (max-width: 600px) and (max-height: 600px) {
+  .alc-contact__toggle {
+    width: 44px;
+    height: 44px;
+  }
+
+  .alc-contact__toggle svg {
+    width: 23px;
+    height: 23px;
+  }
+
+  .alc-contact__panel {
+    max-height: calc(100dvh - 72px);
+  }
+}
