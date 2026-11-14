@@ -6,8 +6,10 @@ import { getPublished } from '../lib/content'
 import '../styles/alcancari-interactions.css'
 import '../styles/appointment-form.css'
 
-const EMAIL = 'alcancari.terapias@gmail.com'
-const PHONE = '934 779 548'
+
+const EMAIL = site.contacts.email.value
+const PHONE = site.contacts.phone.value
+
 
 const LOCATIONS = [
   {
@@ -290,10 +292,19 @@ export default function ContactExperience({
             </p>
           )}
 
-          <form
-            onSubmit={submit}
-            className="alc-contact__form"
-          >
+{status === 'sending' && (
+  <p role="status" aria-live="polite">
+    Estamos a enviar o seu pedido…
+  </p>
+)}
+
+          
+<form
+  onSubmit={submit}
+  className="alc-contact__form"
+  aria-busy={status === 'sending'}
+>
+
             <fieldset className="alc-appointment__type">
               <legend>O que pretende fazer?</legend>
 
