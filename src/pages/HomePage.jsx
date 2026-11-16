@@ -8,6 +8,7 @@ import Icon from '../components/Icon'
 import '../styles/home-redesign.css'
 import ClinicExplorer from '../components/ClinicExplorer'
 import ClinicFAQ from '../components/ClinicFAQ'
+import FirstVisitJourney from '../components/FirstVisitJourney'
 
 export default function HomePage() {
   usePageMeta()
@@ -170,6 +171,9 @@ export default function HomePage() {
       </section>
       {/* Experiência interativa */}
       <ClinicExplorer />
+      {/* Preparar a primeira visita */}
+      <FirstVisitJourney />
+
       {/* Unidades */}
       <section className="alc-home-units">
         <div className="container-shell alc-home-units-grid">
