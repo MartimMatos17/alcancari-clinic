@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import InstagramFeed from '../components/InstagramFeed'
+import SocialCommunity from '../components/SocialCommunity'
 import { content, site } from '../content/site'
 import { getPublished } from '../lib/content'
 import usePageMeta from '../hooks/usePageMeta'
@@ -98,7 +99,7 @@ export default function NewsPage() {
           {filtered.length ? <div className="blog-grid be-grid">{filtered.map(post => <div className="be-card-wrap" key={post.slug}><PostCard post={post} /><ReadingListButton slug={post.slug} /></div>)}</div> : <div className="blog-empty be-empty"><EmptyState title={onlySaved ? 'Ainda não há leituras guardadas.' : posts.length ? 'Não encontrámos artigos para esta pesquisa.' : content.news.emptyTitle} text={onlySaved ? 'Guarde uma publicação através do botão Guardar para a encontrar aqui.' : posts.length ? 'Experimente outra palavra ou selecione uma categoria diferente.' : content.news.emptyText} /><button type="button" className="be-button be-button--dark" onClick={reset}>Ver todas as publicações</button></div>}
         </section>
         <div className="be-closing"><span aria-hidden="true">✳</span><p>Conhecer mais é uma forma de cuidar melhor.</p><span>ALCANÇARI / BLOG</span></div>
-        <InstagramFeed />
+        <SocialCommunity /><InstagramFeed />
       </div>
     </div>
   )
