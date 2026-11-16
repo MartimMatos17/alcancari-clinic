@@ -1,4 +1,5 @@
 import { ShareButton } from '../components/UtilityActions'
+import { FavoriteButton } from '../components/ConnectFavorites'
 import { Link } from 'react-router-dom'
 import Icon from '../components/Icon'
 import SourceNote from '../components/SourceNote'
@@ -52,6 +53,7 @@ export default function ServiceDetailPage({ entry, services }) {
         <div className="sv-detail-hero__copy">
           <p className="sv-eyebrow"><span className="sv-dot" />Os nossos serviços<span className="sv-detail-hero__number">{String(current + 1).padStart(2, '0')} / {String(services.length).padStart(2, '0')}</span></p>
           <h1 id="service-title">{entry.title}</h1><ShareButton title={entry.title} />
+          <FavoriteButton type="service" id={entry.slug} title={entry.title} />
           <p className="sv-lead">{entry.summary}</p>
           <div className="sv-detail-hero__actions"><Link className="sv-button" to="/contactos">Contactar a clínica<Icon name="diagonal" /></Link>{entry.blocks.length > 0 && <a className="sv-text-link" href="#sobre-servico">Conhecer o serviço<Icon className="sv-arrow-down" /></a>}</div>
         </div>

@@ -1,6 +1,7 @@
 
 import { Link } from 'react-router-dom'
 import Icon from './Icon'
+import { FavoriteButton } from './ConnectFavorites'
 import {
   serviceImage,
   serviceImageCaption,
@@ -91,6 +92,7 @@ export function ServiceCard({
           </span>
         </div>
       </Link>
+      <FavoriteButton type="service" id={service.slug} title={service.title} />
     </article>
   )
 }

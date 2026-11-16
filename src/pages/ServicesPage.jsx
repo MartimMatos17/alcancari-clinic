@@ -5,6 +5,7 @@ import { content, site } from '../content/site'
 import { getPublished } from '../lib/content'
 import usePageMeta from '../hooks/usePageMeta'
 import EmptyState from '../components/EmptyState'
+import ConnectFavorites from '../components/ConnectFavorites'
 import Icon from '../components/Icon'
 import {
   ServiceCard,
@@ -132,6 +133,8 @@ export default function ServicesPage() {
             count={visibleServices.length}
           />
         )}
+
+        <ConnectFavorites />
 
         {services.length > 0 ? (
           <div className="sv-collection__grid">

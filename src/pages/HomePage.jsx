@@ -170,7 +170,7 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
-      {/* Experiência interativa */}
+      {/* Alcançari Connect — descoberta e favoritos */}
       <ClinicExplorer />
       {/* Preparar a primeira visita */}
       <FirstVisitJourney />

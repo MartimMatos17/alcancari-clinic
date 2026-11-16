@@ -1,4 +1,5 @@
 import { ShareButton } from '../components/UtilityActions'
+import { FavoriteButton } from '../components/ConnectFavorites'
 
 import { Link, useParams } from 'react-router-dom'
 import { site } from '../content/site'
@@ -57,6 +58,7 @@ export default function TeamDetailPage() {
 
               <h2>{member.name}</h2>
               <p>{member.role}</p>
+              <FavoriteButton type="professional" id={member.id} title={member.name} />
             </div>
           </aside>
 
