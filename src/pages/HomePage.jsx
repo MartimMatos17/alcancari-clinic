@@ -9,6 +9,7 @@ import '../styles/home-redesign.css'
 import ClinicExplorer from '../components/ClinicExplorer'
 import ClinicFAQ from '../components/ClinicFAQ'
 import FirstVisitJourney from '../components/FirstVisitJourney'
+import VirtualTour from '../components/VirtualTour'
 
 export default function HomePage() {
   usePageMeta()
@@ -202,6 +203,13 @@ export default function HomePage() {
               <Icon name="arrow" />
             </Link>
           </div>
+        </div>
+        <div className="container-shell">
+          <VirtualTour
+            units={getPublished(site.units)}
+            galleries={site.galleries.units}
+            preview
+          />
         </div>
       </section>
 

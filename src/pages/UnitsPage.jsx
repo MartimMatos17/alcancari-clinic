@@ -6,7 +6,7 @@ import { getPublished } from '../lib/content'
 import usePageMeta from '../hooks/usePageMeta'
 import PageIntro from '../components/PageIntro'
 import UnitCard from '../components/UnitCard'
-import MediaGallery from '../components/MediaGallery'
+import VirtualTour from '../components/VirtualTour'
 import SourceNote from '../components/SourceNote'
 import NotFoundPage from './NotFoundPage'
 import Icon from '../components/Icon'
@@ -57,10 +57,15 @@ export default function UnitsPage() {
           </p>
         </div>
 
+        <VirtualTour
+          key={selected?.id || 'all-units'}
+          units={allUnits}
+          galleries={site.galleries.units}
+          initialUnitId={selected?.id}
+        />
+
         <div className="alc-units__list">
           {units.map((unit, index) => {
-            const gallery = site.galleries.units?.[unit.id] || []
-
             return (
               <section
                 className="alc-units__item"
@@ -81,31 +86,6 @@ export default function UnitsPage() {
                     detail={Boolean(selected)}
                   />
                 </div>
-
-                {gallery.length > 0 && (
-                  <div className="alc-units__gallery">
-                    <div className="alc-units__gallery-heading">
-                      <div>
-                        <p className="alc-units__eyebrow">
-                          CONHEÇA OS ESPAÇOS
-                        </p>
-                        <h4>Por dentro da nossa unidade.</h4>
-                      </div>
-
-                      <span>
-                        {gallery.length}
-                        {gallery.length === 1
-                          ? ' fotografia'
-                          : ' fotografias'}
-                      </span>
-                    </div>
-
-                    <MediaGallery
-                      images={gallery}
-                      label={`Ver fotografias de ${unit.name}`}
-                    />
-                  </div>
-                )}
 
                 {selected && <SourceNote entry={unit} />}{selected && <ShareButton title={selected.name} />}
 
