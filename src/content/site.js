@@ -20,7 +20,7 @@ export const site = {
     whatsapp: { value: '+351934779548', confirmed: true },
     email: { value: 'alcancari.terapias@gmail.com', confirmed: true },
   },
-  // Modelos e regras de publicação em docs/CONTENT.md.
+  // Conteúdos e regras de publicação: README.md; proveniência em docs/sources/.
   services: withImages(services, media.services),
   team: withImages(team, media.team),
   units: withImages(units, media.units),

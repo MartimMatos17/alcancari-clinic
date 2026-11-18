@@ -94,7 +94,7 @@ backups/        recuperação privada; ignorada pelo Git
 dist/          build regenerável; ignorado pelo Git
 ```
 
-`node_modules/`, `dist/`, caches e relatórios são regeneráveis. `.env*`, credenciais, backups e rascunhos nunca devem ser versionados nem copiados para `public/`. Preserve `docs/sources/`: os testes comparam os conteúdos com essas fontes. As restantes notas históricas locais não fazem parte do website.
+`node_modules/`, `dist/`, caches e relatórios são regeneráveis. `.env*`, credenciais, backups e rascunhos nunca devem ser versionados nem copiados para `public/`. Preserve `docs/sources/`: os testes comparam os conteúdos com essas fontes. As notas e relatórios históricos locais foram preservados em `backups/project-notes-2026-11-18-*/` e não fazem parte do website. Os manifestos públicos de imagens em `docs/` continuam disponíveis para manutenção.
 
 Publique, futuramente, **apenas `dist/`**. O verificador do build recusa ficheiros não autorizados, mapas de código e padrões conhecidos de credenciais, e limita o JavaScript total a 500 KiB. Estas verificações são uma camada adicional, não uma garantia de deteção de todos os segredos.
 

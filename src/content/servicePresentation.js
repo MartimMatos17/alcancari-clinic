@@ -1,7 +1,7 @@
 import { media } from './media'
 
 // Presentation only: official service text and shared image assignments stay intact.
-// Sources and selection notes: docs/SERVICES_DESIGN.md.
+// Public source provenance: docs/media-inventory.json; operational guidance: README.md.
 const fromGallery = (slug, index) => media.galleries.services[slug][index]
 export const serviceSpace = {
   ...media.galleries.clinic.find(image => image.src.includes('031f2689')),
