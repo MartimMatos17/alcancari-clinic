@@ -1,3 +1,4 @@
+import { reduceMotion } from '../lib/appearance'
 
 import { useEffect } from 'react'
 
@@ -9,7 +10,7 @@ export default function ScrollReveal() {
 
     if (
       !('IntersectionObserver' in window) ||
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      reduceMotion()
     ) {
       return
     }

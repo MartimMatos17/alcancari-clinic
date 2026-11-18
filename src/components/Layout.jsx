@@ -1,3 +1,4 @@
+import { reduceMotion } from '../lib/appearance'
 import ComfortSettings from './ComfortSettings'
 import RecentPages from './RecentPages'
 import GlobalSearch from './GlobalSearch'
@@ -153,7 +154,7 @@ export default function Layout() {
       </main>
 
       {showTop && <button className="alc-back-top" type="button" aria-label="Voltar ao início da página" onClick={() => {
-        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        const reduced = reduceMotion()
         window.scrollTo({ top: 0, behavior: reduced ? 'instant' : 'smooth' })
         main.current?.focus({ preventScroll: true })
       }}><Icon name="arrow" /><span>Voltar ao topo</span></button>}
