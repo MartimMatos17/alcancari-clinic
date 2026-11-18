@@ -1,175 +1,113 @@
-
-<div align="center">
-
 # Clínica Alcançari
 
-### Website Institucional
+Website institucional em React/Vite, com administração editorial **exclusivamente local**. Em desenvolvimento: sem domínio associado, sem alojamento escolhido e sem publicação automática.
 
-**Um espaço digital pensado para acolher, informar e aproximar.**
+## Começar
 
-Website desenvolvido com React, Vite e JavaScript, com foco na experiência de utilização, acessibilidade, desempenho e apresentação dos serviços da Clínica Alcançari.
-
-![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![CSS](https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=css&logoColor=white)
-
-**Estado:** Em desenvolvimento · Ainda não publicado
-
-</div>
-
----
-
-## Sobre o projeto
-
-O projeto consiste na modernização do website institucional da Clínica Alcançari, com uma experiência responsiva e uma arquitetura frontend de manutenção simples.
-
-O objetivo é facilitar o acesso à informação sobre os serviços, os profissionais, as unidades e os contactos da clínica.
-
-## Funcionalidades
-
-| Área | Funcionalidades |
-|---|---|
-| Página inicial | Apresentação da clínica e navegação interativa |
-| Serviços | Nove áreas de intervenção, categorias e páginas de detalhe |
-| Equipa | Perfis profissionais, pesquisa e filtros |
-| Unidades | Fotografias, informações e localização |
-| Novidades | Publicações, pesquisa e categorias |
-| Contactos | Formulário de contacto e pedido de marcação |
-| WhatsApp | Contacto rápido e mensagens personalizadas |
-| Pesquisa global | Pesquisa de conteúdos do website |
-| Atlas | Exploração visual interativa de serviços, equipa, unidades e artigos |
-| Acessibilidade | Modo conforto, tamanho de texto, contraste, teclado e redução de movimento |
-
-As informações apresentadas são institucionais. O formulário não confirma automaticamente marcações nem deve ser utilizado para transmitir dados clínicos sensíveis.
-
-## Tecnologias
-
-- React — interface e componentes reutilizáveis
-- Vite — desenvolvimento e compilação
-- React Router — navegação e rotas
-- JavaScript — funcionalidades interativas
-- CSS — design responsivo e animações
-- Formspree — receção de pedidos de contacto, quando configurado
-- WebP — otimização das fotografias
-
-## Estrutura do projeto
-
-```text
-alcancari-clinic/
-├── public/
-│   └── images/
-│       ├── branding/
-│       ├── clinica/
-│       ├── equipa/
-│       ├── servicos/
-│       ├── unidades/
-│       └── blog/
-├── src/
-│   ├── components/
-│   ├── content/
-│   ├── hooks/
-│   ├── lib/
-│   ├── pages/
-│   └── styles/
-├── scripts/
-├── tests/
-├── index.html
-├── package.json
-└── vite.config.js
-```
-
-## Executar localmente
-
-### Requisitos
-
-- Node.js compatível com a versão indicada no projeto
-- npm
-
-### Instalação
+Requisitos: Node.js 24 LTS (ver `.nvmrc`) e npm 10 ou superior.
 
 ```bash
-git clone https://github.com/MartimMatos17/alcancari-clinic.git
-cd alcancari-clinic
 npm ci
 npm run dev
 ```
 
-O Vite apresenta o endereço local da aplicação no terminal.
-
-### Testes e compilação
+Abra o endereço local indicado pelo Vite. O servidor escuta apenas em `127.0.0.1`.
 
 ```bash
-npm run check
-npm run build
-npm run preview
+npm run check     # testes de conteúdos, segurança e funcionalidades
+npm run build     # gera dist/ e verifica o que pode ser público
+npm run preview   # demonstração local do build
 ```
 
-O build de produção é gerado na pasta `dist/`.
+O build é estático e pode ser preparado para Cloudflare Pages, Netlify ou equivalente. Não existe integração de deploy nem configuração ativa de domínio ou cabeçalhos de produção.
 
-## Configuração
+## O que existe
 
-O website pode ser executado localmente sem credenciais para explorar as páginas institucionais.
+| Área | Funcionalidades |
+| --- | --- |
+| Clínica e serviços | Informação institucional e textos originais das áreas de intervenção |
+| Equipa e unidades | Perfis, pesquisa, fotografias, visita virtual e informações práticas |
+| Blog | Artigos existentes, filtros, pesquisa, favoritos e ajustes de leitura |
+| Atlas | Exploração visual dos conteúdos publicados |
+| Connect | Percursos de descoberta e favoritos no navegador |
+| Conforto | Texto ajustável, contraste, menos movimento e navegação por teclado |
+| Contactos | Telefone, email, WhatsApp e formulário opcional |
+| Administração local | Inventário, revisão editorial, rascunhos, histórico e recuperação |
 
-O envio de pedidos depende de `PUBLIC_CONTACT_FORM_ENDPOINT=https://formspree.io/f/SEU_ID`, configurado no ambiente do build ou num `.env.local` ignorado pelo Git. É um endereço público, validado pelo Vite; nenhuma outra variável privada é exposta ao cliente. Sem este endereço, o site mantém os contactos alternativos. Configure a proteção contra spam e os destinatários no Formspree, e valide consentimento, privacidade e envio antes de publicar.
+Não são geridos pacientes, pagamentos, consultas ou processos clínicos. O formulário não confirma marcações. Os artigos que têm apenas excertos continuam identificados como tal.
 
-As credenciais privadas e os ficheiros `.env` não devem ser adicionados ao repositório. Variáveis incluídas no código cliente não devem conter segredos.
+## Administração local
 
-## Desempenho
-
-As imagens públicas foram convertidas e otimizadas para WebP.
-
-| Indicador | Resultado da otimização |
-|---|---|
-| Imagens convertidas | 88 |
-| Build anterior | Aproximadamente 34 MB |
-| Build otimizado | Aproximadamente 12 MB |
-| Redução | Aproximadamente 65% |
-
-Estes valores representam o tamanho dos ficheiros gerados, não o tráfego descarregado por cada visitante.
-
-## Segurança e privacidade
-
-- Website institucional sem base de dados de pacientes
-- Sem autenticação de utilizadores finais
-- Ficheiros privados excluídos do build público
-- Formulários sujeitos a validação
-- Informação de privacidade disponível no website
-- Dependências verificadas durante o desenvolvimento
-
-A revisão de segurança e privacidade para produção ainda está em curso. Um build aprovado não equivale a uma auditoria completa.
-
-## Administração local e preparação do lançamento
+Execute em **terminais separados**:
 
 ```bash
 node scripts/admin-local.mjs
-# Dashboard: http://127.0.0.1:4174/
+# http://127.0.0.1:4174/ — dashboard
+
 node scripts/admin-editor.mjs
-# Editor: http://127.0.0.1:4175/
+# http://127.0.0.1:4175/ — estúdio editorial
 ```
 
-Execute os painéis em terminais separados. Cada processo apresenta o seu código temporário de acesso; reiniciar invalida sessões e códigos anteriores. Opcionalmente, configure `ALCANCARI_ADMIN_PASSWORD` no ambiente privado com pelo menos 20 caracteres. Nunca a inclua no Git, em URLs ou em variáveis do frontend.
+Cada processo apresenta o seu código temporário no terminal. Abra o endereço de raiz no Safari ou Chrome e utilize o código desse painel. Ao reiniciar, atualize a página e use o novo código. `Ctrl+C` encerra o processo e invalida as suas sessões.
 
-O estúdio guarda apenas rascunhos em `backups/admin-drafts/`, com revisão, histórico e deteção de conflitos. Não publique estes servidores, nem os exponha por túneis ou proxies. Não gerem pacientes nem substituem uma administração online com autenticação multifator.
+Opcionalmente, defina `ALCANCARI_ADMIN_PASSWORD` no ambiente privado com pelo menos 20 caracteres; estes scripts não carregam automaticamente `.env`. Não coloque a palavra-passe em argumentos, URLs, código, capturas de ecrã ou Git.
 
-O CI verifica testes, build, sintaxe administrativa e vulnerabilidades conhecidas. Dependabot propõe atualizações semanais, sem aprovação ou merge automático. As configurações passam a vigorar no GitHub depois de integradas na branch predefinida. Proteção de branches, revisão obrigatória, MFA e alertas de segredos precisam de configuração na conta/repositório.
+Proteções implementadas: validação de Host e origem, autenticação no servidor, cookies HttpOnly/SameSite, tokens CSRF, limite de tentativas, CSP com nonce, expiração após 20 minutos de inatividade e limite absoluto de 2 horas. O HTTP sem cookie Secure é uma limitação deliberada deste acesso loopback; não constitui configuração para Internet.
 
-O build estático é gerado em `dist/` e pode ser alojado em Cloudflare Pages, Netlify ou equivalente. Não existe configuração de deploy, domínio, HSTS ou cabeçalhos de produção ativa neste projeto. Depois de escolhido o alojamento, configure o fallback das rotas React para `index.html` e os cabeçalhos CSP, anti-incorporação e HTTPS no fornecedor. A CSP deverá considerar os recursos locais, o envio Formspree e o iframe oficial do Facebook. Verifique as respostas reais antes do lançamento. Publique exclusivamente `dist/`, nunca o projeto inteiro nem os painéis administrativos.
+**Nunca exponha estes painéis por túnel, proxy, rede local ou alojamento público.** Uma futura administração online exige arquitetura própria, HTTPS, MFA e revisão de permissões e auditoria.
 
-Antes do lançamento, configure o domínio e HTTPS, reveja a política de privacidade e teste o envio do formulário e as integrações. A indexação continua desativada até aprovação. Auditorias automáticas não garantem ausência de vulnerabilidades.
+### Rascunhos e recuperação
 
-## Estado do projeto
+- `backups/admin-drafts/posts.json`: rascunhos atuais; nunca altera `src/content/posts.json`.
+- Histórico por publicação: até 20 versões anteriores, com recuperação no editor.
+- `backups/admin-drafts/copies/`: até 20 cópias independentes do ficheiro anterior, criadas antes da sua substituição.
+- Gravação com ficheiro temporário exclusivo, sincronização em disco e substituição atómica; ficheiros privados com modo `0600` e diretórios administrativos com `0700`.
+- O editor deteta conflitos entre janelas. Atualize antes de tentar guardar novamente e conserve o seu texto.
 
-O website encontra-se em desenvolvimento.
+No estúdio, abra **Cópias de segurança** (`/copias`). A recuperação funciona mesmo com JSON principal danificado. Exige confirmação, substitui todos os rascunhos e conserva uma cópia do estado substituído. Nunca recupera automaticamente dados danificados.
 
-Antes da publicação serão realizadas verificações finais de conteúdos, contactos, privacidade, formulários, acessibilidade, desempenho e configuração do alojamento.
+Cópias no mesmo disco não protegem de perda do computador. Mantenha uma cópia externa cifrada e teste a recuperação. Os arquivos antigos em `backups/` são material de recuperação, não lixo, e não são removidos pela retenção do Admin.
 
----
+## Configuração opcional
 
-<div align="center">
+| Variável | Utilização | Local |
+| --- | --- | --- |
+| `PUBLIC_CONTACT_FORM_ENDPOINT` | URL pública `https://formspree.io/f/SEU_ID`, validada pelo Vite | ambiente de build ou `.env.local` |
+| `ALCANCARI_ADMIN_PASSWORD` | Palavra-passe local opcional | ambiente do processo Admin |
+| `INSTAGRAM_ACCESS_TOKEN` | Credencial privada Meta | ambiente privado do build |
+| `INSTAGRAM_ACCOUNT_ID` | Identificador da conta profissional oficial | ambiente privado do build |
+| `META_GRAPH_VERSION` | Versão suportada `vNN.N` | ambiente privado do build |
 
-**Desenvolvido para a Clínica Alcançari**
+Sem endpoint, o formulário mantém os contactos alternativos. Configure os destinatários, proteção contra spam e privacidade no fornecedor e teste um envio autorizado antes do lançamento.
 
-*Tecnologia ao serviço de uma experiência mais simples e próxima.*
+A integração Instagram usa a API oficial Meta apenas no build; não faz scraping nem contacta a API durante o desenvolvimento. Sem autorização/configuração válida, mantém os artigos existentes. Sincronização agendada e publicação continuam pendentes de configuração externa.
 
-</div>
+## Organização e limpeza
+
+```text
+src/            interface, estilos e conteúdos públicos
+public/         recursos que podem ser publicados
+scripts/        build, administração e ferramentas de manutenção
+tests/         verificações automáticas
+docs/sources/  fontes públicas utilizadas para verificar os textos
+backups/        recuperação privada; ignorada pelo Git
+dist/          build regenerável; ignorado pelo Git
+```
+
+`node_modules/`, `dist/`, caches e relatórios são regeneráveis. `.env*`, credenciais, backups e rascunhos nunca devem ser versionados nem copiados para `public/`. Preserve `docs/sources/`: os testes comparam os conteúdos com essas fontes. As restantes notas históricas locais não fazem parte do website.
+
+Publique, futuramente, **apenas `dist/`**. O verificador do build recusa ficheiros não autorizados, mapas de código e padrões conhecidos de credenciais, e limita o JavaScript total a 500 KiB. Estas verificações são uma camada adicional, não uma garantia de deteção de todos os segredos.
+
+## GitHub e segurança
+
+O CI executa testes, sintaxe administrativa, auditoria npm e build. As ações estão fixadas por hash e usam permissões de leitura. Dependabot propõe atualizações semanais sem merge automático. Configurações novas só ficam plenamente integradas depois de aprovadas na branch predefinida.
+
+Mantenha MFA na conta, proteção da `main`, revisões e verificações obrigatórias, alertas de dependências e deteção de segredos conforme disponibilidade. A política de comunicação de vulnerabilidades está em [.github/SECURITY.md](.github/SECURITY.md). Não inclua dados pessoais ou credenciais em issues.
+
+## Antes da demonstração e lançamento
+
+A demonstração pode continuar inteiramente local, com `npm run build` e `npm run preview`.
+
+Antes de publicar: aprovar conteúdos e privacidade; testar teclado, telemóvel e navegadores; validar formulário; escolher alojamento e configurar HTTPS, cabeçalhos e fallback das rotas para `index.html`; testar as respostas reais; preparar recuperação externa. A indexação permanece desativada até aprovação.
+
+Um build aprovado ou uma auditoria npm sem alertas não garantem segurança absoluta. Os controlos precisam de manutenção e de validação no ambiente final.

@@ -45,3 +45,12 @@ coverage/
 # Local Python import tooling
 __pycache__/
 *.pyc
+
+# Local databases, editor recovery files and Python environments
+*.sqlite
+*.sqlite3
+*.sqlite-journal
+*.swp
+*.swo
+*~
+.venv/

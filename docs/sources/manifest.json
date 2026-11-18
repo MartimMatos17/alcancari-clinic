@@ -1,0 +1,257 @@
+{
+  "retrievedAt": "2026-11-12",
+  "entries": [
+    {
+      "id": "fisioterapia",
+      "url": "https://alcancari.com/fisioterapia/",
+      "textSha256": "a39e42469fb58cf0c2053226426cf34d6a0f44e32d075a503335a00f9266ccc9",
+      "characters": 1144
+    },
+    {
+      "id": "acupunctura",
+      "url": "https://alcancari.com/acupunctura/",
+      "textSha256": "d8151ff5bfdf69a2216b4eec66224e06800c66c5d6cbdfeca99e1d030cc56cf8",
+      "characters": 1223
+    },
+    {
+      "id": "psicologia",
+      "url": "https://alcancari.com/psicologia/",
+      "textSha256": "07c1b771385e1047d8ca2975501294089aca90c6a07cc063d4c938a7ec1fd061",
+      "characters": 903
+    },
+    {
+      "id": "terapia-da-fala",
+      "url": "https://alcancari.com/terapia-da-fala/",
+      "textSha256": "b1db762ae9dd9732c49b2420a439fa1a8f614fabf536d659d7de73dd0278544e",
+      "characters": 815
+    },
+    {
+      "id": "terapia-ocupacional",
+      "url": "https://alcancari.com/terapia-ocupacional/",
+      "textSha256": "6b1e9f7e81856dce5b4697834180de6cd78171a91ef7f0f4ea0f38f630546d00",
+      "characters": 11453
+    },
+    {
+      "id": "floortime",
+      "url": "https://alcancari.com/floortime/",
+      "textSha256": "d27b046271f354ce16cddb0aeec03e11ad321ae0d286cf56f33771479ce59e83",
+      "characters": 644
+    },
+    {
+      "id": "integracao-sensorial",
+      "url": "https://alcancari.com/integracao-sensorial/",
+      "textSha256": "442a5f586d5491bda9fc0263fb51ebf3b90306035d27f3d28abbcada5d811c42",
+      "characters": 713
+    },
+    {
+      "id": "alexandra-fernandes",
+      "url": "https://alcancari.com/corpo-clinico/",
+      "textSha256": "9469f4ee024a2efd100be747346dd5216db9a325a25e4e5098315655537b832d",
+      "characters": 354
+    },
+    {
+      "id": "andreia-machado",
+      "url": "https://alcancari.com/corpo-clinico/",
+      "textSha256": "e522c8e8cfd932e30d2c1999897c80ea8860041f28097b9eaed8b0c43c4f5adb",
+      "characters": 402
+    },
+    {
+      "id": "fabiana-rocha",
+      "url": "https://alcancari.com/corpo-clinico/",
+      "textSha256": "5402409c242aab7e036dff5e6a1c87c4db83cb8dc31b1271275d7ca131d5f7b7",
+      "characters": 424
+    },
+    {
+      "id": "ines-maia",
+      "url": "https://alcancari.com/corpo-clinico/",
+      "textSha256": "710e52c9acf04162472935024d45c619ce380d5cfde85c99b678940c6cec2fe4",
+      "characters": 362
+    },
+    {
+      "id": "ines-henriques",
+      "url": "https://alcancari.com/corpo-clinico/",
+      "textSha256": "8ea826d3c04c82ab357018f16b69d18c409f212e294be5ef771b233ef40f767a",
+      "characters": 432
+    },
+    {
+      "id": "maria-oliveira-silva",
+      "url": "https://alcancari.com/corpo-clinico/",
+      "textSha256": "4fe0bed28fcac10ccc81fded48b0fc3f62dd78355b766cce8089fa8452e0ccd3",
+      "characters": 951
+    },
+    {
+      "id": "sofia-costa",
+      "url": "https://alcancari.com/corpo-clinico/",
+      "textSha256": "e3eb8cf6481b44a467ee031fc2f4ad5c6e51a5fc565bc2818025db04535573f2",
+      "characters": 488
+    },
+    {
+      "id": "joana-simoes",
+      "url": "https://alcancari.com/corpo-clinico/",
+      "textSha256": "610db750244e3d60fe675adac45946434ac1f9e91f0577a69041f1a600b05d63",
+      "characters": 514
+    },
+    {
+      "id": "joana-bessa",
+      "url": "https://alcancari.com/corpo-clinico/",
+      "textSha256": "d5d802371dd845d6eac9579aa023c1b360053a199180ce6037676dbb4cc30d6f",
+      "characters": 1021
+    },
+    {
+      "id": "joana-martins",
+      "url": "https://alcancari.com/corpo-clinico/",
+      "textSha256": "72fc77f511b6192781dbf3517c8e70948bcde15fd6945ddbd07da455e5152c0b",
+      "characters": 247
+    },
+    {
+      "id": "filipa-lima",
+      "url": "https://alcancari.com/corpo-clinico/",
+      "textSha256": "535194ffcd27f9da940822de7cd2ce879e7e8b9c930c34a1c4d1587f2c39cc81",
+      "characters": 768
+    },
+    {
+      "id": "maria-joao-cunha",
+      "url": "https://alcancari.com/corpo-clinico/",
+      "textSha256": "84a3689cca83cbe65766bfa537247260206f65a89b3528459bba31d84ab882f1",
+      "characters": 517
+    },
+    {
+      "id": "isabel-lourenco",
+      "url": "https://alcancari.com/corpo-clinico/",
+      "textSha256": "5c5be1639695f6431b81d70a0a75232ba340c65c6505e1cde82b556d9fbc4735",
+      "characters": 324
+    },
+    {
+      "id": "luisa-perdiz",
+      "url": "https://alcancari.com/corpo-clinico/",
+      "textSha256": "f8d112569616b474f432ab8f8f574f722743a092d585328652c5fabd070ef481",
+      "characters": 559
+    },
+    {
+      "id": "sonia-teixeira",
+      "url": "https://alcancari.com/corpo-clinico/",
+      "textSha256": "3e37d603641970909277d8564b9a8d5ebefd70ef41f1de2b6efe9bd92b99e332",
+      "characters": 562
+    },
+    {
+      "id": "vania-peixoto",
+      "url": "https://alcancari.com/corpo-clinico/",
+      "textSha256": "e96b5ac09cf648b14f5614480d5faf8546d3680f8d8eb4c74cebbfde0000dd54",
+      "characters": 2194
+    },
+    {
+      "id": "seletividade-alimentar",
+      "url": "https://alcancari.com/blog/",
+      "textSha256": "048ab15eecf9f1481261915f9ee197dc77665f233b7e59e4a75d330d9c939934",
+      "characters": 318
+    },
+    {
+      "id": "curso-anos-incriveis-para-pais",
+      "url": "https://alcancari.com/blog/",
+      "textSha256": "fe76c9e7de2e48893a5da66dfb3f6e9f33b3a51d2a225bae13b4647fb4bb29d7",
+      "characters": 262
+    },
+    {
+      "id": "os-adultos-precisam-de-reaprender-a-brincar",
+      "url": "https://alcancari.com/blog/",
+      "textSha256": "e093f06b9cf7077f345b340b5c0261abb01c5f3c082672675b8254a4e7a2423e",
+      "characters": 281
+    },
+    {
+      "id": "atividades-da-rotina-diaria-para-estimular-o-desenvolvimento",
+      "url": "https://alcancari.com/blog/",
+      "textSha256": "416c2d94dc1adc3938ee982c0991cfd86360288e65db1ebe418d7daa18fc1ff1",
+      "characters": 335
+    },
+    {
+      "id": "o-que-e-a-hiperlexia",
+      "url": "https://alcancari.com/blog/",
+      "textSha256": "1de9377a7c6b75e8c6f9c21f287083ed4b6257b450bb014c656efa03a602b61a",
+      "characters": 193
+    },
+    {
+      "id": "motricidade-fina-o-que-e-e-como-se-desenvolve",
+      "url": "https://alcancari.com/blog/",
+      "textSha256": "7c94af7c12a769376c44109f5b0e29852c544c030582473abdf29f458f88c1de",
+      "characters": 207
+    },
+    {
+      "id": "o-meu-filho-anda-em-bicos-dos-pes-porque-e-que-isto-acontece",
+      "url": "https://alcancari.com/blog/",
+      "textSha256": "45508be02f44121c6c06249686cca747e717164358934d4c8f32651944089f58",
+      "characters": 181
+    },
+    {
+      "id": "como-brincar-com-uma-crianca-com-autismo",
+      "url": "https://alcancari.com/blog/",
+      "textSha256": "c50074c6b314a5faa7ea482c1fdbd8fe683d8724fd6b81185956491ab7a36a89",
+      "characters": 204
+    },
+    {
+      "id": "como-identificar-os-principais-sinais-de-autismo",
+      "url": "https://alcancari.com/blog/",
+      "textSha256": "448ecc66431514e19bc0c0d201dce17277e11108ad189c3c49ba0d57490452ff",
+      "characters": 184
+    },
+    {
+      "id": "birra-ou-crise-de-desregulacao-qual-e-a-diferenca",
+      "url": "https://alcancari.com/blog/",
+      "textSha256": "b3d4bc31440097b6c210b4e52fe2ea09a45493a6c3ef8472b83cfeff95c07c3f",
+      "characters": 181
+    },
+    {
+      "id": "intervencao-da-terapia-ocupacional-na-perturbacao-de-hiperatividade-e-defice-de-atencao",
+      "url": "https://alcancari.com/blog/",
+      "textSha256": "8d6af55b619f1cd995ac848bed46a2c69c37c8b3a66a3510f0ce287180fd097f",
+      "characters": 334
+    },
+    {
+      "id": "reportagem-os-desafios-dos-pais-de-criancas-com-necessidades-educativas-especiais",
+      "url": "https://alcancari.com/blog/",
+      "textSha256": "4dde70db0436b9b72db3878c1285dbb4510f266eba68b037e333b8f0eb94014d",
+      "characters": 205
+    },
+    {
+      "id": "a-clinica",
+      "url": "https://alcancari.com/a-clinica/",
+      "textSha256": "1e37ffd746ec60d727a86cc3520dc427a8018325ca89c6c863b04ac2d9ce42d6",
+      "characters": 211
+    },
+    {
+      "id": "apresentacao",
+      "url": "https://alcancari.com/",
+      "textSha256": "4ef2cce8140d096218531ff1dde51f92ebd156618cc202948935e21456e97758",
+      "characters": 743
+    },
+    {
+      "id": "unidade-leca-da-palmeira",
+      "url": "https://alcancari.com/unidade-leca-da-palmeira/",
+      "textSha256": "c53f356b4d9f35c1d212ec4cf1a1b1b5dba467828d7dbbfcc4fb26719f3eb3d0",
+      "characters": 182
+    },
+    {
+      "id": "unidade-sao-mamede-de-infesta",
+      "url": "https://alcancari.com/unidade-sao-mamede-de-infesta/",
+      "textSha256": "0874426b3f6aab34b503908499c073f7d8b635f124e606ec1b1650bd72eb8617",
+      "characters": 186
+    }
+  ],
+  "htmlHashes": {
+    "unidades": "c1405be6651925edde57e35c27bbd9005cda837e2b3c8416371bac6bc4e7328e",
+    "unidade-sao-mamede-de-infesta": "d89f7a9006e36d47739fe4492d730b0906427667e85dc1665eae9d13d31c16dd",
+    "unidade-leca-da-palmeira": "10ea33da6f09609bc83c6be6e9a993bb6d6e9daf78b7d040a53f361d8674c069",
+    "contacto": "80e5b22652b2820b7f8a714ce3cae23007c3d6f073022718142f9a4c0ce8b05d",
+    "blog": "4e594a8bb9ac04059097120171116a8b544168c828887eb16e13bb2cb4ff119a",
+    "integracao-sensorial": "2b16b7ff2d1a4610ec86136d998b862c732e8ddcf36de436d3c293291e74e204",
+    "floortime": "63148a10851827839a5269bd0ad873e76dc74ff77628f8377493aa9231276768",
+    "terapia-ocupacional": "688e29ee9fe7033f7cbbdab2ce2b6567584f93739dd767ea675b4d140301f4c8",
+    "terapia-da-fala": "9174ab28b692747f22d399b183b32eb9d954351a4cd7145342a9a538b4a7b10d",
+    "psicologia": "a459290ac1dccfb3958b07a1376a6a5194ca665d72349fc55a466987ec3fb6d8",
+    "acupunctura": "03aeb7f65966b27ee9a5b91c425eb029a847698aae3160516cdd4e9c456c5732",
+    "fisioterapia": "04e51536db9d3c2992775d9d479be79ba3ad62661a538d42ee34d4fdefdfb688",
+    "servicos": "53932f04658afac27a6b057f440ed8540c27c79f8b183bf26b19d3949526cb84",
+    "corpo-clinico": "2dcb114d94ebde42d902dc8759d22ee86e92dfb742cfbd08835524eed623cddf",
+    "a-clinica": "c69efe95e7c5f98d93ea2fcadc86822507b27b5cc1c97f34ad0886adeab05600",
+    "home": "4a201a4719ed5796fb66441815f3a210f0712e2b5007f74516b8c8e77418f718"
+  }
+}
