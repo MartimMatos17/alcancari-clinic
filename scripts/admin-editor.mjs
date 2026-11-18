@@ -1,291 +1,68 @@
-import { createServer } from 'node:http'
-import { readFileSync, mkdirSync, writeFileSync } from 'node:fs'
-import { join } from 'node:path'
+import { startAdmin } from './admin-security.mjs'
+import { postCatalog, readDrafts, saveDraft, revision, states } from './admin-content.mjs'
+import { shell, escape, dateLabel } from './admin-ui.mjs'
 
-const HOST = '127.0.0.1'
 const PORT = 4175
-const ORIGIN = `http://${HOST}:${PORT}`
-
-const source = join(process.cwd(), 'src/content/posts.json')
-const draftDir = join(process.cwd(), 'backups/admin-drafts')
-const draftFile = join(draftDir, 'posts.json')
-
-const escape = value => String(value ?? '').replace(
-  /[&<>"']/g,
-  character => ({
-    '&': '&amp;', '<': '&lt;', '>': '&gt;',
-    '"': '&quot;', "'": '&#39;',
-  })[character]
-)
-
-function getPosts() {
-  return JSON.parse(readFileSync(source, 'utf8'))
-}
-
-function getDrafts() {
-  try {
-    return JSON.parse(readFileSync(draftFile, 'utf8'))
-  } catch (error) {
-    if (error.code === 'ENOENT') return {}
-    throw error
-  }
-}
-
-function render(message = '') {
-  const posts = getPosts()
-  const drafts = getDrafts()
-
-  const options = posts.map(post => `
-    <option value="${escape(post.slug)}">
-      ${escape(post.title)}
-    </option>
-  `).join('')
-
-  const cards = posts.map(post => {
-    const draft = drafts[post.slug]
-    return `
-      <article>
-        <div>
-          <strong>${escape(post.title)}</strong>
-          <p>${escape(post.category)}</p>
-        </div>
-        <span>${draft ? 'Rascunho guardado' : 'Original'}</span>
-      </article>
-    `
-  }).join('')
-
-  const data = JSON.stringify(posts.map(post => ({
-    slug: post.slug,
-    title: drafts[post.slug]?.title ?? post.title,
-    category: drafts[post.slug]?.category ?? post.category,
-    summary: drafts[post.slug]?.summary ?? post.summary,
-  }))).replace(/</g, '\\u003c')
-
-  return `<!doctype html>
-<html lang="pt-PT">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex">
-<title>Alcançari — Editor Local</title>
-<style>
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    font-family: system-ui, sans-serif;
-    background: #f3f8f6;
-    color: #173f4a;
-  }
-  header {
-    padding: 25px 5%;
-    background: #173f4a;
-    color: white;
-  }
-  header small { display: block; opacity: .7; margin-top: 5px; }
-  main { max-width: 1100px; margin: auto; padding: 45px 22px; }
-  h1 {
-    font: 400 clamp(32px,5vw,52px) Georgia,serif;
-    margin: 0 0 15px;
-  }
-  .intro { color: #62787a; line-height: 1.8; }
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 22px;
-    margin-top: 32px;
-  }
-  .panel {
-    min-width: 0;
-    border: 1px solid #e1ebe8;
-    border-radius: 20px;
-    padding: 28px;
-    background: white;
-  }
-  label { display: block; margin: 18px 0 8px; font-weight: 650; }
-  input, select, textarea {
-    width: 100%;
-    padding: 13px;
-    border: 1px solid #cbdedb;
-    border-radius: 10px;
-    background: white;
-    color: #173f4a;
-    font: inherit;
-  }
-  textarea { min-height: 165px; resize: vertical; line-height: 1.65; }
-  button {
-    margin-top: 22px;
-    padding: 15px 23px;
-    border: 0;
-    border-radius: 30px;
-    background: #147c91;
-    color: white;
-    font: inherit;
-    font-weight: 700;
-    cursor: pointer;
-  }
-  button:hover { background: #173f4a; }
-  article {
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    padding: 15px 0;
-    border-bottom: 1px solid #e7eeeb;
-  }
-  article p { margin: 6px 0 0; color: #718487; font-size: 12px; }
-  article span { color: #147c91; font-size: 11px; white-space: nowrap; }
-  .notice {
-    padding: 15px;
-    border-radius: 10px;
-    background: #e4f3ef;
-    color: #285c56;
-  }
-  @media(max-width:750px) {
-    .grid { grid-template-columns: 1fr; }
-  }
-</style>
-</head>
-<body>
-<header>
-  <strong>ALCANÇARI / ADMIN</strong>
-  <small>Editor local de conteúdos — apenas rascunhos</small>
-</header>
-<main>
-  <h1>Gerir publicações.</h1>
-  <p class="intro">
-    Edita títulos, categorias e resumos.
-    As alterações ficam guardadas apenas no teu Mac.
-  </p>
+const fields = ['title', 'category', 'summary', 'note']
+const labels = { title: 'Título', category: 'Categoria', summary: 'Resumo', note: 'Nota interna de revisão' }
+const limits = { title: 180, category: 100, summary: 1500, note: 1000 }
+function render(security, slug, message = '') {
+  const posts = postCatalog()
+  const drafts = readDrafts()
+  const original = posts.find(post => post.slug === slug) || posts[0]
+  if (!original) return shell({ ...security, title: 'Estúdio editorial', subtitle: 'Ainda não existem publicações disponíveis para edição.', body: '', editor: true })
+  const current = Object.hasOwn(drafts, original.slug) ? drafts[original.slug] : null
+  const draft = { ...original, note: '', ...current }
+  const tokens = `<input type="hidden" name="csrf" value="${security.csrf}"><input type="hidden" name="slug" value="${escape(original.slug)}"><input type="hidden" name="version" value="${revision(current)}"><input type="hidden" name="sourceVersion" value="${revision(original)}">`
+  const history = Array.isArray(current?.history) ? current.history : []
+  const body = `<div class="actions"><a class="button" href="/exportar">Exportar rascunhos JSON ↓</a><span class="badge">${Object.keys(drafts).filter(key => posts.some(post => post.slug === key)).length} publicações com rascunho</span></div>
   ${message ? `<p class="notice" role="status">${escape(message)}</p>` : ''}
-  <div class="grid">
-    <section class="panel">
-      <h2>Editar publicação</h2>
-      <form method="POST" action="/guardar">
-        <label for="post">Publicação</label>
-        <select id="post" name="slug" required>${options}</select>
-
-        <label for="title">Título</label>
-        <input id="title" name="title" maxlength="180" required>
-
-        <label for="category">Categoria</label>
-        <input id="category" name="category" maxlength="100" required>
-
-        <label for="summary">Resumo</label>
-        <textarea id="summary" name="summary"
-          maxlength="1500" required></textarea>
-
-        <button type="submit">Guardar rascunho</button>
-      </form>
-    </section>
-    <section class="panel">
-      <h2>Publicações existentes</h2>
-      ${cards}
-    </section>
-  </div>
-</main>
-<script type="application/json" id="post-data">${data}</script>
-<script>
-  const posts = JSON.parse(
-    document.getElementById('post-data').textContent
-  );
-  const select = document.getElementById('post');
-  const fields = ['title', 'category', 'summary'];
-
-  function populate() {
-    const post = posts.find(item => item.slug === select.value);
-    if (!post) return;
-    fields.forEach(name => {
-      document.getElementById(name).value = post[name] || '';
-    });
-  }
-  select.addEventListener('change', populate);
-  populate();
-</script>
-</body>
-</html>`
+  <section class="panel"><label for="post">Escolher publicação</label><select id="post">${posts.map(post => `<option value="${escape(post.slug)}" ${post.slug === original.slug ? 'selected' : ''}>${escape(post.title)}${Object.hasOwn(drafts, post.slug) ? ' · ' + (states[drafts[post.slug]?.status] || 'Em edição') : ' · Original'}</option>`).join('')}</select><p class="status-line">${current ? 'Última gravação: ' + dateLabel(current.updatedAt) : 'A editar a partir do original. Ainda sem rascunho.'}</p></section>
+  <div class="columns"><section class="panel"><div class="section-head"><h2>A sua edição</h2><span class="badge" id="save-status">Sem alterações por guardar</span></div><form id="editor-form" method="post" action="/guardar">${tokens}
+  ${fields.map(name => `<div class="field"><label for="${name}">${labels[name]} <span class="counter" id="count-${name}"></span></label>${['summary', 'note'].includes(name) ? `<textarea id="${name}" name="${name}" maxlength="${limits[name]}" ${name !== 'note' ? 'required' : ''}>${escape(draft[name])}</textarea>` : `<input id="${name}" name="${name}" maxlength="${limits[name]}" required value="${escape(draft[name])}">`}${name === 'note' ? '<small>Apenas para revisão editorial. Não introduza informações de pacientes ou credenciais.</small>' : ''}</div>`).join('')}
+  <div class="field"><label for="status">Estado de trabalho</label><select id="status" name="status">${Object.entries(states).map(([key, label]) => `<option value="${key}" ${(current?.status || 'draft') === key ? 'selected' : ''}>${label}</option>`).join('')}</select><small>«Revisto» organiza o trabalho editorial; não publica o conteúdo nem representa aprovação clínica.</small></div><div class="actions"><button class="primary" id="save-button">Guardar rascunho</button><button type="button" id="reset-fields">Repor campos guardados</button></div><p class="status-line" role="status" id="edit-status">Atalho para guardar: Ctrl+S / ⌘S.</p></form></section>
+  <section class="panel"><h2>Pré-visualização em tempo real</h2><div class="preview"><span class="overline" id="preview-category"></span><h3 id="preview-title"></h3><p id="preview-summary"></p></div><p class="muted">Apresentação do título e resumo em rascunho. O texto completo do artigo permanece no original.</p><h3>Revisão rápida</h3><ul class="muted" id="review-checks"></ul>${original.status === 'excerpt-only' ? '<p class="notice warning">A origem contém apenas um excerto. Este editor não cria nem completa o texto do artigo.</p>' : ''}</section></div>
+  <section class="panel"><h2>Original e rascunho, lado a lado</h2><div class="comparison"><div><p class="overline">ORIGINAL NO PROJETO</p>${['title', 'category', 'summary'].map(name => `<h3>${labels[name]}</h3><p>${escape(original[name])}</p>`).join('')}</div><div id="comparison-draft"><p class="overline">EDIÇÃO ATUAL</p>${['title', 'category', 'summary'].map(name => `<h3>${labels[name]}</h3><p id="compare-${name}"></p>`).join('')}</div></div><details style="margin-top:22px"><summary>Consultar texto original completo disponível</summary>${(original.blocks || []).map(block => block.type === 'list' ? `<ul>${block.items.map(item => `<li>${escape(item)}</li>`).join('')}</ul>` : `<p style="white-space:pre-wrap;line-height:1.8">${escape(block.text)}</p>`).join('')}</details></section>
+  <section class="panel" id="historico"><div class="section-head"><h2>Histórico recuperável</h2><span class="badge">${history.length} / 20 versões anteriores</span></div><p class="muted">Cada gravação conserva a versão anterior. Restaurar cria um novo rascunho em edição e preserva o historial, até ao limite de 20 versões.</p>${history.length ? history.map(snapshot => `<details class="history"><summary>${escape(dateLabel(snapshot.updatedAt))} · ${escape(snapshot.title)} · ${escape(states[snapshot.status] || 'Em edição')}</summary><p>${escape(snapshot.summary)}</p><p class="muted">Nota: ${escape(snapshot.note || 'Sem nota interna.')}</p><form method="post" action="/restaurar" data-confirm="Restaurar esta versão como rascunho? A edição guardada atual ficará no histórico.">${tokens}<input type="hidden" name="restoreId" value="${escape(snapshot.id)}"><button>Restaurar esta versão</button></form></details>`).join('') : '<p class="muted">As versões anteriores aparecem aqui a partir da segunda gravação.</p>'}<form method="post" action="/original" data-confirm="Criar um rascunho a partir do original? O rascunho guardado atual ficará no histórico.">${tokens}<button>Recuperar os campos do original</button></form></section>`
+  const script = `const data = JSON.parse(document.getElementById('admin-data').textContent);
+const form = document.getElementById('editor-form');
+const fields = ['title','category','summary','note'];
+const selector = document.getElementById('post');
+const initial = Object.fromEntries([...new FormData(form)]);
+let dirty = false;
+function update() {
+  dirty = [...new FormData(form)].some(([key, value]) => initial[key] !== value);
+  document.getElementById('save-status').textContent = dirty ? 'Alterações por guardar' : 'Sem alterações por guardar';
+  fields.forEach(name => { const value = document.getElementById(name).value; document.getElementById('count-' + name).textContent = value.length + ' / ' + document.getElementById(name).maxLength; if (name !== 'note') { document.getElementById('preview-' + name).textContent = value; const comparison = document.getElementById('compare-' + name); comparison.textContent = value; comparison.classList.toggle('changed', value !== data.original[name]); } });
+  const checks = [document.getElementById('title').value.trim() ? '✓ Título preenchido' : '○ Preencha o título', document.getElementById('category').value.trim() ? '✓ Categoria preenchida' : '○ Preencha a categoria', document.getElementById('summary').value.trim() ? '✓ Resumo preenchido' : '○ Preencha o resumo', 'Texto do artigo preservado no original'];
+  const list = document.getElementById('review-checks'); list.replaceChildren(...checks.map(text => { const li = document.createElement('li'); li.textContent = text; return li; }));
 }
-
-createServer(async (req, res) => {
-  const headers = {
-    'Content-Type': 'text/html; charset=utf-8',
-    'Cache-Control': 'no-store',
-    'X-Content-Type-Options': 'nosniff',
-    'Content-Security-Policy':
-      "default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'",
+update(); form.addEventListener('input', update); form.addEventListener('change', update);
+form.addEventListener('submit', () => { dirty = false; document.getElementById('save-button').disabled = true; document.getElementById('edit-status').textContent = 'A guardar…'; });
+window.addEventListener('pageshow', () => { document.getElementById('save-button').disabled = false; update(); });
+selector.addEventListener('change', () => { if (dirty && !confirm('Tem alterações por guardar. Mudar de publicação?')) { selector.value = data.original.slug; return; } dirty = false; window.location.href = '/?slug=' + encodeURIComponent(selector.value); });
+document.getElementById('reset-fields').addEventListener('click', () => { if (dirty && !confirm('Repor os campos tal como estavam ao abrir a página?')) return; fields.concat('status').forEach(name => { document.getElementById(name).value = initial[name]; }); update(); });
+window.addEventListener('beforeunload', event => { if (dirty) { event.preventDefault(); event.returnValue = ''; } });
+window.addEventListener('keydown', event => { if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 's') { event.preventDefault(); if (!document.getElementById('save-button').disabled) form.requestSubmit(); } });
+document.querySelectorAll('form[data-confirm]').forEach(target => target.addEventListener('submit', event => { if ((dirty && !confirm('As alterações por guardar serão perdidas. Continuar?')) || !confirm(target.dataset.confirm)) event.preventDefault(); else dirty = false; }));`
+  return shell({ ...security, title: 'O seu estúdio editorial.', subtitle: 'Escreva, compare, reveja e recupere versões. Cada alteração continua em rascunho.', body, script, data: { original }, editor: true })
+}
+export function editorHandler(req, res, security) {
+  const url = new URL(req.url, 'http://127.0.0.1:4175')
+  if (req.method === 'GET' && url.pathname === '/exportar') {
+    res.setHeader('Content-Type', 'application/json; charset=utf-8')
+    res.setHeader('Content-Disposition', 'attachment; filename="alcancari-rascunhos.json"')
+    return security.send(200, JSON.stringify({ exportedAt: new Date().toISOString(), scope: 'local-editorial-drafts', drafts: readDrafts() }, null, 2))
   }
-
-  try {
-    if (req.method === 'GET' && req.url === '/') {
-      res.writeHead(200, headers)
-      return res.end(render())
-    }
-
-    if (req.method === 'POST' && req.url === '/guardar') {
-      if (
-        req.headers.origin !== ORIGIN ||
-        !req.headers['content-type']?.startsWith(
-          'application/x-www-form-urlencoded'
-        )
-      ) {
-        res.writeHead(403)
-        return res.end('Pedido recusado')
-      }
-
-      let body = ''
-      for await (const chunk of req) {
-        body += chunk.toString()
-        if (body.length > 10000) {
-          res.writeHead(413)
-          return res.end('Pedido demasiado grande')
-        }
-      }
-
-      const params = new URLSearchParams(body)
-      const slug = params.get('slug')
-      const post = getPosts().find(item => item.slug === slug)
-
-      if (!post) {
-        res.writeHead(400)
-        return res.end('Publicação desconhecida')
-      }
-
-      const title = (params.get('title') || '').trim()
-      const category = (params.get('category') || '').trim()
-      const summary = (params.get('summary') || '').trim()
-
-      if (
-        !title || !category || !summary ||
-        title.length > 180 ||
-        category.length > 100 ||
-        summary.length > 1500
-      ) {
-        res.writeHead(400)
-        return res.end('Dados inválidos')
-      }
-
-      const drafts = getDrafts()
-      drafts[slug] = { title, category, summary }
-
-      mkdirSync(draftDir, { recursive: true, mode: 0o700 })
-      writeFileSync(
-        draftFile,
-        JSON.stringify(drafts, null, 2) + '\n',
-        { encoding: 'utf8', mode: 0o600 }
-      )
-
-      res.writeHead(303, {
-        Location: '/',
-        'Cache-Control': 'no-store',
-      })
-      return res.end()
-    }
-
-    res.writeHead(404)
-    res.end('Não encontrado')
-  } catch (error) {
-    console.error('Erro no editor:', error.message)
-    res.writeHead(500)
-    res.end('Erro interno')
-  }
-}).listen(PORT, HOST, () => {
-  console.log(`Editor Alcançari: ${ORIGIN}/`)
-})
+  if (req.method === 'GET' && url.pathname === '/') return security.send(200, render(security, url.searchParams.get('slug'), url.searchParams.get('guardado') === '1' ? 'Rascunho guardado. O site publicado não foi alterado.' : ''))
+  if (req.method !== 'POST' || !['/guardar', '/original', '/restaurar'].includes(url.pathname)) return security.send(404, 'Página não encontrada.')
+  const params = security.params
+  const allowed = ['csrf', 'slug', 'version', 'sourceVersion', 'restoreId', 'status', ...fields]
+  if ([...params.keys()].some(key => !allowed.includes(key))) return security.send(400, 'Dados inválidos.')
+  const action = url.pathname === '/original' ? 'original' : url.pathname === '/restaurar' ? 'restore' : 'save'
+  const next = Object.fromEntries(fields.concat('status', 'restoreId').map(name => [name, params.get(name) || '']))
+  const result = saveDraft(params.get('slug'), next, params.get('version'), params.get('sourceVersion'), action)
+  if (result.code !== 200) return security.send(result.code, shell({ ...security, editor: true, title: 'A alteração não foi guardada.', subtitle: result.message, body: `<section class="panel"><h2>Conserve a sua edição</h2><p class="muted">Copie estes campos antes de atualizar a página. Nenhum conteúdo publicado foi alterado.</p>${fields.map(name => `<label>${labels[name]}<textarea readonly>${escape(next[name])}</textarea></label>`).join('')}<a class="button" href="/?slug=${encodeURIComponent(params.get('slug') || '')}">Atualizar conteúdo</a></section>` }))
+  res.writeHead(303, { Location: `/?slug=${encodeURIComponent(params.get('slug'))}&guardado=1` }); res.end()
+}
+startAdmin({ port: PORT, title: 'Estúdio editorial Alcançari', handle: editorHandler })
