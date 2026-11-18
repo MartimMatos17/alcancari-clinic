@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom'
 import { useEffect, useRef, useState } from 'react'
 import '../styles/site-utilities.css'
 
@@ -22,5 +23,5 @@ export function Modal({ children, label, onClose, className = '', onKeyDown }) {
   const ref = useRef(null)
   const close = useRef(onClose); close.current = onClose
   useEffect(() => { const dialog = ref.current; const active = document.activeElement; const overflow = document.body.style.overflow; dialog.showModal(); document.body.style.overflow = 'hidden'; return () => { dialog.close(); document.body.style.overflow = overflow; if (active?.isConnected) active.focus() } }, [])
-  return <dialog ref={ref} aria-label={label} className={`utility-modal ${className}`} onCancel={event => { event.preventDefault(); close.current() }} onKeyDown={onKeyDown} onClick={event => { if (event.target === event.currentTarget) close.current() }}><div className="utility-modal__inner"><button type="button" className="utility-modal__close utility-button" onClick={onClose} aria-label="Fechar">✕</button>{children}</div></dialog>
+  return createPortal(<dialog ref={ref} aria-label={label} className={`utility-modal ${className}`} onCancel={event => { event.preventDefault(); close.current() }} onKeyDown={onKeyDown} onClick={event => { if (event.target === event.currentTarget) close.current() }}><div className="utility-modal__inner"><button type="button" className="utility-modal__close utility-button" onClick={onClose} aria-label="Fechar">✕</button>{children}</div></dialog>, document.body)
 }

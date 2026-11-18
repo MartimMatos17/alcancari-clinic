@@ -7,6 +7,7 @@ import NotFoundPage from './pages/NotFoundPage'
 import WhatsAppWidget from './components/WhatsAppWidget'
 import { legacyRoutes } from './content/routes.js'
 
+const AtlasPage = lazy(() => import('./pages/AtlasPage'))
 const ClinicPage = lazy(() => import('./pages/ClinicPage'))
 const ServicesPage = lazy(() => import('./pages/ServicesPage'))
 const TeamDetailPage = lazy(() => import('./pages/TeamDetailPage'))
@@ -23,6 +24,7 @@ export default function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<HomePage />} />
+          <Route path="atlas" element={<AtlasPage />} />
           <Route path="clinica" element={<ClinicPage />} />
           <Route path="servicos" element={<ServicesPage />} />
           <Route path="servicos/:slug" element={<DetailPage kind="service" />} />

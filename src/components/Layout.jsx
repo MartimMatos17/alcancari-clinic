@@ -1,3 +1,5 @@
+import ComfortSettings from './ComfortSettings'
+import RecentPages from './RecentPages'
 import GlobalSearch from './GlobalSearch'
 import ScrollReveal from './ScrollReveal'
 import '../styles/microinteractions.css'
@@ -10,6 +12,13 @@ import '../styles/layout-redesign.css'
 
 export default function Layout() {
   const [open, setOpen] = useState(false)
+  const [showTop, setShowTop] = useState(false)
+  useEffect(() => {
+    const update = () => setShowTop(window.scrollY > Math.max(700, window.innerHeight))
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    return () => window.removeEventListener('scroll', update)
+  }, [])
   const location = useLocation()
   const menuButton = useRef(null)
   const main = useRef(null)
@@ -54,7 +63,7 @@ export default function Layout() {
 
       <div className="site-kicker alc-layout-kicker">
         <span>Clínica Alcançari</span>
-        <span>Leça da Palmeira · São Mamede de Infesta</span>
+        <Link to="/unidades">Leça da Palmeira · São Mamede de Infesta <span aria-hidden="true">↗</span></Link>
       </div>
 
       <header className="site-header alc-layout-header">
@@ -128,7 +137,7 @@ export default function Layout() {
       </header>
 
       <main id="conteudo" ref={main} tabIndex={-1}>
-  <ScrollReveal />
+          <ScrollReveal />
         <Suspense
           fallback={
             <p
@@ -143,6 +152,12 @@ export default function Layout() {
         </Suspense>
       </main>
 
+      {showTop && <button className="alc-back-top" type="button" aria-label="Voltar ao início da página" onClick={() => {
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        window.scrollTo({ top: 0, behavior: reduced ? 'instant' : 'smooth' })
+        main.current?.focus({ preventScroll: true })
+      }}><Icon name="arrow" /><span>Voltar ao topo</span></button>}
+      <RecentPages />
       <footer className="site-footer alc-layout-footer">
         <div className="container-shell alc-layout-footer-main">
           <div className="alc-layout-footer-about">
@@ -169,6 +184,7 @@ export default function Layout() {
               ao acompanhamento e ao desenvolvimento.
             </p>
 
+            <ComfortSettings />
             <div className="alc-layout-footer-units">
               <span>Leça da Palmeira</span>
               <span>São Mamede de Infesta</span>

@@ -35,8 +35,8 @@ test('datas inválidas não são apresentadas como datas reais', () => {
   assert.match(formatDate('2026-11-09'), /novembro/)
 })
 
-test('preparação mantém indexação desligada e as sete páginas públicas', () => {
+test('preparação mantém indexação desligada e as páginas públicas e o Atlas', () => {
   assert.equal(site.indexingEnabled, false)
   assert.equal(site.url, '')
-  assert.deepEqual(navigation.map(item => item.path), ['/', '/clinica', '/servicos', '/equipa', '/unidades', '/novidades', '/contactos'])
+  assert.deepEqual(navigation.map(item => item.path), ['/', '/clinica', '/servicos', '/equipa', '/unidades', '/novidades', '/atlas', '/contactos'])
 })

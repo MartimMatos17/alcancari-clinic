@@ -69,3 +69,14 @@
 @media (max-width: 1000px) { .blog-edition { display: none; } .blog-card--featured { grid-template-columns: 1.1fr 1fr; } .blog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .blog-reading-layout { grid-template-columns: 155px minmax(0, 1fr); gap: 35px; } }
 @media (max-width: 640px) { .blog-intro { padding-block: 42px 30px; } .blog-card--featured { grid-template-columns: 1fr; margin-bottom: 45px; } .blog-card--featured .media-frame { min-height: 0; aspect-ratio: 1.5; } .blog-library__heading { flex-direction: column; align-items: flex-start; gap: 20px; } .blog-search { width: 100%; } .blog-grid { grid-template-columns: 1fr; gap: 32px; } .blog-library { padding-bottom: 55px; } .blog-filters button { font-size: .72rem; padding: 8px 12px; } .blog-article__header { padding-block: 25px 30px; text-align: left; } .blog-back { margin-bottom: 35px; } .blog-article__header .blog-meta { justify-content: flex-start; } .blog-article__cover .media-frame { aspect-ratio: 1.4; } .blog-reading-layout { display: block; padding-block: 35px 50px; } .blog-reading-aside { margin-bottom: 30px; } .blog-reading-aside > p:not(.blog-kicker) { margin-block: 10px; } .blog-article__end { align-items: flex-start; flex-direction: column; } .blog-related { padding-block: 40px 55px; } }
 @media (prefers-reduced-motion: reduce) { .blog-card .media-frame img { transition: none; } }
+
+.blog-reading-tools { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; border-block: 1px solid #d8dcd2; padding-block: 12px; margin-bottom: 28px; font-family: var(--font-sans); }
+.blog-reading-tools > span { font-size: .65rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: #637168; }
+.blog-reading-tools > div { display: flex; gap: 5px; }
+.blog-reading-tools button { min-height: 40px; border: 1px solid transparent; background: transparent; color: #253f38; border-radius: 24px; padding: 8px 13px; font: inherit; font-size: .76rem; }
+.blog-reading-tools button[aria-pressed=true] { background: #e5eade; border-color: #bdc7bc; }
+.blog-reading-tools button:hover { background: #eef0e8; }
+.blog-prose .blog-adjusted-text--1 .rich-content { font-size: 1.5rem; }
+.blog-prose .blog-adjusted-text--2 .rich-content { font-size: 1.75rem; }
+.blog-adjusted-text { overflow-wrap: anywhere; }
+@media print { .blog-reading-tools { display: none; } }

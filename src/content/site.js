@@ -41,6 +41,7 @@ export const navigation = [
   { path: '/equipa', label: 'Equipa' },
   { path: '/unidades', label: 'Unidades' },
   { path: '/novidades', label: 'Blog' },
+  { path: '/atlas', label: 'Atlas' },
   { path: '/contactos', label: 'Contactos' },
 ]
 

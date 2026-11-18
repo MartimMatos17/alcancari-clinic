@@ -1,3 +1,4 @@
+import DiscoveryWall from '../components/DiscoveryWall'
 
 import { Link } from 'react-router-dom'
 import { content, site } from '../content/site'
@@ -17,6 +18,13 @@ export default function HomePage() {
   const copy = content.home
   const services = getPublished(site.services)
   const posts = getPublished(site.posts).slice(0, 3)
+  const members = getPublished(site.team)
+  const roles = new Set()
+  const featuredTeam = members.filter(member => {
+    if (!member.image || roles.has(member.role)) return false
+    roles.add(member.role)
+    return true
+  }).slice(0, 3)
 
   return (
     <div className="alc-home">
@@ -89,8 +97,20 @@ export default function HomePage() {
         </div>
       </section>
 
+      <nav className="container-shell alc-home-shortcuts" aria-label="Encontre o seu ponto de partida">
+        <div className="alc-home-shortcuts__intro"><p className="alc-home-eyebrow">COMO PODEMOS AJUDAR?</p><h2>O seu próximo passo,<br /><em>com mais clareza.</em></h2></div>
+        {[{ to: '/servicos', number: '01', title: 'Encontrar um serviço', text: 'Conheça as áreas de intervenção.' }, { to: '/equipa', number: '02', title: 'Conhecer a equipa', text: 'Descubra os nossos profissionais.' }, { to: '/unidades', number: '03', title: 'Preparar a visita', text: 'Explore espaços, moradas e horários.' }].map(item => <Link key={item.to} to={item.to} className="alc-home-shortcut"><span className="alc-home-shortcut__number">{item.number}</span><span><strong>{item.title}</strong><small>{item.text}</small></span><Icon name="diagonal" /></Link>)}
+      </nav>
+
+      <nav className="container-shell alc-home-page-nav" aria-label="Explorar esta página">
+        <span>Nesta página</span>
+        <a href="#a-clinica">A clínica</a><a href="#areas-de-intervencao">Serviços</a>
+        {featuredTeam.length > 0 && <a href="#pessoas-da-alcancari">O mural</a>}
+        <a href="#primeira-visita">Primeira visita</a><a href="#os-nossos-espacos">Unidades</a><a href="#ideias-e-novidades">Blog</a>
+      </nav>
+
       {/* Sobre a clínica */}
-      <section className="alc-home-about">
+      <section className="alc-home-about" id="a-clinica">
         <div className="container-shell alc-home-about-grid">
           <div>
             <p className="alc-home-eyebrow">A NOSSA CLÍNICA</p>
@@ -108,7 +128,7 @@ export default function HomePage() {
       </section>
 
       {/* Serviços em destaque */}
-      <section className="container-shell alc-home-section">
+      <section className="container-shell alc-home-section" id="areas-de-intervencao">
         <div className="alc-home-section-heading">
           <div>
             <p className="alc-home-eyebrow">O QUE FAZEMOS</p>
@@ -120,7 +140,7 @@ export default function HomePage() {
           </div>
 
           <Link className="alc-home-inline-link" to="/servicos">
-            Explorar os nove serviços
+            Explorar os serviços
             <Icon name="arrow" />
           </Link>
         </div>
@@ -170,13 +190,14 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
+      <DiscoveryWall />
       {/* Alcançari Connect — descoberta e favoritos */}
       <ClinicExplorer />
       {/* Preparar a primeira visita */}
       <FirstVisitJourney />
 
       {/* Unidades */}
-      <section className="alc-home-units">
+      <section className="alc-home-units" id="os-nossos-espacos">
         <div className="container-shell alc-home-units-grid">
           <div>
             <p className="alc-home-eyebrow">OS NOSSOS ESPAÇOS</p>
@@ -194,8 +215,7 @@ export default function HomePage() {
             </p>
 
             <div className="alc-home-unit-names">
-              <span>Leça da Palmeira</span>
-              <span>São Mamede de Infesta</span>
+              {getPublished(site.units).map(unit => <Link key={unit.id} to={`/unidades/${unit.id}`}>{unit.name}<Icon name="diagonal" /></Link>)}
             </div>
 
             <Link to="/unidades" className="alc-home-inline-link">
@@ -214,7 +234,7 @@ export default function HomePage() {
       </section>
 
       {/* Publicações do Blog */}
-      <section className="container-shell alc-home-section alc-home-news">
+      <section className="container-shell alc-home-section alc-home-news" id="ideias-e-novidades">
         <div className="alc-home-section-heading">
           <div>
             <p className="alc-home-eyebrow">BLOG E NOVIDADES</p>
