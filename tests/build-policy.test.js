@@ -21,3 +21,10 @@ test('o build rejeita sinais de configuração privada sem expor o valor', () =>
 test('o orçamento de JavaScript evita regressões significativas', () => {
   assert.throws(() => checkPublicFiles([index, { name: 'assets/app.js', content: 'x'.repeat(512_001) }]), /orçamento/)
 })
+
+test('aceita cabeçalhos de alojamento e rejeita credenciais reconhecíveis', () => {
+  assert.equal(checkPublicFiles([index, { name: '_headers', content: '/*\n  X-Content-Type-Options: nosniff' }]).files, 2)
+  for (const content of ['ghp_' + 'x'.repeat(36), 'AKIA' + 'A'.repeat(16)]) {
+    assert.throws(() => checkPublicFiles([index, { name: 'assets/app.js', content }]), /Possível credencial/)
+  }
+})

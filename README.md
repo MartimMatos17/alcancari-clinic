@@ -38,7 +38,8 @@ O objetivo é facilitar o acesso à informação sobre os serviços, os profissi
 | Contactos | Formulário de contacto e pedido de marcação |
 | WhatsApp | Contacto rápido e mensagens personalizadas |
 | Pesquisa global | Pesquisa de conteúdos do website |
-| Acessibilidade | Navegação responsiva, foco por teclado e suporte para redução de movimento |
+| Atlas | Exploração visual interativa de serviços, equipa, unidades e artigos |
+| Acessibilidade | Modo conforto, tamanho de texto, contraste, teclado e redução de movimento |
 
 As informações apresentadas são institucionais. O formulário não confirma automaticamente marcações nem deve ser utilizado para transmitir dados clínicos sensíveis.
 
@@ -90,7 +91,6 @@ alcancari-clinic/
 ```bash
 git clone https://github.com/MartimMatos17/alcancari-clinic.git
 cd alcancari-clinic
-git switch refactor/public-website
 npm ci
 npm run dev
 ```
@@ -111,7 +111,7 @@ O build de produção é gerado na pasta `dist/`.
 
 O website pode ser executado localmente sem credenciais para explorar as páginas institucionais.
 
-O envio de pedidos através do formulário depende da configuração de um endpoint Formspree.
+O envio de pedidos depende de `PUBLIC_CONTACT_FORM_ENDPOINT=https://formspree.io/f/SEU_ID`, configurado no ambiente do build ou num `.env.local` ignorado pelo Git. É um endereço público, validado pelo Vite; nenhuma outra variável privada é exposta ao cliente. Sem este endereço, o site mantém os contactos alternativos. Configure a proteção contra spam e os destinatários no Formspree, e valide consentimento, privacidade e envio antes de publicar.
 
 As credenciais privadas e os ficheiros `.env` não devem ser adicionados ao repositório. Variáveis incluídas no código cliente não devem conter segredos.
 
@@ -138,6 +138,25 @@ Estes valores representam o tamanho dos ficheiros gerados, não o tráfego desca
 - Dependências verificadas durante o desenvolvimento
 
 A revisão de segurança e privacidade para produção ainda está em curso. Um build aprovado não equivale a uma auditoria completa.
+
+## Administração local e preparação do lançamento
+
+```bash
+node scripts/admin-local.mjs
+# Dashboard: http://127.0.0.1:4174/
+node scripts/admin-editor.mjs
+# Editor: http://127.0.0.1:4175/
+```
+
+Execute os painéis em terminais separados. Cada processo apresenta o seu código temporário de acesso; reiniciar invalida sessões e códigos anteriores. Opcionalmente, configure `ALCANCARI_ADMIN_PASSWORD` no ambiente privado com pelo menos 20 caracteres. Nunca a inclua no Git, em URLs ou em variáveis do frontend.
+
+O estúdio guarda apenas rascunhos em `backups/admin-drafts/`, com revisão, histórico e deteção de conflitos. Não publique estes servidores, nem os exponha por túneis ou proxies. Não gerem pacientes nem substituem uma administração online com autenticação multifator.
+
+O CI verifica testes, build, sintaxe administrativa e vulnerabilidades conhecidas. Dependabot propõe atualizações semanais, sem aprovação ou merge automático. As configurações passam a vigorar no GitHub depois de integradas na branch predefinida. Proteção de branches, revisão obrigatória, MFA e alertas de segredos precisam de configuração na conta/repositório.
+
+`public/_headers` prepara CSP, bloqueio de incorporação e outros cabeçalhos para Cloudflare Pages/Netlify. Outros alojamentos exigem configuração equivalente. HSTS requer HTTPS funcional; valide os cabeçalhos nas respostas reais antes do lançamento. A CSP permite apenas recursos locais, envio para Formspree e o iframe oficial do Facebook. O diretório a publicar é exclusivamente `dist/`.
+
+Antes do lançamento, configure o domínio e HTTPS, reveja a política de privacidade e teste o envio do formulário e as integrações. A indexação continua desativada até aprovação. Auditorias automáticas não garantem ausência de vulnerabilidades.
 
 ## Estado do projeto
 

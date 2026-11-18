@@ -8,12 +8,15 @@
 // https://www.postman.com/meta/instagram/documentation/6yqw8pt/instagram-api
 export default function instagramFeed() {
   const virtualId = '\0virtual:instagram-feed'
+  let building = false
   return {
     name: 'instagram-feed',
+    configResolved(config) { building = config.command === 'build' },
     resolveId(id) { if (id === 'virtual:instagram-feed') return virtualId },
     async load(id) {
       if (id !== virtualId) return
       const empty = 'export default []'
+      if (!building) return empty
       const token = process.env.INSTAGRAM_ACCESS_TOKEN
       const account = process.env.INSTAGRAM_ACCOUNT_ID
       const version = process.env.META_GRAPH_VERSION

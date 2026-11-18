@@ -3,11 +3,13 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 export function checkPublicFiles(files) {
-  const allowed = /^(index\.html|robots\.txt|favicon\.svg|assets\/[a-zA-Z0-9._-]+\.(js|css)|(?:images|brand)\/(?:[a-zA-Z0-9_/-]+\.(avif|webp|png|jpe?g|svg)|(?:[a-zA-Z0-9_/-]+\/)?\.gitkeep))$/
+  const allowed = /^(index\.html|_headers|robots\.txt|favicon\.svg|assets\/[a-zA-Z0-9._-]+\.(js|css)|(?:images|brand)\/(?:[a-zA-Z0-9_/-]+\.(avif|webp|png|jpe?g|svg)|(?:[a-zA-Z0-9_/-]+\/)?\.gitkeep))$/
+  const publicSecrets = [/\b(?:github_pat_[A-Za-z0-9_]{20,}|gh[pousr]_[A-Za-z0-9]{30,})\b/, /\bAKIA[A-Z0-9]{16}\b/, /-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/]
   for (const file of files) {
     if (!allowed.test(file.name) || /(^|\/)(backups|backend|database|node_modules|\.git)(\/|$)|(^|\/)\.env(?:\.|$)|\.map$/.test(file.name)) {
       throw new Error(`Ficheiro não permitido no build público: ${file.name}`)
     }
+    if (publicSecrets.some(pattern => pattern.test(file.content))) throw new Error(`Possível credencial no build público: ${file.name}; valor omitido.`)
     if (/postgres(?:ql)?:\/\/|-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|\b(?:DATABASE_URL|JWT_SECRET|SMTP_PASS|POSTGRES_PASSWORD)\b/.test(file.content)) {
       throw new Error(`Conteúdo privado detetado em ${file.name}; valor omitido.`)
     }
