@@ -9,10 +9,11 @@ test('admin local protege login, origem, sessao, CSRF, logout e tentativas', asy
   process.env.ALCANCARI_ADMIN_PASSWORD = 'fixture-only-not-a-real-password-12345'
   const listen = Server.prototype.listen
   let server
+  let now = Date.now()
   try {
     // Exercise the real request handler without opening a network port.
     Server.prototype.listen = function () { return this }
-    server = startAdmin({ port: 4189, title: 'Test', handle(req, res, security) { security.send(200, security.csrf) } })
+    server = startAdmin({ port: 4189, title: 'Test', clock: () => now, handle(req, res, security) { security.send(200, security.csrf) } })
   } finally { Server.prototype.listen = listen }
   const password = process.env.ALCANCARI_ADMIN_PASSWORD
   if (previousPassword === undefined) delete process.env.ALCANCARI_ADMIN_PASSWORD
@@ -43,6 +44,15 @@ test('admin local protege login, origem, sessao, CSRF, logout e tentativas', asy
   assert.equal((await request('POST', '/sair', { csrf: 'wrong' }, { cookie })).status, 403)
   assert.equal((await request('POST', '/sair', { csrf: response.body }, { cookie })).status, 303)
   assert.match((await request('GET', '/', {}, { cookie })).body, /Acesso reservado/)
+  response = await request('POST', '/entrar', { csrf, password })
+  const idleCookie = response.headers['set-cookie'].split(';')[0]
+  now += 20 * 60_000
+  assert.match((await request('GET', '/', {}, { cookie: idleCookie })).body, /Acesso reservado/)
+  response = await request('POST', '/entrar', { csrf, password })
+  const absoluteCookie = response.headers['set-cookie'].split(';')[0]
+  for (let index = 0; index < 11; index++) { now += 10 * 60_000; assert.equal((await request('GET', '/', {}, { cookie: absoluteCookie })).status, 200) }
+  now += 10 * 60_000
+  assert.match((await request('GET', '/', {}, { cookie: absoluteCookie })).body, /Acesso reservado/)
   for (let index = 0; index < 5; index++) await request('POST', '/entrar', { csrf, password: 'wrong' })
   assert.equal((await request('POST', '/entrar', { csrf, password })).status, 429)
 })

@@ -7,7 +7,7 @@ export const adminRoot = new URL('../', import.meta.url)
 
 // Local administrative tools only. Do not expose these HTTP servers via a proxy,
 // tunnel or public interface. Online administration requires HTTPS and managed MFA.
-export function startAdmin({ port, title, handle }) {
+export function startAdmin({ port, title, handle, clock = Date.now }) {
   const origin = `http://127.0.0.1:${port}`
   const password = process.env.ALCANCARI_ADMIN_PASSWORD || randomBytes(24).toString('base64url')
   if (password.length < 20) throw new Error('ALCANCARI_ADMIN_PASSWORD deve ter pelo menos 20 caracteres.')
@@ -20,8 +20,8 @@ export function startAdmin({ port, title, handle }) {
   const cookie = (value, age) => `${cookieName}=${value}; HttpOnly; SameSite=Strict; Path=/; Max-Age=${age}`
   const server = createServer(async (req, res) => {
     const nonce = randomBytes(18).toString('base64')
-    const now = Date.now()
-    for (const [key, value] of sessions) if (now > value.expires || now - value.last > 20 * 60_000) sessions.delete(key)
+    const now = clock()
+    for (const [key, value] of sessions) if (now >= value.expires || now - value.last >= 20 * 60_000) sessions.delete(key)
     res.setHeader('Content-Type', 'text/html; charset=utf-8')
     res.setHeader('Cache-Control', 'no-store, max-age=0')
     res.setHeader('X-Content-Type-Options', 'nosniff')
@@ -72,8 +72,8 @@ export function startAdmin({ port, title, handle }) {
         if (req.method !== 'GET' || req.url !== '/') return send(401, loginPage('A sessão expirou. Entre novamente. Qualquer alteração não submetida permanece por guardar.'))
         return send(200, loginPage())
       }
-      session.last = now
       if (req.method === 'POST' && !equal(params.get('csrf'), session.csrf)) return send(403, 'Pedido recusado. Atualize a página e tente novamente.')
+      session.last = now
       if (req.method === 'POST' && req.url === '/sair') {
         sessions.delete(sessionId)
         res.setHeader('Set-Cookie', cookie('', 0))

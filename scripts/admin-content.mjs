@@ -1,4 +1,4 @@
-import { readFileSync, mkdirSync, lstatSync, writeFileSync, renameSync, unlinkSync, chmodSync, existsSync } from 'node:fs'
+import { readFileSync, mkdirSync, lstatSync, writeFileSync, renameSync, unlinkSync, chmodSync, existsSync, readdirSync, fsyncSync, openSync, closeSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { createHash, randomBytes } from 'node:crypto'
 import { join } from 'node:path'
@@ -14,25 +14,10 @@ export const sections = [
 ]
 export const states = { draft: 'Em edição', review: 'Para revisão', ready: 'Revisto' }
 export const revision = value => createHash('sha256').update(JSON.stringify(value ?? null)).digest('hex')
-const directory = fileURLToPath(new URL('backups/admin-drafts', adminRoot))
-const file = join(directory, 'posts.json')
-function checkPaths() {
-  for (const path of [fileURLToPath(new URL('backups', adminRoot)), directory, file]) {
-    try { if (lstatSync(path).isSymbolicLink()) throw new Error('Ligação simbólica recusada.') } catch (error) { if (error.code !== 'ENOENT') throw error }
-  }
+export function catalogs(root = adminRoot) {
+  return sections.map(section => ({ ...section, entries: JSON.parse(readFileSync(new URL(`src/content/${section.key}.json`, root), 'utf8')) }))
 }
-export function readDrafts() {
-  checkPaths()
-  try {
-    const drafts = JSON.parse(readFileSync(file, 'utf8'))
-    if (!drafts || typeof drafts !== 'object' || Array.isArray(drafts)) throw new Error('Formato de rascunhos inválido.')
-    return drafts
-  } catch (error) { if (error.code === 'ENOENT') return {}; throw error }
-}
-export function catalogs() {
-  return sections.map(section => ({ ...section, entries: JSON.parse(readFileSync(new URL(`src/content/${section.key}.json`, adminRoot), 'utf8')) }))
-}
-export function postCatalog() { return catalogs().find(section => section.key === 'posts').entries }
+export function postCatalog(root = adminRoot) { return catalogs(root).find(section => section.key === 'posts').entries }
 export function contentIssues(section, entry) {
   const image = media[section.key]?.[entry.slug || entry.id]
   const issues = []
@@ -45,35 +30,99 @@ export function contentIssues(section, entry) {
   if (!(entry.title || entry.name)?.trim()) issues.push('Título ou nome em falta')
   return issues
 }
-export function saveDraft(slug, next, expected, sourceExpected, action = 'save') {
-  const original = postCatalog().find(post => post.slug === slug)
-  if (!original || ['__proto__', 'constructor', 'prototype'].includes(slug)) return { code: 400, message: 'Publicação desconhecida.' }
-  const drafts = readDrafts()
-  const current = Object.hasOwn(drafts, slug) ? drafts[slug] : null
-  if (revision(current) !== expected || revision(original) !== sourceExpected) return { code: 409, message: 'Este conteúdo mudou noutra janela ou no ficheiro original. Copie as alterações que deseja conservar e atualize a página antes de continuar.' }
-  let fields = next
-  if (action === 'original') fields = { title: original.title, category: original.category, summary: original.summary, status: 'draft', note: '' }
-  if (action === 'restore') {
-    const snapshot = current?.history?.find(item => item.id === next.restoreId)
-    if (!snapshot) return { code: 400, message: 'Versão não encontrada.' }
-    fields = { title: snapshot.title, category: snapshot.category, summary: snapshot.summary, note: snapshot.note || '', status: 'draft' }
+export function createDraftStore(root = adminRoot) {
+  const directory = fileURLToPath(new URL('backups/admin-drafts', root))
+  const copies = join(directory, 'copies')
+  const file = join(directory, 'posts.json')
+  function checkPaths() {
+    for (const path of [fileURLToPath(new URL('backups', root)), directory, copies, file]) {
+      try { if (lstatSync(path).isSymbolicLink()) throw new Error('Ligação simbólica recusada.') } catch (error) { if (error.code !== 'ENOENT') throw error }
+    }
   }
-  const limits = { title: 180, category: 100, summary: 1500, note: 1000 }
-  for (const [name, limit] of Object.entries(limits)) {
-    if (typeof fields[name] !== 'string' || fields[name].length > limit || (name !== 'note' && !fields[name].trim()) || /[\u0000-\u0008\u000b\u000c\u000e-\u001f]/.test(fields[name])) return { code: 400, message: 'Campos inválidos ou demasiado longos.' }
+  function readDrafts() {
+    checkPaths()
+    try {
+      const drafts = JSON.parse(readFileSync(file, 'utf8'))
+      if (!drafts || typeof drafts !== 'object' || Array.isArray(drafts)) throw new Error('Formato de rascunhos inválido.')
+      return drafts
+    } catch (error) { if (error.code === 'ENOENT') return {}; throw error }
   }
-  if (!Object.hasOwn(states, fields.status)) return { code: 400, message: 'Estado editorial inválido.' }
-  const history = Array.isArray(current?.history) ? current.history : []
-  const snapshot = current ? [{ id: randomBytes(12).toString('hex'), title: current.title, category: current.category, summary: current.summary, note: current.note || '', status: Object.hasOwn(states, current.status) ? current.status : 'draft', updatedAt: current.updatedAt || null }] : []
-  drafts[slug] = { title: fields.title.trim(), category: fields.category.trim(), summary: fields.summary.trim(), note: fields.note.trim(), status: fields.status, updatedAt: new Date().toISOString(), action, history: [...snapshot, ...history].slice(0, 20) }
-  checkPaths()
-  mkdirSync(directory, { recursive: true, mode: 0o700 })
-  checkPaths()
-  chmodSync(directory, 0o700)
-  const temporary = join(directory, `.posts-${randomBytes(16).toString('hex')}.tmp`)
-  try {
-    writeFileSync(temporary, JSON.stringify(drafts, null, 2) + '\n', { mode: 0o600, flag: 'wx' })
-    renameSync(temporary, file)
-  } finally { try { unlinkSync(temporary) } catch (error) { if (error.code !== 'ENOENT') throw error } }
-  return { code: 200 }
+
+  const copyPattern = /^drafts-\d{13}-[a-f0-9]{16}\.json$/
+  function durableWrite(path, content) {
+    const descriptor = openSync(path, 'wx', 0o600)
+    try { writeFileSync(descriptor, content, 'utf8'); fsyncSync(descriptor) } finally { closeSync(descriptor) }
+  }
+  function listBackups() {
+    checkPaths()
+    try { return readdirSync(copies).filter(name => copyPattern.test(name)).sort().reverse() }
+    catch (error) { if (error.code === 'ENOENT') return []; throw error }
+  }
+  function backup(content) {
+    checkPaths()
+    mkdirSync(copies, { recursive: true, mode: 0o700 })
+    chmodSync(copies, 0o700)
+    const name = `drafts-${Date.now()}-${randomBytes(8).toString('hex')}.json`
+    durableWrite(join(copies, name), content)
+    // Only files generated by this store are rotated; older project archives are untouched.
+    for (const expired of listBackups().slice(20)) unlinkSync(join(copies, expired))
+  }
+  function diskVersion() {
+    checkPaths()
+    try { return revision(readFileSync(file, 'utf8')) } catch (error) { if (error.code === 'ENOENT') return revision(null); throw error }
+  }
+  function restoreBackup(name, expected) {
+    checkPaths()
+    if (!copyPattern.test(name || '') || !listBackups().includes(name)) return { code: 400, message: 'Cópia desconhecida.' }
+    const path = join(copies, name)
+    if (lstatSync(path).isSymbolicLink()) return { code: 400, message: 'Ligação simbólica recusada.' }
+    const content = readFileSync(path, 'utf8')
+    let parsed
+    try { parsed = JSON.parse(content) } catch { return { code: 400, message: 'Cópia inválida.' } }
+    const posts = postCatalog(root)
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed) || Object.entries(parsed).some(([slug, value]) => !posts.some(post => post.slug === slug) || !value || typeof value !== 'object' || !['title','category','summary'].every(key => typeof value[key] === 'string'))) return { code: 400, message: 'Formato de cópia inválido.' }
+    if (diskVersion() !== expected) return { code: 409, message: 'Os rascunhos mudaram. Atualize a página antes de recuperar.' }
+    if (existsSync(file)) backup(readFileSync(file, 'utf8'))
+    const temporary = join(directory, `.recovery-${randomBytes(16).toString('hex')}.tmp`)
+    try { durableWrite(temporary, content); renameSync(temporary, file) }
+    finally { try { unlinkSync(temporary) } catch (error) { if (error.code !== 'ENOENT') throw error } }
+    return { code: 200 }
+  }
+  function saveDraft(slug, next, expected, sourceExpected, action = 'save') {
+    const original = postCatalog(root).find(post => post.slug === slug)
+    if (!original || ['__proto__', 'constructor', 'prototype'].includes(slug)) return { code: 400, message: 'Publicação desconhecida.' }
+    const drafts = readDrafts()
+    const current = Object.hasOwn(drafts, slug) ? drafts[slug] : null
+    if (revision(current) !== expected || revision(original) !== sourceExpected) return { code: 409, message: 'Este conteúdo mudou noutra janela ou no ficheiro original. Copie as alterações que deseja conservar e atualize a página antes de continuar.' }
+    let fields = next
+    if (action === 'original') fields = { title: original.title, category: original.category, summary: original.summary, status: 'draft', note: '' }
+    if (action === 'restore') {
+      const snapshot = current?.history?.find(item => item.id === next.restoreId)
+      if (!snapshot) return { code: 400, message: 'Versão não encontrada.' }
+      fields = { title: snapshot.title, category: snapshot.category, summary: snapshot.summary, note: snapshot.note || '', status: 'draft' }
+    }
+    const limits = { title: 180, category: 100, summary: 1500, note: 1000 }
+    for (const [name, limit] of Object.entries(limits)) {
+      if (typeof fields[name] !== 'string' || fields[name].length > limit || (name !== 'note' && !fields[name].trim()) || /[\u0000-\u0008\u000b\u000c\u000e-\u001f]/.test(fields[name])) return { code: 400, message: 'Campos inválidos ou demasiado longos.' }
+    }
+    if (!Object.hasOwn(states, fields.status)) return { code: 400, message: 'Estado editorial inválido.' }
+    const history = Array.isArray(current?.history) ? current.history : []
+    const snapshot = current ? [{ id: randomBytes(12).toString('hex'), title: current.title, category: current.category, summary: current.summary, note: current.note || '', status: Object.hasOwn(states, current.status) ? current.status : 'draft', updatedAt: current.updatedAt || null }] : []
+    drafts[slug] = { title: fields.title.trim(), category: fields.category.trim(), summary: fields.summary.trim(), note: fields.note.trim(), status: fields.status, updatedAt: new Date().toISOString(), action, history: [...snapshot, ...history].slice(0, 20) }
+    checkPaths()
+    mkdirSync(directory, { recursive: true, mode: 0o700 })
+    checkPaths()
+    chmodSync(directory, 0o700)
+    if (existsSync(file)) backup(readFileSync(file, 'utf8'))
+    const temporary = join(directory, `.posts-${randomBytes(16).toString('hex')}.tmp`)
+    try {
+      durableWrite(temporary, JSON.stringify(drafts, null, 2) + '\n')
+      renameSync(temporary, file)
+    } finally { try { unlinkSync(temporary) } catch (error) { if (error.code !== 'ENOENT') throw error } }
+    return { code: 200 }
+  }
+
+  return { readDrafts, saveDraft, listBackups, restoreBackup, diskVersion }
 }
+const store = createDraftStore()
+export const { readDrafts, saveDraft, listBackups, restoreBackup, diskVersion } = store

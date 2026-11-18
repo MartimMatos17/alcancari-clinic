@@ -1,5 +1,7 @@
+import { pathToFileURL } from 'node:url'
+import { resolve } from 'node:path'
 import { startAdmin } from './admin-security.mjs'
-import { postCatalog, readDrafts, saveDraft, revision, states } from './admin-content.mjs'
+import { postCatalog, readDrafts, saveDraft, revision, states, listBackups, restoreBackup, diskVersion } from './admin-content.mjs'
 import { shell, escape, dateLabel } from './admin-ui.mjs'
 
 const PORT = 4175
@@ -15,7 +17,7 @@ function render(security, slug, message = '') {
   const draft = { ...original, note: '', ...current }
   const tokens = `<input type="hidden" name="csrf" value="${security.csrf}"><input type="hidden" name="slug" value="${escape(original.slug)}"><input type="hidden" name="version" value="${revision(current)}"><input type="hidden" name="sourceVersion" value="${revision(original)}">`
   const history = Array.isArray(current?.history) ? current.history : []
-  const body = `<div class="actions"><a class="button" href="/exportar">Exportar rascunhos JSON ↓</a><span class="badge">${Object.keys(drafts).filter(key => posts.some(post => post.slug === key)).length} publicações com rascunho</span></div>
+  const body = `<div class="actions"><a class="button" href="/copias">Cópias de segurança</a><a class="button" href="/exportar">Exportar rascunhos JSON ↓</a><span class="badge">${Object.keys(drafts).filter(key => posts.some(post => post.slug === key)).length} publicações com rascunho</span></div>
   ${message ? `<p class="notice" role="status">${escape(message)}</p>` : ''}
   <section class="panel"><label for="post">Escolher publicação</label><select id="post">${posts.map(post => `<option value="${escape(post.slug)}" ${post.slug === original.slug ? 'selected' : ''}>${escape(post.title)}${Object.hasOwn(drafts, post.slug) ? ' · ' + (states[drafts[post.slug]?.status] || 'Em edição') : ' · Original'}</option>`).join('')}</select><p class="status-line">${current ? 'Última gravação: ' + dateLabel(current.updatedAt) : 'A editar a partir do original. Ainda sem rascunho.'}</p></section>
   <div class="columns"><section class="panel"><div class="section-head"><h2>A sua edição</h2><span class="badge" id="save-status">Sem alterações por guardar</span></div><form id="editor-form" method="post" action="/guardar">${tokens}
@@ -49,12 +51,27 @@ document.querySelectorAll('form[data-confirm]').forEach(target => target.addEven
 }
 export function editorHandler(req, res, security) {
   const url = new URL(req.url, 'http://127.0.0.1:4175')
+  if (req.method === 'GET' && url.pathname === '/copias') {
+    const version = diskVersion()
+    const backups = listBackups()
+    const body = `<section class="panel"><h2>Recuperação dos rascunhos</h2><p class="muted">Até 20 cópias locais independentes. Cada gravação guarda o ficheiro anterior. Recuperar substitui todos os rascunhos, conserva uma cópia do estado atual e nunca altera os artigos publicados. Estas cópias no mesmo disco não substituem uma cópia externa.</p>${backups.length ? backups.map(name => `<form class="row" method="post" action="/recuperar-copia"><div><strong>${escape(dateLabel(Number(name.split('-')[1])))}</strong><small>${escape(name)}</small></div><input type="hidden" name="csrf" value="${security.csrf}"><input type="hidden" name="version" value="${version}"><input type="hidden" name="backup" value="${escape(name)}"><label><input type="checkbox" required name="confirm" value="yes"> Confirmo a substituição de todos os rascunhos</label><button>Recuperar cópia</button></form>`).join('') : '<p class="notice">Ainda não existem cópias independentes. São criadas antes de substituir um ficheiro de rascunhos existente.</p>'}<a class="button" href="/">Voltar ao editor</a></section>`
+    return security.send(200, shell({ ...security, editor: true, title: 'Cópias de segurança.', subtitle: 'Recuperação local, incluindo quando o ficheiro principal está danificado.', body }))
+  }
+  if (req.method === 'POST' && url.pathname === '/recuperar-copia') {
+    if (security.params.get('confirm') !== 'yes') return security.send(400, 'Confirmação necessária.')
+    const result = restoreBackup(security.params.get('backup'), security.params.get('version'))
+    if (result.code !== 200) return security.send(result.code, escape(result.message))
+    res.writeHead(303, { Location: '/' }); return res.end()
+  }
   if (req.method === 'GET' && url.pathname === '/exportar') {
     res.setHeader('Content-Type', 'application/json; charset=utf-8')
     res.setHeader('Content-Disposition', 'attachment; filename="alcancari-rascunhos.json"')
     return security.send(200, JSON.stringify({ exportedAt: new Date().toISOString(), scope: 'local-editorial-drafts', drafts: readDrafts() }, null, 2))
   }
-  if (req.method === 'GET' && url.pathname === '/') return security.send(200, render(security, url.searchParams.get('slug'), url.searchParams.get('guardado') === '1' ? 'Rascunho guardado. O site publicado não foi alterado.' : ''))
+  if (req.method === 'GET' && url.pathname === '/') {
+    try { return security.send(200, render(security, url.searchParams.get('slug'), url.searchParams.get('guardado') === '1' ? 'Rascunho guardado. O site publicado não foi alterado.' : '')) }
+    catch { return security.send(500, shell({ ...security, editor: true, title: 'Não foi possível abrir o editor.', subtitle: 'Os dados não foram alterados. Se o ficheiro de rascunhos estiver danificado, pode recuperar uma cópia independente.', body: '<section class="panel"><a class="button" href="/copias">Abrir recuperação de cópias de segurança</a></section>' })) }
+  }
   if (req.method !== 'POST' || !['/guardar', '/original', '/restaurar'].includes(url.pathname)) return security.send(404, 'Página não encontrada.')
   const params = security.params
   const allowed = ['csrf', 'slug', 'version', 'sourceVersion', 'restoreId', 'status', ...fields]
@@ -65,4 +82,4 @@ export function editorHandler(req, res, security) {
   if (result.code !== 200) return security.send(result.code, shell({ ...security, editor: true, title: 'A alteração não foi guardada.', subtitle: result.message, body: `<section class="panel"><h2>Conserve a sua edição</h2><p class="muted">Copie estes campos antes de atualizar a página. Nenhum conteúdo publicado foi alterado.</p>${fields.map(name => `<label>${labels[name]}<textarea readonly>${escape(next[name])}</textarea></label>`).join('')}<a class="button" href="/?slug=${encodeURIComponent(params.get('slug') || '')}">Atualizar conteúdo</a></section>` }))
   res.writeHead(303, { Location: `/?slug=${encodeURIComponent(params.get('slug'))}&guardado=1` }); res.end()
 }
-startAdmin({ port: PORT, title: 'Estúdio editorial Alcançari', handle: editorHandler })
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) startAdmin({ port: PORT, title: 'Estúdio editorial Alcançari', handle: editorHandler })

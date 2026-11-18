@@ -1,3 +1,5 @@
+import { pathToFileURL } from 'node:url'
+import { resolve } from 'node:path'
 import { startAdmin } from './admin-security.mjs'
 import { catalogs, readDrafts, contentIssues, states } from './admin-content.mjs'
 import { shell, escape, dateLabel } from './admin-ui.mjs'
@@ -54,4 +56,4 @@ export function dashboardHandler(req, res, security) {
   if (req.url !== '/') return security.send(404, 'Página não encontrada.')
   return security.send(200, render(security))
 }
-startAdmin({ port: 4174, title: 'Alcançari Admin', handle: dashboardHandler })
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) startAdmin({ port: 4174, title: 'Alcançari Admin', handle: dashboardHandler })
