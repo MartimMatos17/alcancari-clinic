@@ -1,10 +1,14 @@
+import { site } from '../content/site'
+import { contactSelection } from '../lib/contactSelection'
 
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import usePageMeta from '../hooks/usePageMeta'
 import ContactExperience from '../components/ContactExperience'
 import Icon from '../components/Icon'
 
 export default function ContactPage() {
+  const [params] = useSearchParams()
+  const selection = contactSelection(params, site.services, site.units)
   usePageMeta(
     'Contactos',
     'Entre em contacto com a Clínica Alcançari.'
@@ -12,7 +16,7 @@ export default function ContactPage() {
 
   return (
     <>
-      <ContactExperience />
+      <ContactExperience key={params.toString()} initialSelection={selection} />
 
       <section className="container-shell page-content">
         <div className="contact-bottom">

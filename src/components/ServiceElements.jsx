@@ -97,7 +97,7 @@ export function ServiceCard({
   )
 }
 
-export function ServiceContact({ detail = false }) {
+export function ServiceContact({ detail = false, serviceSlug = '' }) {
   return (
     <section
       className="sv-contact"
@@ -134,7 +134,7 @@ export function ServiceContact({ detail = false }) {
 
         <Link
           className="sv-button sv-button--light"
-          to="/contactos"
+          to={serviceSlug ? `/contactos?tipo=marcacao&servico=${encodeURIComponent(serviceSlug)}` : "/contactos"}
         >
           {detail
             ? 'Contactar a clínica'

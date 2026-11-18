@@ -60,7 +60,8 @@ test('apresentação, moradas e horários preservam as fontes e a divergência d
 })
 
 test('rotas únicas e redirecionamentos levam apenas a páginas públicas existentes', () => {
-  assert.equal(publicPaths.length, 47)
+  assert.equal(publicPaths.length, 48)
+  assert.ok(publicPaths.includes('/atlas'))
   assert.equal(new Set(publicPaths).size, publicPaths.length)
   for (const destination of Object.values(legacyRoutes)) assert.ok(publicPaths.includes(destination), destination)
   for (const path of publicPaths) assert.doesNotMatch(path, /\/(login|dashboard|admin|api)(\/|$)/)

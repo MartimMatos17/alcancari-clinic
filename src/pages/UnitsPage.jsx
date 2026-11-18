@@ -130,7 +130,7 @@ export default function UnitsPage() {
             </p>
           </div>
 
-          <Link to="/contactos" className="alc-units__button">
+          <Link to={selected ? `/contactos?tipo=marcacao&unidade=${encodeURIComponent(selected.id)}` : "/contactos"} className="alc-units__button">
             Falar com a clínica
             <Icon name="arrow" />
           </Link>

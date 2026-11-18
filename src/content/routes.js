@@ -15,7 +15,7 @@ export const legacyRoutes = {
 }
 
 export const publicPaths = [
-  '/', '/clinica', '/servicos', '/equipa', '/unidades', '/novidades', '/contactos', '/privacidade',
+  '/', '/clinica', '/servicos', '/equipa', '/unidades', '/novidades', '/atlas', '/contactos', '/privacidade',
   ...site.services.map(item => `/servicos/${item.slug}`),
   ...site.team.map(item => `/equipa/${item.id}`),
   ...site.units.map(item => `/unidades/${item.id}`),

@@ -1,3 +1,4 @@
+import { lazy, Suspense, useState } from 'react'
 import DiscoveryWall from '../components/DiscoveryWall'
 
 import { Link } from 'react-router-dom'
@@ -7,24 +8,19 @@ import usePageMeta from '../hooks/usePageMeta'
 import MediaPlaceholder from '../components/MediaPlaceholder'
 import Icon from '../components/Icon'
 import '../styles/home-redesign.css'
-import ClinicExplorer from '../components/ClinicExplorer'
+const ClinicExplorer = lazy(() => import('../components/ClinicExplorer'))
 import ClinicFAQ from '../components/ClinicFAQ'
 import FirstVisitJourney from '../components/FirstVisitJourney'
 import VirtualTour from '../components/VirtualTour'
 
 export default function HomePage() {
   usePageMeta()
+  const [exploreOpened, setExploreOpened] = useState(false)
 
   const copy = content.home
   const services = getPublished(site.services)
   const posts = getPublished(site.posts).slice(0, 3)
-  const members = getPublished(site.team)
-  const roles = new Set()
-  const featuredTeam = members.filter(member => {
-    if (!member.image || roles.has(member.role)) return false
-    roles.add(member.role)
-    return true
-  }).slice(0, 3)
+
 
   return (
     <div className="alc-home">
@@ -105,7 +101,7 @@ export default function HomePage() {
       <nav className="container-shell alc-home-page-nav" aria-label="Explorar esta página">
         <span>Nesta página</span>
         <a href="#a-clinica">A clínica</a><a href="#areas-de-intervencao">Serviços</a>
-        {featuredTeam.length > 0 && <a href="#pessoas-da-alcancari">O mural</a>}
+        <a href="#pessoas-da-alcancari">O mural</a>
         <a href="#primeira-visita">Primeira visita</a><a href="#os-nossos-espacos">Unidades</a><a href="#ideias-e-novidades">Blog</a>
       </nav>
 
@@ -192,7 +188,8 @@ export default function HomePage() {
       </section>
       <DiscoveryWall />
       {/* Alcançari Connect — descoberta e favoritos */}
-      <ClinicExplorer />
+      <div className="container-shell alc-home-atlas-link"><span><strong>Prefere descobrir de outra forma?</strong><small>O Atlas reúne serviços, pessoas, espaços e leituras numa experiência visual, ao seu ritmo.</small></span><Link className="alc-home-inline-link" to="/atlas">Entrar no Atlas<Icon name="diagonal" /></Link></div>
+      <details className="alc-home-explore-optional" onToggle={event => { if (event.currentTarget.open) setExploreOpened(true) }}><summary><span><strong>Crie o seu percurso de descoberta.</strong><small>Opcional: combine conteúdos e guarde o que quer voltar a encontrar.</small></span><span aria-hidden="true">+</span></summary><Suspense fallback={<p className="container-shell" role="status">A preparar o seu percurso…</p>}>{exploreOpened && <ClinicExplorer />}</Suspense></details>
       {/* Preparar a primeira visita */}
       <FirstVisitJourney />
 

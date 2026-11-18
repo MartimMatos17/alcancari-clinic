@@ -11,16 +11,7 @@ const EMAIL = site.contacts.email.value
 const PHONE = site.contacts.phone.value
 
 
-const LOCATIONS = [
-  {
-    name: 'Leça da Palmeira',
-    address: 'Rua Francisco Sá Carneiro, 307, Leça da Palmeira',
-  },
-  {
-    name: 'São Mamede de Infesta',
-    address: 'Avenida Conde, 5981, São Mamede de Infesta',
-  },
-]
+const LOCATIONS = getPublished(site.units).map(unit => ({ name: unit.name.replace(/^Unidade\s+/i, ''), address: `${unit.address}, ${unit.postalCode}` }))
 
 const initial = {
   name: '',
@@ -41,8 +32,9 @@ export default function ContactExperience({
   email = EMAIL,
   phone = PHONE,
   locations = LOCATIONS,
+  initialSelection = {},
 }) {
-  const [form, setForm] = useState(initial)
+  const [form, setForm] = useState(() => ({ ...initial, ...initialSelection }))
   const [status, setStatus] = useState('idle')
   const [error, setError] = useState('')
 
@@ -72,7 +64,7 @@ export default function ContactExperience({
     if (!enabled || status === 'sending') return
 
     if (!form.consent) {
-      setError('Confirma que leste a informação de privacidade.')
+      setError('Confirme que leu a informação de privacidade.')
       return
     }
 
@@ -82,7 +74,7 @@ export default function ContactExperience({
     }
 
     if (isAppointment && (!form.service || !form.unit)) {
-      setError('Seleciona o serviço e a unidade pretendidos.')
+      setError('Selecione o serviço e a unidade pretendidos.')
       return
     }
 
@@ -91,7 +83,7 @@ export default function ContactExperience({
       form.contactPreference === 'telefone' &&
       !form.phone.trim()
     ) {
-      setError('Indica um número de telefone para contacto.')
+      setError('Indique um número de telefone para contacto.')
       return
     }
 
@@ -603,7 +595,7 @@ export default function ContactExperience({
 
               <span>
                 Li a{' '}
-                <Link to="/privacidade">
+                <Link to="/privacidade" target="_blank" rel="noopener noreferrer">
                   informação de privacidade
                 </Link>{' '}
                 e compreendo como será tratado este pedido

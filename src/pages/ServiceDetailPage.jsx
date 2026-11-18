@@ -55,7 +55,7 @@ export default function ServiceDetailPage({ entry, services }) {
           <h1 id="service-title">{entry.title}</h1><ShareButton title={entry.title} />
           <FavoriteButton type="service" id={entry.slug} title={entry.title} />
           <p className="sv-lead">{entry.summary}</p>
-          <div className="sv-detail-hero__actions"><Link className="sv-button" to="/contactos">Contactar a clínica<Icon name="diagonal" /></Link>{entry.blocks.length > 0 && <a className="sv-text-link" href="#sobre-servico">Conhecer o serviço<Icon className="sv-arrow-down" /></a>}</div>
+          <div className="sv-detail-hero__actions"><Link className="sv-button" to={`/contactos?tipo=marcacao&servico=${encodeURIComponent(entry.slug)}`}>Contactar a clínica<Icon name="diagonal" /></Link>{entry.blocks.length > 0 && <a className="sv-text-link" href="#sobre-servico">Conhecer o serviço<Icon className="sv-arrow-down" /></a>}</div>
         </div>
         <div className="sv-detail-hero__visual">
           <ServicePhoto image={serviceImage(entry)} eager />
@@ -84,7 +84,7 @@ export default function ServiceDetailPage({ entry, services }) {
     </section>
 
     <ServiceGallery images={gallery} title={entry.title} id={galleryId} />
-    <ServiceContact detail />
+    <ServiceContact detail serviceSlug={entry.slug} />
 
     <section className="sv-related sv-shell" aria-labelledby="service-related-title">
       <div className="sv-section-heading"><div><p className="sv-eyebrow">Continue a explorar</p><h2 id="service-related-title">Outros serviços<br /><em>da clínica.</em></h2></div><Link className="sv-text-link" to="/servicos">Ver todos os serviços<Icon name="arrow" /></Link></div>

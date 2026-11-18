@@ -1,3 +1,4 @@
+import PageRecovery, { PageLoading } from './PageRecovery'
 import { reduceMotion } from '../lib/appearance'
 import ComfortSettings from './ComfortSettings'
 import RecentPages from './RecentPages'
@@ -139,18 +140,9 @@ export default function Layout() {
 
       <main id="conteudo" ref={main} tabIndex={-1}>
           <ScrollReveal />
-        <Suspense
-          fallback={
-            <p
-              className="container-shell loading-message"
-              role="status"
-            >
-              A carregar a página…
-            </p>
-          }
-        >
-          <Outlet />
-        </Suspense>
+        <PageRecovery key={location.pathname}>
+          <Suspense fallback={<PageLoading />}><Outlet /></Suspense>
+        </PageRecovery>
       </main>
 
       {showTop && <button className="alc-back-top" type="button" aria-label="Voltar ao início da página" onClick={() => {
