@@ -154,7 +154,7 @@ O estúdio guarda apenas rascunhos em `backups/admin-drafts/`, com revisão, his
 
 O CI verifica testes, build, sintaxe administrativa e vulnerabilidades conhecidas. Dependabot propõe atualizações semanais, sem aprovação ou merge automático. As configurações passam a vigorar no GitHub depois de integradas na branch predefinida. Proteção de branches, revisão obrigatória, MFA e alertas de segredos precisam de configuração na conta/repositório.
 
-`public/_headers` prepara CSP, bloqueio de incorporação e outros cabeçalhos para Cloudflare Pages/Netlify. Outros alojamentos exigem configuração equivalente. HSTS requer HTTPS funcional; valide os cabeçalhos nas respostas reais antes do lançamento. A CSP permite apenas recursos locais, envio para Formspree e o iframe oficial do Facebook. O diretório a publicar é exclusivamente `dist/`.
+O build estático é gerado em `dist/` e pode ser alojado em Cloudflare Pages, Netlify ou equivalente. Não existe configuração de deploy, domínio, HSTS ou cabeçalhos de produção ativa neste projeto. Depois de escolhido o alojamento, configure o fallback das rotas React para `index.html` e os cabeçalhos CSP, anti-incorporação e HTTPS no fornecedor. A CSP deverá considerar os recursos locais, o envio Formspree e o iframe oficial do Facebook. Verifique as respostas reais antes do lançamento. Publique exclusivamente `dist/`, nunca o projeto inteiro nem os painéis administrativos.
 
 Antes do lançamento, configure o domínio e HTTPS, reveja a política de privacidade e teste o envio do formulário e as integrações. A indexação continua desativada até aprovação. Auditorias automáticas não garantem ausência de vulnerabilidades.
 
