@@ -1,5 +1,4 @@
-import { lazy, Suspense, useState } from 'react'
-import DiscoveryWall from '../components/DiscoveryWall'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 
 import { Link } from 'react-router-dom'
 import { content, site } from '../content/site'
@@ -8,18 +7,36 @@ import usePageMeta from '../hooks/usePageMeta'
 import MediaPlaceholder from '../components/MediaPlaceholder'
 import Icon from '../components/Icon'
 import '../styles/home-redesign.css'
-const ClinicExplorer = lazy(() => import('../components/ClinicExplorer'))
 import ClinicFAQ from '../components/ClinicFAQ'
-import FirstVisitJourney from '../components/FirstVisitJourney'
 import VirtualTour from '../components/VirtualTour'
+
+const ClinicExplorer = lazy(() => import('../components/ClinicExplorer'))
+const DiscoveryWall = lazy(() => import('../components/DiscoveryWall'))
+const FirstVisitJourney = lazy(() => import('../components/FirstVisitJourney'))
 
 export default function HomePage() {
   usePageMeta()
   const [exploreOpened, setExploreOpened] = useState(false)
+  const [wallOpened, setWallOpened] = useState(false)
+  const [visitOpened, setVisitOpened] = useState(false)
+  const connectRef = useRef(null)
+  const wallRef = useRef(null)
+  const visitRef = useRef(null)
+
+  useEffect(() => {
+    const reveal = () => {
+      const target = { '#alcancari-connect': connectRef, '#pessoas-da-alcancari': wallRef, '#primeira-visita': visitRef }[window.location.hash]?.current
+      if (target) { target.open = true; target.querySelector('summary')?.focus({ preventScroll: true }); target.scrollIntoView({ block: 'start' }) }
+    }
+    reveal()
+    window.addEventListener('hashchange', reveal)
+    return () => window.removeEventListener('hashchange', reveal)
+  }, [])
 
   const copy = content.home
   const services = getPublished(site.services)
   const posts = getPublished(site.posts).slice(0, 3)
+  const people = getPublished(site.team).filter(member => member.image).filter((member, index, all) => all.findIndex(other => other.role.toLocaleLowerCase('pt-PT') === member.role.toLocaleLowerCase('pt-PT')) === index).slice(0, 2)
 
 
   return (
@@ -47,19 +64,17 @@ export default function HomePage() {
 
             <div className="alc-home-actions">
               <Link
-                to="/clinica"
+                to="/servicos"
                 className="alc-home-button alc-home-button-primary"
               >
-                Conhecer a clínica
-                <Icon name="arrow" />
+                Explorar os serviços
               </Link>
 
               <Link
                 to="/contactos"
                 className="alc-home-button alc-home-button-outline"
               >
-                Falar connosco
-                <Icon name="arrow" />
+                Falar com a clínica
               </Link>
             </div>
 
@@ -94,8 +109,7 @@ export default function HomePage() {
       </section>
 
       <nav className="container-shell alc-home-shortcuts" aria-label="Encontre o seu ponto de partida">
-        <div className="alc-home-shortcuts__intro"><p className="alc-home-eyebrow">COMO PODEMOS AJUDAR?</p><h2>O seu próximo passo,<br /><em>com mais clareza.</em></h2></div>
-        {[{ to: '/servicos', number: '01', title: 'Encontrar um serviço', text: 'Conheça as áreas de intervenção.' }, { to: '/equipa', number: '02', title: 'Conhecer a equipa', text: 'Descubra os nossos profissionais.' }, { to: '/unidades', number: '03', title: 'Preparar a visita', text: 'Explore espaços, moradas e horários.' }].map(item => <Link key={item.to} to={item.to} className="alc-home-shortcut"><span className="alc-home-shortcut__number">{item.number}</span><span><strong>{item.title}</strong><small>{item.text}</small></span><Icon name="diagonal" /></Link>)}
+        {[{ to: '/servicos', title: 'Serviços', text: 'Áreas de intervenção' }, { to: '/equipa', title: 'Equipa', text: 'Os nossos profissionais' }, { to: '/unidades', title: 'Unidades', text: 'Espaços, moradas e horários' }, { to: '/contactos', title: 'Contactos', text: 'Fale com a clínica' }].map(item => <Link key={item.to} to={item.to} className="alc-home-shortcut"><span><strong>{item.title}</strong><small>{item.text}</small></span></Link>)}
       </nav>
 
       <nav className="container-shell alc-home-page-nav" aria-label="Explorar esta página">
@@ -178,20 +192,23 @@ export default function HomePage() {
           ))}
         </div>
 
-        <div className="alc-home-more-services">
-          <p>Conheça todas as áreas de intervenção da clínica.</p>
-          <Link to="/servicos" className="alc-home-inline-link">
-            Ver todos os serviços
-            <Icon name="arrow" />
-          </Link>
+      </section>
+      <section className="alc-home-people" aria-labelledby="home-people-title">
+        <div className="container-shell alc-home-people__layout">
+          <div className="alc-home-people__intro">
+            <p className="alc-home-eyebrow">A NOSSA EQUIPA</p>
+            <h2 id="home-people-title">Conheça quem está <em>deste lado.</em></h2>
+            <p>Conheça os profissionais, as suas áreas de intervenção e os seus percursos.</p>
+            <Link className="alc-home-inline-link" to="/equipa">Conhecer toda a equipa</Link>
+          </div>
+          <div className="alc-home-people__grid">
+            {people.map(member => <article className="alc-home-person" key={member.id}>
+              <Link className="alc-home-person__photo" to={`/equipa/${member.id}`}><MediaPlaceholder image={member.image} label={member.name} /></Link>
+              <div className="alc-home-person__body"><p>{member.role}</p><h3><Link to={`/equipa/${member.id}`}>{member.name}</Link></h3></div>
+            </article>)}
+          </div>
         </div>
       </section>
-      <DiscoveryWall />
-      {/* Alcançari Connect — descoberta e favoritos */}
-      <div className="container-shell alc-home-atlas-link"><span><strong>Prefere descobrir de outra forma?</strong><small>O Atlas reúne serviços, pessoas, espaços e leituras numa experiência visual, ao seu ritmo.</small></span><Link className="alc-home-inline-link" to="/atlas">Entrar no Atlas<Icon name="diagonal" /></Link></div>
-      <details className="alc-home-explore-optional" onToggle={event => { if (event.currentTarget.open) setExploreOpened(true) }}><summary><span><strong>Crie o seu percurso de descoberta.</strong><small>Opcional: combine conteúdos e guarde o que quer voltar a encontrar.</small></span><span aria-hidden="true">+</span></summary><Suspense fallback={<p className="container-shell" role="status">A preparar o seu percurso…</p>}>{exploreOpened && <ClinicExplorer />}</Suspense></details>
-      {/* Preparar a primeira visita */}
-      <FirstVisitJourney />
 
       {/* Unidades */}
       <section className="alc-home-units" id="os-nossos-espacos">
@@ -211,10 +228,6 @@ export default function HomePage() {
               a sua próxima visita.
             </p>
 
-            <div className="alc-home-unit-names">
-              {getPublished(site.units).map(unit => <Link key={unit.id} to={`/unidades/${unit.id}`}>{unit.name}<Icon name="diagonal" /></Link>)}
-            </div>
-
             <Link to="/unidades" className="alc-home-inline-link">
               Conhecer as unidades
               <Icon name="arrow" />
@@ -229,6 +242,13 @@ export default function HomePage() {
           />
         </div>
       </section>
+
+      <div className="container-shell alc-home-visit-wrap">
+        <details ref={visitRef} id="primeira-visita" className="alc-home-visit alc-home-explore-optional" onToggle={event => { if (event.currentTarget.open) setVisitOpened(true) }}>
+          <summary><span><strong>Preparar a primeira visita</strong><small>Um guia interativo com etapas e uma checklist para a sua visita.</small></span><span aria-hidden="true">+</span></summary>
+          <Suspense fallback={<p role="status">A preparar o guia…</p>}>{visitOpened && <FirstVisitJourney id="guia-primeira-visita" />}</Suspense>
+        </details>
+      </div>
 
       {/* Publicações do Blog */}
       <section className="container-shell alc-home-section alc-home-news" id="ideias-e-novidades">
@@ -293,7 +313,25 @@ export default function HomePage() {
         )}
       </section>
 
-            {/* Perguntas frequentes */}
+      <section className="container-shell alc-home-discover" aria-labelledby="home-discover-title">
+        <div className="alc-home-atlas-link">
+          <span><p className="alc-home-eyebrow">AO SEU RITMO</p><h2 id="home-discover-title">Há mais para <em>descobrir.</em></h2><small>Explore serviços, pessoas, espaços e leituras de outra forma.</small></span>
+          <Link className="alc-home-button alc-home-button-outline" to="/atlas">Entrar no Atlas</Link>
+        </div>
+        <div className="alc-home-discover__options">
+          <details ref={wallRef} className="alc-home-mural-optional alc-home-explore-optional" onToggle={event => { if (event.currentTarget.open) setWallOpened(true) }}>
+            <summary><span><strong>O mural da Alcançari</strong><small>Fotografias, pessoas e leituras. Escolha um olhar.</small></span><span aria-hidden="true">+</span></summary>
+            <Suspense fallback={<p role="status">A preparar o mural…</p>}>{wallOpened && <DiscoveryWall />}</Suspense>
+          </details>
+          <details ref={connectRef} className="alc-home-connect-optional alc-home-explore-optional" onToggle={event => { if (event.currentTarget.open) setExploreOpened(true) }}>
+            <summary><span><strong>Alcançari Connect</strong><small>Combine conteúdos e guarde o que quer voltar a encontrar.</small></span><span aria-hidden="true">+</span></summary>
+            <Suspense fallback={<p role="status">A preparar o seu percurso…</p>}>{exploreOpened && <ClinicExplorer />}</Suspense>
+          </details>
+        </div>
+      </section>
+
+      {/* Perguntas frequentes */}
+
       <ClinicFAQ />
 
       {/* Contactos */}

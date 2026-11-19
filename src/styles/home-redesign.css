@@ -936,3 +936,85 @@
 @media (max-width: 760px) { .alc-home-people__grid { gap: 16px; } .alc-home-person__photo { border-radius: 70px 70px 10px 10px; } .alc-home-person h3 { font-size: 1.4rem; } }
 @media (max-width: 560px) { .alc-home-page-nav > span { display: none; } .alc-home-page-nav { gap: 2px; } .alc-home-page-nav a { padding-inline: 13px; background: #eef3ec; } .alc-home-people__grid { grid-template-columns: 1fr; gap: 30px; } .alc-home-person { display: grid; grid-template-columns: 38% minmax(0, 1fr); align-items: center; gap: 20px; } .alc-home-person__photo { border-radius: 65px 65px 12px 12px; } .alc-home-person__photo .media-frame { aspect-ratio: .8; } .alc-home-person__body { padding: 0; } .alc-home-person__body > p { font-size: .6rem; } .alc-home-person__link { margin-top: 12px; } }
 @media (prefers-reduced-motion: reduce) { .alc-home-page-nav a, .alc-home-person__photo img { transition: none; } .alc-home-person:hover .alc-home-person__photo img { transform: none; } }
+
+/* Editorial rhythm: core information first; optional tools together. */
+.alc-home-hero-grid { padding-block: clamp(40px, 5vw, 72px); gap: clamp(32px, 5vw, 72px); }
+.alc-home-hero-copy h1 { font-size: clamp(2.65rem, 5vw, 4.9rem); line-height: 1.08; }
+.alc-home-hero-photo .media-frame { aspect-ratio: .95; }
+.alc-home-hero-foot { margin-top: 32px; }
+.alc-home-hero-copy .alc-home-eyebrow { padding: 0; border: 0; background: none; font-size: .75rem; }
+.alc-home-button-primary { background: var(--home-dark); }
+.alc-home-shortcuts { grid-template-columns: repeat(4, minmax(0, 1fr)); padding-block: 22px; border-bottom: 1px solid #d7e3df; }
+.alc-home-shortcut { min-width: 0; padding: 16px 24px; }
+.alc-home-shortcut:first-of-type { border-left: 0; padding-left: 0; }
+.alc-home-shortcut strong { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 400; }
+.alc-home-shortcut small { font-size: .875rem; }
+.alc-home-about, .alc-home-units { padding-block: clamp(48px, 6vw, 80px); }
+.alc-home-section { padding-block: clamp(48px, 6vw, 80px); }
+.alc-home-section-heading { margin-bottom: 32px; }
+.alc-home-more-services { margin-top: 24px; }
+.alc-home-people { padding-block: clamp(48px, 6vw, 80px); }
+.alc-home-people__layout { display: grid; grid-template-columns: 1fr 1.6fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+.alc-home-people__intro h2 { font-size: clamp(2rem, 3.7vw, 3.3rem); margin: 16px 0 24px; }
+.alc-home-people__intro .alc-home-eyebrow { font-size: .75rem; color: #11677a; }
+.alc-home-people__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.alc-home-person__photo { border-radius: 96px 96px 12px 12px; }
+.alc-home-person__photo .media-frame { aspect-ratio: .9; }
+.alc-home-person__body { padding-top: 16px; }
+.alc-home-person__body > p { font-size: .75rem; color: #11677a; }
+.alc-home-person h3 { font-size: clamp(1.4rem, 2vw, 1.8rem); margin-top: 8px; }
+.alc-home-units .alc-tour { margin: 32px 0 0; padding: clamp(16px, 3vw, 32px); background: #ffffff90; border-radius: 20px; }
+.alc-home-units .alc-tour__intro h2 { font-size: 1.5rem; margin-block: 10px 16px; }
+.alc-home-units .alc-tour__units { margin: 16px 0 24px; }
+.alc-home-units .alc-tour__stage { height: clamp(240px, 37vw, 440px); }
+.alc-home-visit-wrap { margin-block: 28px 0; }
+.alc-home-discover { margin-block: 0 48px; }
+.alc-home-discover .alc-home-atlas-link { margin-bottom: 0; padding-block: 28px; border-bottom: 0; }
+.alc-home-atlas-link h2 { font-size: clamp(2rem, 3.4vw, 3rem); margin-top: 12px; }
+.alc-home-discover__options { border-block: 1px solid #cfddd5; }
+.alc-home-explore-optional { background: transparent; border: 0; scroll-margin-top: 110px; }
+.alc-home-explore-optional + .alc-home-explore-optional { border-top: 1px solid #cfddd5; }
+.alc-home-explore-optional > summary { width: 100%; padding: 24px 0; }
+.alc-home-explore-optional > summary strong { font-size: clamp(1.35rem, 2vw, 1.65rem); }
+.alc-home-explore-optional > summary small { font-size: .875rem; }
+.alc-home-explore-optional > summary:hover strong { color: #11677a; }
+.alc-home-explore-optional > summary:focus-visible { outline: 3px solid #11677a; outline-offset: 5px; }
+.alc-home-visit { border-block: 1px solid #cfddd5; }
+.alc-home-visit .fv { padding-block: 32px; background: transparent; }
+.alc-home-visit .fv-shell, .alc-home-discover .container-shell { width: 100%; }
+.alc-home-visit .fv-head { margin-bottom: 28px; }
+.alc-home-visit .fv-head h2 { font-size: 2rem; }
+.alc-home-discover .discovery-wall { border-radius: 20px; margin-bottom: 24px; padding: clamp(20px, 4vw, 40px); }
+.alc-home-discover .ac-connect { padding-top: 24px; }
+.alc-home-cta-inner { padding-block: clamp(36px, 5vw, 64px); }
+@media (max-width: 760px) {
+  .alc-home-shortcuts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .alc-home-shortcut, .alc-home-shortcut:first-of-type { padding: 16px; border: 0; }
+  .alc-home-shortcut:nth-child(odd) { padding-left: 0; border-right: 1px solid #d7e3df; }
+  .alc-home-shortcut:nth-child(n+3) { border-top: 1px solid #d7e3df; }
+  .alc-home-shortcut strong { font-size: 1.35rem; }
+  .alc-home-people__layout { grid-template-columns: 1fr; }
+  .alc-home-people__intro { max-width: 560px; }
+  .alc-home-people__grid { gap: 24px; }
+  .alc-home-hero-photo .media-frame { aspect-ratio: 1.2; }
+  .alc-home-hero-foot { margin-top: 28px; }
+}
+@media (max-width: 560px) {
+  .alc-home-hero-copy h1 { font-size: clamp(2.5rem, 10vw, 3.3rem); }
+  .alc-home-people__grid { grid-template-columns: 1fr; }
+  .alc-home-person { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 20px; align-items: center; }
+  .alc-home-person__photo { border-radius: 40px 40px 10px 10px; }
+  .alc-home-person__body { padding: 0; }
+  .alc-home-person h3 { font-size: 1.5rem; }
+  .alc-home-discover .alc-home-atlas-link { gap: 20px; }
+  .alc-home-explore-optional > summary { gap: 16px; }
+  .alc-home-explore-optional > summary small { font-size: .875rem; }
+}
+
+.alc-home .alc-faq { padding-block: clamp(48px, 5vw, 64px); }
+.alc-home .alc-faq__heading { margin-bottom: 32px; }
+.alc-home .alc-faq__heading h2 { font-size: clamp(2rem, 3.4vw, 3rem); }
+.alc-home .alc-faq__item button { padding-block: 20px; }
+
+.alc-home-people__intro > p:not(.alc-home-eyebrow) { font-size: 1rem; color: #526a6e; }
+.alc-home-people__intro .alc-home-inline-link { color: #11677a; }

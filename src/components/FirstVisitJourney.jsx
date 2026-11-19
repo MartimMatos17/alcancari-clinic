@@ -24,7 +24,7 @@ function initialChecks() {
   } catch { return [] }
 }
 
-export default function FirstVisitJourney() {
+export default function FirstVisitJourney({ id = 'primeira-visita' }) {
   const [unitId, setUnitId] = useState(site.units[0]?.id || '')
   const [checked, setChecked] = useState(initialChecks)
   const [stepIndex, setStepIndex] = useState(0)
@@ -44,7 +44,7 @@ export default function FirstVisitJourney() {
   const print = () => window.print()
 
   return (
-    <section className="fv" id="primeira-visita" aria-labelledby="fv-title">
+    <section className="fv" id={id} aria-labelledby="fv-title">
       <div className="container-shell fv-shell">
         <header className="fv-head">
           <div>
