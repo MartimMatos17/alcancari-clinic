@@ -1,6 +1,6 @@
-import { media } from './media'
+import { media } from './media.js'
 
-// Presentation only: official service text and shared image assignments stay intact.
+// Presentation shared by every public service card; original media provenance stays intact.
 // Public source provenance: docs/media-inventory.json; operational guidance: README.md.
 const fromGallery = (slug, index) => media.galleries.services[slug][index]
 export const serviceSpace = {

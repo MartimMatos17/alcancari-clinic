@@ -4,6 +4,7 @@ import assert from 'node:assert/strict'
 import { existsSync, readFileSync } from 'node:fs'
 import { resolve, sep } from 'node:path'
 import { media } from '../src/content/media.js'
+import { site } from '../src/content/site.js'
 
 const PUBLIC_DIR = resolve('public')
 const IMAGE_PATH = /^\/images\/(branding|equipa|servicos|unidades|clinica|blog)\/[a-z0-9-]+\.(webp|jpg|jpeg|png|svg)$/i
@@ -137,4 +138,19 @@ test('os retratos de baixa resolução mantêm dimensões declaradas', () => {
     [media.team['vania-peixoto'].width, media.team['vania-peixoto'].height],
     [410, 410]
   )
+})
+
+
+test('o catálogo público usa fotografias da área correta em todos os exploradores', () => {
+  for (const [slug, incorrect] of [
+    ['terapia-ocupacional', 'fisioterapia'],
+    ['floortime', 'acupuntura'],
+    ['integracao-sensorial', 'psicologia'],
+  ]) {
+    const image = site.services.find(service => service.slug === slug).image
+    assert.notEqual(image.src, media.services[incorrect].src, `Fotografia indevida em ${slug}`)
+    assert.ok(media.galleries.services[slug].some(candidate => candidate.src === image.src), `Sem fotografia da própria área: ${slug}`)
+    checkImage(image)
+  }
+  assert.ok(site.services.every(service => service.image), 'O catálogo deve manter uma apresentação local para todos os serviços')
 })

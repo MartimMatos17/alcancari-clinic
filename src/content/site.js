@@ -4,6 +4,7 @@ import units from './units.json' with { type: 'json' }
 import posts from './posts.json' with { type: 'json' }
 import clinic from './clinic.json' with { type: 'json' }
 import { media } from './media.js'
+import { serviceImage } from './servicePresentation.js'
 
 const withImages = (items, images) => items.map(item => ({ ...item, image: images[item.slug || item.id] || null }))
 
@@ -21,7 +22,7 @@ export const site = {
     email: { value: 'alcancari.terapias@gmail.com', confirmed: true },
   },
   // Conteúdos e regras de publicação: README.md; proveniência em docs/sources/.
-  services: withImages(services, media.services),
+  services: withImages(services, media.services).map(service => ({ ...service, image: serviceImage(service) })),
   team: withImages(team, media.team),
   units: withImages(units, media.units),
   posts: withImages(posts, media.posts),
