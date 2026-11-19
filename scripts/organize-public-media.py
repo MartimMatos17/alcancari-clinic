@@ -6,6 +6,7 @@ from urllib.parse import urlparse,unquote
 from PIL import Image,ImageOps
 import json,re,sys,hashlib,shutil,unicodedata,csv
 from wordpress_html import Tree,widgets,norm
+from private_backups import private_report
 
 archive=Path(sys.argv[1])
 def slug(value):return re.sub(r'[^a-z0-9]+','-',unicodedata.normalize('NFKD',value).encode('ascii','ignore').decode().lower()).strip('-')
@@ -121,4 +122,4 @@ with Path('docs/media-inventory.csv').open('w',newline='') as out:
     writer=csv.writer(out);writer.writerow(['ficheiro','categoria','largura','altura','bytes','origem','original','arquivo','paginas','sha256','resolucao_limitada'])
     for e in entries:writer.writerow([e['localPath'],e['category'],e['width'],e['height'],e['bytes'],e['sourceUrl'],e['originalFileName'],e['archivePath'],' | '.join(e['pages']),e['sha256'],e['lowResolution']])
 summary={'families':len(records),'recoveredFamilies':sum(bool(g['selected']) for g in records),'uniqueImages':len(entries),'duplicatesAvoided':sum(bool(g['selected']) for g in records)-len(entries),'totalBytes':sum(e['bytes'] for e in entries),'lowResolution':[e['localPath'] for e in entries if e['lowResolution']],'missingImages':[g['family'] for g in missing],'missingPortraits':[a['label'] for key,a in associations.items() if key.startswith('team.') and not a['images']]}
-(archive/'summary.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n');print(json.dumps(summary,ensure_ascii=False,indent=2))
+private_report(archive/'summary.json', json.dumps(summary,ensure_ascii=False,indent=2)+'\n', Path(__file__).resolve().parent.parent/'backups');print(json.dumps(summary,ensure_ascii=False,indent=2))

@@ -9,18 +9,29 @@ from html import unescape
 import json, re, hashlib, subprocess, sys
 from PIL import Image
 from wordpress_html import Tree
+from private_backups import private_directory, private_write_new, private_report
 
 BASE = 'https://alcancari.com/'
 ARCHIVE = Path(sys.argv[2])
+PRIVATE_ROOT = Path(__file__).resolve().parent.parent / 'backups'
 LOG = []
 
 def fetch(url, destination):
     parsed = urlparse(url)
     assert parsed.scheme == 'https' and parsed.netloc == 'alcancari.com'
-    destination.parent.mkdir(parents=True, exist_ok=True)
+    private_directory(destination.parent, PRIVATE_ROOT)
+    if destination.exists() or destination.is_symlink():
+        if destination.is_symlink() or not destination.is_file() or destination.stat().st_mode & 0o077:
+            raise PermissionError('Arquivo existente inseguro; preservado sem alterações.')
+        record = {'url': url, 'httpStatus': 200, 'archivePath': str(destination), 'preserved': True}
+        LOG.append(record)
+        return record
+    private_write_new(destination, b'', PRIVATE_ROOT)
     result = subprocess.run(['curl', '--silent', '--show-error', '--location', '--proto', '=https', '--proto-redir', '=https', '--max-time', '45', '--retry', '1', '-A', 'Mozilla/5.0', '--output', str(destination), '--write-out', '%{http_code}', url], capture_output=True, text=True)
     status = int(result.stdout) if result.stdout.isdigit() else 0
     record = {'url': url, 'httpStatus': status, 'archivePath': str(destination), 'error': result.stderr.strip() if result.returncode else None}
+    if status != 200 and destination.exists():
+        destination.unlink()  # Only this call's incomplete download.
     LOG.append(record)
     return record
 
@@ -106,7 +117,7 @@ def discover():
         if original not in g['candidates']:g['candidates'][original]={'url':original,'priority':10**11,'reason':'public-original-path-candidate'}
         elif not re.search(r'-\d+x\d+\.',original):g['candidates'][original]['priority']=max(g['candidates'][original]['priority'],10**11)
         g['candidates']=sorted(g['candidates'].values(),key=lambda c:c['priority'],reverse=True)
-    (ARCHIVE/'discovery.json').write_text(json.dumps({'pages':[p['link'] for p in pages],'cssFiles':sorted(css_pages),'groups':list(groups.values()),'requests':LOG},ensure_ascii=False,indent=2)+'\n')
+    private_report(ARCHIVE/'discovery.json', json.dumps({'pages':[p['link'] for p in pages],'cssFiles':sorted(css_pages),'groups':list(groups.values()),'requests':LOG},ensure_ascii=False,indent=2)+'\n', PRIVATE_ROOT)
     print(json.dumps({'pages':len(pages),'cssFiles':len(css_pages),'imageReferences':len(refs),'families':len(groups),'mediaMetadata':len(metadata),'failedRequests':[r for r in LOG if r['httpStatus']!=200]},ensure_ascii=False),flush=True)
 
 def download():
@@ -140,7 +151,7 @@ def download():
         print(('OK '+str(best['width'])+'x'+str(best['height']) if best else 'MISSING')+' '+g['family'],flush=True)
         return {**g,'selected':best,'attempts':attempts}
     with ThreadPoolExecutor(max_workers=4) as pool:results=list(pool.map(recover,discovery['groups']))
-    (ARCHIVE/'downloads.json').write_text(json.dumps(results,ensure_ascii=False,indent=2)+'\n')
+    private_report(ARCHIVE/'downloads.json', json.dumps(results,ensure_ascii=False,indent=2)+'\n', PRIVATE_ROOT)
     print(json.dumps({'recoveredFamilies':sum(bool(g['selected']) for g in results),'uniqueFiles':len({g['selected']['sha256'] for g in results if g['selected']}),'missing':[g['family'] for g in results if not g['selected']]}),flush=True)
 
 if __name__=='__main__':

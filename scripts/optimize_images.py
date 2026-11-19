@@ -1,6 +1,6 @@
 from pathlib import Path
 import json
-import shutil
+from private_backups import private_directory, private_copy, private_report
 import subprocess
 import sys
 
@@ -58,7 +58,7 @@ def image_dimensions(path):
     return width, height
 
 def convert():
-    BACKUP.mkdir(parents=True, exist_ok=True)
+    private_directory(BACKUP, ROOT / "backups")
 
     images = sorted(
         p for p in IMAGES.rglob("*")
@@ -127,8 +127,7 @@ def convert():
             continue
 
         backup_path = BACKUP / relative.relative_to("public")
-        backup_path.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(source, backup_path)
+        private_copy(source, backup_path, ROOT / "backups")
 
         replacements[source.name] = output.name
         converted.append(str(relative))
@@ -151,14 +150,16 @@ def convert():
             file.write_text(updated, encoding="utf-8")
             changed.append(str(file.relative_to(ROOT)))
 
-    MANIFEST.write_text(
+    report = private_report(
+        MANIFEST,
         json.dumps({
             "images": converted,
             "updated_files": changed
         }, ensure_ascii=False, indent=2),
-        encoding="utf-8"
+        ROOT / "backups"
     )
 
+    print("Relatório privado:", report)
     print("\n===== RESULTADO =====")
     print("Imagens convertidas:", len(converted))
     print("Ficheiros atualizados:", len(changed))
@@ -171,10 +172,14 @@ def convert():
     print("\nAinda não foram removidos os originais públicos.")
 
 def finalize():
-    if not MANIFEST.exists():
+    report = Path(sys.argv[sys.argv.index("--manifest") + 1]) if "--manifest" in sys.argv else MANIFEST
+    private_directory(report.parent, ROOT / "backups")
+    if report.is_symlink():
+        raise SystemExit("Relatório simbólico recusado.")
+    if not report.exists():
         raise SystemExit("Não existe relatório de otimização.")
 
-    data = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    data = json.loads(report.read_text(encoding="utf-8"))
     originals = [ROOT / name for name in data["images"]]
 
     for original in originals:
