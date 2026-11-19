@@ -1,3 +1,4 @@
+import { articlePreview, previewResource } from './admin-preview.mjs'
 import { pathToFileURL } from 'node:url'
 import { resolve } from 'node:path'
 import { startAdmin } from './admin-security.mjs'
@@ -17,13 +18,13 @@ function render(security, slug, message = '') {
   const draft = { ...original, note: '', ...current }
   const tokens = `<input type="hidden" name="csrf" value="${security.csrf}"><input type="hidden" name="slug" value="${escape(original.slug)}"><input type="hidden" name="version" value="${revision(current)}"><input type="hidden" name="sourceVersion" value="${revision(original)}">`
   const history = Array.isArray(current?.history) ? current.history : []
-  const body = `<div class="actions"><a class="button" href="/copias">Cópias de segurança</a><a class="button" href="/exportar">Exportar rascunhos JSON ↓</a><span class="badge">${Object.keys(drafts).filter(key => posts.some(post => post.slug === key)).length} publicações com rascunho</span></div>
+  const body = `<div class="actions"><a class="button primary" href="/prever?slug=${encodeURIComponent(original.slug)}" target="_blank" rel="noopener noreferrer">Ver artigo com o aspeto do site ↗</a><a class="button" href="/copias">Cópias de segurança</a><a class="button" href="/exportar">Exportar rascunhos JSON ↓</a><span class="badge">${Object.keys(drafts).filter(key => posts.some(post => post.slug === key)).length} publicações com rascunho</span></div>
   ${message ? `<p class="notice" role="status">${escape(message)}</p>` : ''}
   <section class="panel"><label for="post">Escolher publicação</label><select id="post">${posts.map(post => `<option value="${escape(post.slug)}" ${post.slug === original.slug ? 'selected' : ''}>${escape(post.title)}${Object.hasOwn(drafts, post.slug) ? ' · ' + (states[drafts[post.slug]?.status] || 'Em edição') : ' · Original'}</option>`).join('')}</select><p class="status-line">${current ? 'Última gravação: ' + dateLabel(current.updatedAt) : 'A editar a partir do original. Ainda sem rascunho.'}</p></section>
   <div class="columns"><section class="panel"><div class="section-head"><h2>A sua edição</h2><span class="badge" id="save-status">Sem alterações por guardar</span></div><form id="editor-form" method="post" action="/guardar">${tokens}
   ${fields.map(name => `<div class="field"><label for="${name}">${labels[name]} <span class="counter" id="count-${name}"></span></label>${['summary', 'note'].includes(name) ? `<textarea id="${name}" name="${name}" maxlength="${limits[name]}" ${name !== 'note' ? 'required' : ''}>${escape(draft[name])}</textarea>` : `<input id="${name}" name="${name}" maxlength="${limits[name]}" required value="${escape(draft[name])}">`}${name === 'note' ? '<small>Apenas para revisão editorial. Não introduza informações de pacientes ou credenciais.</small>' : ''}</div>`).join('')}
   <div class="field"><label for="status">Estado de trabalho</label><select id="status" name="status">${Object.entries(states).map(([key, label]) => `<option value="${key}" ${(current?.status || 'draft') === key ? 'selected' : ''}>${label}</option>`).join('')}</select><small>«Revisto» organiza o trabalho editorial; não publica o conteúdo nem representa aprovação clínica.</small></div><div class="actions"><button class="primary" id="save-button">Guardar rascunho</button><button type="button" id="reset-fields">Repor campos guardados</button></div><p class="status-line" role="status" id="edit-status">Atalho para guardar: Ctrl+S / ⌘S.</p></form></section>
-  <section class="panel"><h2>Pré-visualização em tempo real</h2><div class="preview"><span class="overline" id="preview-category"></span><h3 id="preview-title"></h3><p id="preview-summary"></p></div><p class="muted">Apresentação do título e resumo em rascunho. O texto completo do artigo permanece no original.</p><h3>Revisão rápida</h3><ul class="muted" id="review-checks"></ul>${original.status === 'excerpt-only' ? '<p class="notice warning">A origem contém apenas um excerto. Este editor não cria nem completa o texto do artigo.</p>' : ''}</section></div>
+  <section class="panel"><h2>Pré-visualização em tempo real</h2><div class="preview"><span class="overline" id="preview-category"></span><h3 id="preview-title"></h3><p id="preview-summary"></p></div><p class="muted">Apresentação do título e resumo em rascunho. Guarde antes de abrir a pré-visualização completa, que usa apenas a versão guardada. O texto do artigo permanece no original.</p><h3>Revisão rápida</h3><ul class="muted" id="review-checks"></ul>${original.status === 'excerpt-only' ? '<p class="notice warning">A origem contém apenas um excerto. Este editor não cria nem completa o texto do artigo.</p>' : ''}</section></div>
   <section class="panel"><h2>Original e rascunho, lado a lado</h2><div class="comparison"><div><p class="overline">ORIGINAL NO PROJETO</p>${['title', 'category', 'summary'].map(name => `<h3>${labels[name]}</h3><p>${escape(original[name])}</p>`).join('')}</div><div id="comparison-draft"><p class="overline">EDIÇÃO ATUAL</p>${['title', 'category', 'summary'].map(name => `<h3>${labels[name]}</h3><p id="compare-${name}"></p>`).join('')}</div></div><details style="margin-top:22px"><summary>Consultar texto original completo disponível</summary>${(original.blocks || []).map(block => block.type === 'list' ? `<ul>${block.items.map(item => `<li>${escape(item)}</li>`).join('')}</ul>` : `<p style="white-space:pre-wrap;line-height:1.8">${escape(block.text)}</p>`).join('')}</details></section>
   <section class="panel" id="historico"><div class="section-head"><h2>Histórico recuperável</h2><span class="badge">${history.length} / 20 versões anteriores</span></div><p class="muted">Cada gravação conserva a versão anterior. Restaurar cria um novo rascunho em edição e preserva o historial, até ao limite de 20 versões.</p>${history.length ? history.map(snapshot => `<details class="history"><summary>${escape(dateLabel(snapshot.updatedAt))} · ${escape(snapshot.title)} · ${escape(states[snapshot.status] || 'Em edição')}</summary><p>${escape(snapshot.summary)}</p><p class="muted">Nota: ${escape(snapshot.note || 'Sem nota interna.')}</p><form method="post" action="/restaurar" data-confirm="Restaurar esta versão como rascunho? A edição guardada atual ficará no histórico.">${tokens}<input type="hidden" name="restoreId" value="${escape(snapshot.id)}"><button>Restaurar esta versão</button></form></details>`).join('') : '<p class="muted">As versões anteriores aparecem aqui a partir da segunda gravação.</p>'}<form method="post" action="/original" data-confirm="Criar um rascunho a partir do original? O rascunho guardado atual ficará no histórico.">${tokens}<button>Recuperar os campos do original</button></form></section>`
   const script = `const data = JSON.parse(document.getElementById('admin-data').textContent);
@@ -51,6 +52,18 @@ document.querySelectorAll('form[data-confirm]').forEach(target => target.addEven
 }
 export function editorHandler(req, res, security) {
   const url = new URL(req.url, 'http://127.0.0.1:4175')
+  if (req.method === 'GET' && url.pathname === '/prever') {
+    const result = articlePreview(url.searchParams.get('slug'), { nonce: security.nonce })
+    return security.send(result.code, result.body)
+  }
+  if (req.method === 'GET' && (url.pathname.startsWith('/preview-assets/') || url.pathname.startsWith('/preview-media/'))) {
+    try {
+      const resource = previewResource(url.pathname)
+      if (!resource) return security.send(404, 'Recurso não encontrado.')
+      res.setHeader('Content-Type', resource.type)
+      return security.send(200, resource.body)
+    } catch { return security.send(404, 'Recurso não encontrado.') }
+  }
   if (req.method === 'GET' && url.pathname === '/copias') {
     const version = diskVersion()
     const backups = listBackups()

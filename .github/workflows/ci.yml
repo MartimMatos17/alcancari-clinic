@@ -38,6 +38,7 @@ jobs:
           node --check scripts/admin-security.mjs
           node --check scripts/admin-content.mjs
           node --check scripts/admin-ui.mjs
+          node --check scripts/admin-preview.mjs
           node --check scripts/admin-editor.mjs
           node --check scripts/admin-local.mjs
       - name: Compilar e verificar ficheiros publicos

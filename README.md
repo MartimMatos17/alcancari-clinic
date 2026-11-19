@@ -56,6 +56,10 @@ Proteções implementadas: validação de Host e origem, autenticação no servi
 
 **Nunca exponha estes painéis por túnel, proxy, rede local ou alojamento público.** Uma futura administração online exige arquitetura própria, HTTPS, MFA e revisão de permissões e auditoria.
 
+### Pré-visualização no contexto do Blog
+
+Execute `npm run build` antes de abrir **Ver artigo com o aspeto do site** no estúdio. A pré-visualização usa a versão guardada, os estilos compilados e o texto original integral disponível. O resumo editorial é apresentado separadamente, como na listagem do Blog. Não apresenta notas internas nem grava ficheiros em `dist/`. A página, os estilos e as fotografias continuam protegidos pela sessão local. Sem build disponível, apresenta instruções e não tenta publicar nada.
+
 ### Rascunhos e recuperação
 
 - `backups/admin-drafts/posts.json`: rascunhos atuais; nunca altera `src/content/posts.json`.
@@ -78,7 +82,7 @@ Cópias no mesmo disco não protegem de perda do computador. Mantenha uma cópia
 | `INSTAGRAM_ACCOUNT_ID` | Identificador da conta profissional oficial | ambiente privado do build |
 | `META_GRAPH_VERSION` | Versão suportada `vNN.N` | ambiente privado do build |
 
-Sem endpoint, o formulário mantém os contactos alternativos. Configure os destinatários, proteção contra spam e privacidade no fornecedor e teste um envio autorizado antes do lançamento.
+Sem endpoint autorizado, o formulário de dados fica oculto e são apresentadas alternativas diretas de telefone, email e WhatsApp. Os testes de envio usam respostas simuladas, sem enviar mensagens reais. Configure os destinatários, proteção contra spam e privacidade no fornecedor e teste um envio autorizado antes do lançamento.
 
 A integração Instagram usa a API oficial Meta apenas no build; não faz scraping nem contacta a API durante o desenvolvimento. Sem autorização/configuração válida, mantém os artigos existentes. Sincronização agendada e publicação continuam pendentes de configuração externa.
 
