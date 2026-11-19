@@ -77,17 +77,6 @@ export default function NewsPage() {
           </section>
         )}
 
-        <section className="be-discover" aria-labelledby="be-discover-title">
-          <div className="be-section-heading"><div><p className="be-eyebrow">NAVEGUE POR INTERESSES</p><h2 id="be-discover-title">O que desperta a sua <em>curiosidade?</em></h2></div></div>
-          <div className="be-topic-grid">
-            {categories.slice(0, 6).map((topic, index) => (
-              <button key={topic} type="button" className={`be-topic ${category === topic && !onlySaved ? 'is-active' : ''}`} onClick={() => { setCategory(topic); setOnlySaved(false); document.getElementById('explorar-blog')?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }}>
-                <span className="be-topic__number">{String(index + 1).padStart(2, '0')}</span><strong>{topic}</strong><span aria-hidden="true">↗</span>
-              </button>
-            ))}
-          </div>
-        </section>
-
         <section className="blog-library be-library" id="explorar-blog" aria-labelledby="blog-library-title">
           <div className="blog-library__heading be-library__heading"><div><p className="be-eyebrow">BIBLIOTECA ALCANÇARI</p><h2 id="blog-library-title">Explore. Guarde. <em>Volte a ler.</em></h2></div><p>Encontre um tema interessante e guarde as leituras que quiser revisitar, neste dispositivo.</p></div>
           <div className="be-toolbar">

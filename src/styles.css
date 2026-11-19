@@ -55,7 +55,7 @@ p { line-height: 1.8; }
 .hero h1 em { color: #68785a; font-weight: 400; }
 .hero-description { font-size: 1rem; color: #5a665b; max-width: 370px; margin-top: 28px; }
 .hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 30px; margin-top: 35px; }
-.button { display: inline-flex; align-items: center; justify-content: center; min-height: 49px; gap: 24px; padding: 14px 23px; font-size: .8rem; font-weight: 550; border-radius: 3px; border: 1px solid transparent; transition: background .2s; }
+.button { display: inline-flex; align-items: center; justify-content: center; min-height: 49px; gap: 24px; padding: 14px 23px; font-size: .8rem; font-weight: 600; border-radius: 30px; border: 1px solid transparent; transition: background .2s; }
 .button-primary { background: var(--color-forest); color: #fff; }
 .button-primary:hover { background: #173d34; }
 .text-link { display: inline-flex; align-items: center; gap: 16px; font-size: .8rem; font-weight: 550; line-height: 1.6; min-height: 44px; }
@@ -459,3 +459,11 @@ details p { margin-top: 14px; font-size: .85rem; color: #5e6e56; }
     transform: none;
   }
 }
+
+/* Consistent reading measure across the clinic, units and profile introductions. */
+.page-intro { padding-block: 28px 40px; }
+.page-intro .breadcrumb { margin-bottom: 32px; font-size: .8125rem; }
+.page-intro h1 { max-width: 20ch; font-size: clamp(2.5rem, 5.2vw, 4.6rem); }
+.page-intro .intro-text { max-width: 62ch; font-size: 1rem; line-height: 1.8; }
+.split-copy .rich-content { max-width: 65ch; }
+@media (max-width: 640px) { .page-intro { padding-block: 24px 32px; } .page-intro .breadcrumb { margin-bottom: 24px; } }

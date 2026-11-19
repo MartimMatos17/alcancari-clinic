@@ -559,3 +559,12 @@ main [id] { scroll-margin-top: 112px; }
 .global-search-shortcut kbd { font-family: inherit; padding: 2px 5px; border: 1px solid #d8dcd2; border-radius: 4px; }
 @media (max-width: 900px) { .recent-pages__grid { grid-template-columns: 1fr; } .recent-pages__heading { align-items: start; flex-direction: column; } }
 @media print { .recent-pages, .global-search-shortcut { display: none; } }
+
+/* Legible navigation and a compact, structured mobile footer. */
+.alc-layout-links .alc-layout-link { font-size: .875rem; }
+.alc-layout-footer-navigation a { min-height: 44px; }
+@media (max-width: 560px) {
+  .alc-layout-footer-navigation { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 20px; }
+  .alc-layout-footer-navigation h2 { grid-column: 1 / -1; }
+  .alc-layout-footer-about > p { max-width: 35ch; }
+}

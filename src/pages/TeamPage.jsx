@@ -23,9 +23,9 @@ export default function TeamPage() {
             </p>
 
             <h2>
-              Conheça a nossa
+              Profissionais e áreas
               <br />
-              <em>equipa.</em>
+              <em>de intervenção.</em>
             </h2>
           </div>
 
