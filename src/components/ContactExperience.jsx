@@ -1,8 +1,9 @@
+import { sendContactRequest, validContactEndpoint } from '../lib/contactRequest'
 
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { site } from '../content/site'
-import { getPublished } from '../lib/content'
+import { getPublished, getContactLinks } from '../lib/content'
 import '../styles/alcancari-interactions.css'
 import '../styles/appointment-form.css'
 
@@ -39,8 +40,7 @@ export default function ContactExperience({
   const [error, setError] = useState('')
 
   const services = getPublished(site.services)
-  const enabled =
-    /^https:\/\/formspree\.io\/f\/[a-zA-Z0-9]+$/.test(endpoint)
+  const enabled = validContactEndpoint(endpoint)
 
   const isAppointment = form.requestType === 'marcacao'
 
@@ -115,36 +115,17 @@ export default function ContactExperience({
           : 'Email'
     }
 
-    const controller = new AbortController()
-    const timeout = setTimeout(
-      () => controller.abort(),
-      12000
-    )
-
-    try {
-      const result = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify(payload),
-        signal: controller.signal,
-      })
-
-      if (!result.ok) {
-        throw new Error('Pedido não aceite')
-      }
-
+    const result = await sendContactRequest(endpoint, payload)
+    if (result.ok) {
       setStatus('success')
       setForm(initial)
-    } catch {
+    } else {
       setStatus('error')
-      setError(
-        'Não foi possível enviar o pedido. Tenta novamente ou contacta-nos por telefone ou email.'
-      )
-    } finally {
-      clearTimeout(timeout)
+      setError(result.reason === 'timeout'
+        ? 'O envio demorou mais do que o esperado. Não foi possível confirmar a receção. Verifique antes de repetir ou contacte a clínica por telefone ou email.'
+        : result.reason === 'rate-limit'
+          ? 'Existem demasiados pedidos neste momento. Aguarde antes de tentar novamente ou utilize os contactos alternativos.'
+          : 'Não foi possível confirmar o envio. Os campos foram mantidos. Tente novamente ou contacte-nos por telefone ou email.')
     }
   }
 
@@ -260,7 +241,7 @@ export default function ContactExperience({
           <h2>Como podemos ajudar?</h2>
 
           <p className="alc-contact__form-sub">
-            Escolha o tipo de pedido e preencha os seus dados.
+            {enabled ? 'Escolha o tipo de pedido e preencha os seus dados.' : 'O envio por formulário está indisponível. Escolha um dos canais de contacto abaixo.'}
           </p>
 
           {status === 'success' && (
@@ -279,10 +260,11 @@ export default function ContactExperience({
               className="alc-contact__notice"
               role="status"
             >
-              O formulário ainda não está ligado ao serviço
-              de email. Contacte-nos por telefone ou email.
+              Este formulário ainda não recebe pedidos. Não é necessário preencher dados nesta demonstração; pode contactar a clínica por telefone, email ou WhatsApp.
             </p>
           )}
+
+{!enabled && <div className="alc-contact__alternatives" aria-label="Alternativas ao formulário">{getContactLinks(site.contacts).map(link => <a key={link.type} href={link.href} target={link.external ? '_blank' : undefined} rel={link.external ? 'noopener noreferrer' : undefined}><strong>{link.label}</strong><span>{link.type === 'whatsapp' ? 'Abrir conversa' : link.value}</span><span aria-hidden="true">↗</span></a>)}{initialSelection.service && <p>Serviço escolhido: {initialSelection.service}</p>}{initialSelection.unit && <p>Unidade escolhida: {initialSelection.unit}</p>}</div>}
 
 {status === 'sending' && (
   <p role="status" aria-live="polite">
@@ -291,11 +273,12 @@ export default function ContactExperience({
 )}
 
 
-<form
+{enabled && <form
   onSubmit={submit}
   className="alc-contact__form"
   aria-busy={status === 'sending'}
 >
+<fieldset disabled={status === 'sending'} className="alc-contact__submission-fields" aria-label="Dados do pedido">
 
             <fieldset className="alc-appointment__type">
               <legend>O que pretende fazer?</legend>
@@ -633,7 +616,8 @@ export default function ContactExperience({
               clínicas ou dados de saúde. Este formulário
               não se destina a situações de emergência.
             </small>
-          </form>
+            </fieldset>
+          </form>}
         </div>
       </section>
     </div>

@@ -39,7 +39,7 @@ export default function ContactPage() {
               </summary>
               <p>
                 Pode contactar a clínica por telefone,
-                WhatsApp, email ou através do formulário.
+                WhatsApp ou email. Quando o formulário estiver disponível, poderá também utilizá-lo.
                 A equipa confirmará a disponibilidade.
               </p>
             </details>
