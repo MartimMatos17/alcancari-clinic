@@ -19,9 +19,9 @@ export function ReadingProgress({ target }) {
   }, [target])
   return <progress className="reading-progress" max="100" value={value} aria-label="Progresso de leitura" />
 }
-export function Modal({ children, label, onClose, className = '', onKeyDown }) {
+export function Modal({ children, label, onClose, className = '', onKeyDown, initialFocus }) {
   const ref = useRef(null)
   const close = useRef(onClose); close.current = onClose
-  useEffect(() => { const dialog = ref.current; const active = document.activeElement; const overflow = document.body.style.overflow; dialog.showModal(); document.body.style.overflow = 'hidden'; return () => { dialog.close(); document.body.style.overflow = overflow; if (active?.isConnected) active.focus() } }, [])
+  useEffect(() => { const dialog = ref.current; const active = document.activeElement; const overflow = document.body.style.overflow; dialog.showModal(); initialFocus?.current?.focus(); document.body.style.overflow = 'hidden'; return () => { dialog.close(); document.body.style.overflow = overflow; if (active?.isConnected) active.focus() } }, [])
   return createPortal(<dialog ref={ref} aria-label={label} className={`utility-modal ${className}`} onCancel={event => { event.preventDefault(); close.current() }} onKeyDown={event => { if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); onClose(); return } onKeyDown?.(event) }} onClick={event => { if (event.target === event.currentTarget) close.current() }}><div className="utility-modal__inner"><button type="button" className="utility-modal__close utility-button" onClick={onClose} aria-label="Fechar">✕</button>{children}</div></dialog>, document.body)
 }
