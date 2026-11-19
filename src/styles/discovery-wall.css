@@ -2,11 +2,11 @@
 .discovery-wall__heading { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 36px; }
 .discovery-wall .alc-home-eyebrow { color: #a4d3c8; font-size: .65rem; }
 .discovery-wall h2 { font-size: clamp(2.3rem, 4.5vw, 4.2rem); line-height: 1.1; margin-top: 18px; }
-.discovery-wall h2 em { color: #b9dccc; }
+.alc-home .discovery-wall h2 em { color: #b9dccc; }
 .discovery-wall__heading > p { max-width: 300px; font-size: .9rem; color: #c3d5d2; }
 .discovery-wall__filters { display: flex; gap: 10px; flex-wrap: wrap; }
 .discovery-wall__filters button { display: inline-flex; align-items: center; gap: 20px; min-height: 48px; border: 1px solid #658086; background: transparent; border-radius: 30px; color: #e5efea; padding: 12px 20px; font-size: .84rem; }
-.discovery-wall__filters button > span { font-size: .65rem; opacity: .7; }
+.discovery-wall__filters button > span { font-size: .65rem; opacity: 1; }
 .discovery-wall__filters button svg { width: 16px; }
 .discovery-wall__filters button[aria-pressed=true] { background: #f3ebdd; color: #173f4a; border-color: #f3ebdd; }
 .discovery-wall__filters button:hover { border-color: #f3ebdd; }

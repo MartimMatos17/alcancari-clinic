@@ -155,12 +155,12 @@ export default function VirtualTour({ units, galleries = {}, initialUnitId, prev
         <div className="alc-tour__gallery">
           <figure className="alc-tour__figure">
             {preview ? (
-              <Link className="alc-tour__stage" to={`/unidades/${unit.id}#visita-virtual`} aria-label={`Explorar a visita fotográfica de ${unit.name}`}>
+              <Link className="alc-tour__stage" to={`/unidades/${unit.id}#visita-virtual`} aria-label={`Explorar fotografias de ${unit.name}`}>
                 <TourPhoto key={photo.src} photo={photo} label={label} />
                 <span className="alc-tour__image-action">Explorar fotografias <span aria-hidden="true">↗</span></span>
               </Link>
             ) : (
-              <button className="alc-tour__stage" type="button" aria-label={`Ampliar: ${label}`} aria-haspopup="dialog" onClick={event => setLightbox({ index: activeIndex, trigger: event.currentTarget })}>
+              <button className="alc-tour__stage" type="button" aria-label={`Ampliar fotografia: ${label}`} aria-haspopup="dialog" onClick={event => setLightbox({ index: activeIndex, trigger: event.currentTarget })}>
                 <TourPhoto key={photo.src} photo={photo} label={label} />
                 <span className="alc-tour__image-action">Ampliar fotografia <span aria-hidden="true">↗</span></span>
               </button>
@@ -184,7 +184,7 @@ export default function VirtualTour({ units, galleries = {}, initialUnitId, prev
                     key={`${unit.id}-${item.src}`}
                     ref={element => { thumbnailRefs.current[position] = element }}
                     type="button"
-                    aria-label={`Ver fotografia ${position + 1} de ${unit.name}`}
+                    aria-label={`${item.caption || `Fotografia ${String(position + 1).padStart(2, '0')}`} — ${unit.name}`}
                     aria-pressed={position === activeIndex}
                     tabIndex={position === activeIndex ? 0 : -1}
                     onClick={() => selectPhoto(position)}

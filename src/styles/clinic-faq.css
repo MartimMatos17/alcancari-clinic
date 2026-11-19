@@ -21,12 +21,12 @@
 }
 
 .alc-faq__heading h2 em {
-  color: #147c91;
+  color: #11677a;
   font-weight: 400;
 }
 
 .alc-faq__heading > p {
-  color: #687c80;
+  color: #586e73;
   line-height: 1.8;
 }
 
@@ -47,7 +47,7 @@
 }
 
 .alc-faq__search span {
-  color: #147c91;
+  color: #11677a;
   font-size: 28px;
 }
 
@@ -93,11 +93,11 @@
 }
 
 .alc-faq__item button:hover {
-  color: #147c91;
+  color: #11677a;
 }
 
 .alc-faq__item button span:last-child {
-  color: #147c91;
+  color: #11677a;
   font-size: 29px;
   font-weight: 400;
 }
@@ -123,7 +123,7 @@
 .alc-faq__footer a {
   display: inline-block;
   margin-top: 13px;
-  color: #147c91;
+  color: #11677a;
   font-size: 14px;
   font-weight: 700;
 }

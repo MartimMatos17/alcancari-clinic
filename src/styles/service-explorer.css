@@ -28,7 +28,7 @@
 
 .sv-explorer__intro > p {
   max-width: 440px;
-  color: #62777b;
+  color: #52676b;
   font-size: 15px;
   line-height: 1.8;
 }
@@ -75,7 +75,7 @@
 
 .sv-explorer__count {
   margin: 22px 0;
-  color: #6a7d80;
+  color: #56696d;
   font-size: 13px;
 }
 
@@ -151,7 +151,7 @@
 .sv-explorer__note {
   max-width: 760px;
   margin-top: 25px;
-  color: #718184;
+  color: #56696d;
   font-size: 12px;
   line-height: 1.8;
 }

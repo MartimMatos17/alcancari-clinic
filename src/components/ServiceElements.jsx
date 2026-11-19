@@ -57,7 +57,6 @@ export function ServiceCard({
       <Link
         className="sv-card__link"
         to={`/servicos/${service.slug}`}
-        aria-label={`Conhecer ${service.title}`}
       >
         <div className="sv-card__visual">
           <ServicePhoto

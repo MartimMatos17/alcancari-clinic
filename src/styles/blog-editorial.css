@@ -1,4 +1,4 @@
-.blog-editorial { --blog-rule: #d8dcd2; --blog-muted: #637168; background: #faf8f3; color: #253f38; }
+.blog-editorial { --blog-rule: #d8dcd2; --blog-muted: #526158; background: #faf8f3; color: #253f38; }
 .blog-editorial .blog-kicker { font-size: .66rem; font-weight: 600; line-height: 1.7; letter-spacing: .13em; text-transform: uppercase; }
 .blog-intro { position: relative; padding-block: 68px 48px; border-bottom: 1px solid var(--blog-rule); margin-bottom: 36px; }
 .blog-intro h1 { max-width: 800px; margin-block: 20px; font-size: clamp(3rem, 6.5vw, 6rem); }
@@ -71,7 +71,7 @@
 @media (prefers-reduced-motion: reduce) { .blog-card .media-frame img { transition: none; } }
 
 .blog-reading-tools { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; border-block: 1px solid #d8dcd2; padding-block: 12px; margin-bottom: 28px; font-family: var(--font-sans); }
-.blog-reading-tools > span { font-size: .65rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: #637168; }
+.blog-reading-tools > span { font-size: .65rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: #526158; }
 .blog-reading-tools > div { display: flex; gap: 5px; }
 .blog-reading-tools button { min-height: 40px; border: 1px solid transparent; background: transparent; color: #253f38; border-radius: 24px; padding: 8px 13px; font: inherit; font-size: .76rem; }
 .blog-reading-tools button[aria-pressed=true] { background: #e5eade; border-color: #bdc7bc; }

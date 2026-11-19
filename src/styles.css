@@ -72,8 +72,8 @@ p { line-height: 1.8; }
 .media-placeholder { display: flex; align-items: center; justify-content: center; isolation: isolate; }
 .media-sand { background: #e9e1d3; }
 .media-sage { background: #e0e6d9; }
-.placeholder-word { font-family: var(--font-serif); font-size: clamp(7rem, 18vw, 15rem); font-weight: 400; color: #a08f6f; letter-spacing: -.07em; margin-top: -28px; opacity: .52; }
-.media-sage .placeholder-word { color: #849577; }
+.placeholder-word { font-family: var(--font-serif); font-size: clamp(7rem, 18vw, 15rem); font-weight: 400; color: #79684c; letter-spacing: -.07em; margin-top: -28px; }
+.media-sage .placeholder-word { color: #627354; }
 .placeholder-lines { position: absolute; inset: 25px 24px 0; z-index: -1; overflow: hidden; }
 .placeholder-lines span { position: absolute; height: 150%; width: 95%; border: 1px solid #c2b49a; border-radius: 48% 48% 0 0; top: 32%; left: -51%; transform: rotate(-28deg); }
 .placeholder-lines span:nth-child(2) { top: 39%; left: -39%; }

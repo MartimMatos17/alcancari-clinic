@@ -43,7 +43,7 @@
 .alc-contact__detail-icon{width:47px;height:47px;display:grid;place-items:center;color:#08779a;background:#eaf4f6;border-radius:14px;font-size:23px;flex-shrink:0}
 .alc-contact__detail>span:nth-child(2){min-width:0;flex:1}
 .alc-contact__detail small,.alc-contact__detail strong{display:block}
-.alc-contact__detail small{color:#72858b;font-size:12px;margin-bottom:5px}
+.alc-contact__detail small{color:#536970;font-size:12px;margin-bottom:5px}
 .alc-contact__detail strong{font-size:15px;overflow-wrap:anywhere}
 .alc-contact__detail>span:last-child{font-size:22px}
 .alc-contact__locations{margin-top:39px;padding:27px;background:#eef6f5;border-radius:25px}
@@ -54,7 +54,7 @@
 .alc-contact__location p{font-size:13px;color:#55717a;line-height:1.55;margin:6px 0 0}
 .alc-contact__form-card{background:#fff;border:1px solid #e7efee;box-shadow:0 22px 65px rgba(17,70,89,.075);border-radius:30px;padding:clamp(24px,4vw,47px)}
 .alc-contact__form-card h2{font-size:clamp(28px,3vw,34px);letter-spacing:-.03em;margin:12px 0 5px}
-.alc-contact__form-sub{color:#6b8186;font-size:14px;margin-bottom:26px}
+.alc-contact__form-sub{color:#536970;font-size:14px;margin-bottom:26px}
 .alc-contact__form{display:grid;gap:19px}
 .alc-contact__cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .alc-contact__field label{display:block;font-size:13px;font-weight:700;color:#2b4e58;margin-bottom:8px}

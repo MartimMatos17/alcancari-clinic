@@ -3,9 +3,9 @@
 
 .alc-team,
 .alc-profile {
-  --team-teal: #147c91;
+  --team-teal: #11677a;
   --team-dark: #173f4a;
-  --team-muted: #64777b;
+  --team-muted: #52666a;
   color: var(--team-dark);
 }
 

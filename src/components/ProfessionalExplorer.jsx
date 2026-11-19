@@ -37,7 +37,7 @@ export default function ProfessionalExplorer({ selected = [], onSelect }) {
       const chosen = selected.some(item => item.type === 'professional' && item.id === member.id)
       const excerpt = member.blocks?.find(block => block.type === 'paragraph' && block.text)?.text
       return <article className="ac-person" key={member.id}>
-        <Link to={`/equipa/${member.id}`} className="ac-person__portrait" aria-label={`Ver perfil completo de ${member.name}`}>
+        <Link to={`/equipa/${member.id}`} className="ac-person__portrait">
           <MediaPlaceholder image={member.image} label={member.name} variant="sage" />
         </Link>
         <div className="ac-person__body">

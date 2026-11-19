@@ -2,9 +2,9 @@
 /* ALCANÇARI — UNIDADES */
 
 .alc-units {
-  --units-teal: #147c91;
+  --units-teal: #11677a;
   --units-dark: #173f4a;
-  --units-muted: #61767a;
+  --units-muted: #506569;
   color: var(--units-dark);
   overflow: clip;
 }
