@@ -1,7 +1,7 @@
 // Public originals recovered from alcancari.com; provenance in docs/media-inventory.json.
 export const media = {
   "brand": "/images/branding/logotipo-alcancari-transparente.webp",
-"brandFooter": "/images/branding/logotipo-alcancari-transparente.webp",
+"brandFooter": "/images/branding/logotipo-rodape-320.webp",
   "favicon": "/images/branding/simbolo-alcancari-35561f15.webp",
   "home": {
     "src": "/images/servicos/psicologia-612945d5.webp",

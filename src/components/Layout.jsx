@@ -77,10 +77,12 @@ export default function Layout() {
           >
             {isPublicAsset(site.brand.logo) ? (
               <img
-                src="/images/branding/logotipo-alcancari-pequeno.webp"
+                src="/images/branding/logotipo-cabecalho-160.webp"
+                srcSet="/images/branding/logotipo-cabecalho-96.webp 96w, /images/branding/logotipo-cabecalho-160.webp 160w"
+                sizes="65px"
                 alt={site.brand.logoAlt}
-                width="475"
-                height="433"
+                width="160"
+                height="160"
               />
             ) : (
               <>
