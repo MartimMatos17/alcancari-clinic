@@ -26,6 +26,7 @@ export function contentIssues(section, entry) {
     if (!image.alt?.trim()) issues.push('Texto alternativo em falta')
     if (!existsSync(new URL(`public${image.src}`, adminRoot))) issues.push('Ficheiro de imagem em falta')
   }
+  if (section.key === 'services' && entry.status === 'summary-only') issues.push('Apenas resumo disponível')
   if (section.key === 'posts' && entry.status === 'excerpt-only') issues.push('Apenas excerto disponível')
   if (!(entry.title || entry.name)?.trim()) issues.push('Título ou nome em falta')
   return issues

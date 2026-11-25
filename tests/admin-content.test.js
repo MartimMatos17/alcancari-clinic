@@ -4,7 +4,7 @@ import { mkdtempSync, mkdirSync, readFileSync, writeFileSync, rmSync, statSync, 
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
-import { createDraftStore, revision } from '../scripts/admin-content.mjs'
+import { createDraftStore, revision, catalogs, contentIssues } from '../scripts/admin-content.mjs'
 
 test('rascunhos preservam originais, conflitos, permissoes e copias recuperaveis', () => {
   const root = mkdtempSync(join(tmpdir(), 'alcancari-drafts-'))
@@ -44,4 +44,12 @@ test('rascunhos preservam originais, conflitos, permissoes e copias recuperaveis
     symlinkSync(outside, path)
     assert.throws(() => store.readDrafts(), /simbólica/)
   } finally { rmSync(root, { recursive: true, force: true }) }
+})
+
+
+test('o radar administrativo identifica os serviços sem texto detalhado', () => {
+  const section = catalogs().find(section => section.key === 'services')
+  const pending = section.entries.filter(entry => contentIssues(section, entry).includes('Apenas resumo disponível'))
+  assert.deepEqual(pending.map(entry => entry.slug), ['intervencao-em-grupo', 'formacao'])
+  assert.ok(pending.every(entry => entry.blocks.length === 0))
 })
