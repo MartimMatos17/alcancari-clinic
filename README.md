@@ -116,6 +116,8 @@ Este passo acrescenta uma **nova** cópia candidata em `copies/`, sem substituir
 
 Para recuperar uma das cópias históricas do arquivo, preserve a extração inicial e reveja a versão pretendida numa segunda pasta privada de trabalho como `posts.json`; só depois use `preparar`. A ferramenta nunca repõe automaticamente dados no Editor. Os ensaios automatizados usam apenas diretórios temporários isolados, sem consultar nem modificar backups reais.
 
+**Ensaio de 25 de novembro de 2026.** A exportação e recuperação foram verificadas em pastas temporárias do mesmo computador. O arquivo autenticado continha apenas os rascunhos fictícios, a cópia editorial esperada e os metadados de formato e data. Foram confirmados os modos `0600` e `0700`, a rejeição de uma palavra-passe incorreta e a deteção de corrupção. Ficou por testar a recuperação a partir de um disco externo físico.
+
 ## Configuração opcional
 
 | Variável | Utilização | Local |
