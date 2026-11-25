@@ -344,3 +344,6 @@
     transform: none;
   }
 }
+
+.alc-units__card .media-frame { align-self:center; height:auto; aspect-ratio:auto; background:transparent; }
+.alc-units__card .media-frame img { width:100%; height:auto; max-height:60svh; object-fit:contain; }

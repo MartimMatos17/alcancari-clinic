@@ -531,3 +531,14 @@
     transform: none;
   }
 }
+
+.sv-gallery__grid { align-items:start; }
+.sv-gallery__grid .sv-gallery__image, .sv-gallery__grid > figure:first-child .sv-gallery__image,
+.sv-detail-hero__visual .sv-photo__frame { aspect-ratio:auto; height:auto; min-height:0; background:transparent; border-radius:14px; }
+.sv-gallery__image img, .sv-detail-hero__visual .sv-photo__frame img { display:block; width:auto; max-width:100%; height:auto; max-height:66svh; margin-inline:auto; border-radius:14px; object-fit:contain; }
+.sv-gallery__image:hover img { transform:none; }
+.sv-lightbox { width:fit-content; max-width:calc(100% - 20px); border-radius:16px; background:#fffcf5; color:#234a42; }
+.sv-lightbox__image { margin:auto; width:auto; height:auto; max-width:100%; max-height:65dvh; }
+.sv-lightbox__bottom p + p { color:#435f53; }
+.sv-lightbox button:hover { background:#e3eee7; }
+.sv-lightbox button:focus-visible { outline:3px solid #126474; }

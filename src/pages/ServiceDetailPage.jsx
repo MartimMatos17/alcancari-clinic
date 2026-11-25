@@ -52,8 +52,11 @@ export default function ServiceDetailPage({ entry, services }) {
       <section className="sv-detail-hero" aria-labelledby="service-title">
         <div className="sv-detail-hero__copy">
           <p className="sv-eyebrow"><span className="sv-dot" />Os nossos serviços<span className="sv-detail-hero__number">{String(current + 1).padStart(2, '0')} / {String(services.length).padStart(2, '0')}</span></p>
-          <h1 id="service-title">{entry.title}</h1><ShareButton title={entry.title} />
-          <FavoriteButton type="service" id={entry.slug} title={entry.title} />
+          <h1 id="service-title">{entry.title}</h1>
+          <div className="reading-actions" role="group" aria-label="Ações do serviço">
+            <FavoriteButton type="service" id={entry.slug} title={entry.title} />
+            <ShareButton title={entry.title} />
+          </div>
           <p className="sv-lead">{entry.summary}</p>
           <div className="sv-detail-hero__actions"><Link className="sv-button" to={`/contactos?tipo=marcacao&servico=${encodeURIComponent(entry.slug)}`}>Contactar a clínica<Icon name="diagonal" /></Link>{entry.blocks.length > 0 && <a className="sv-text-link" href="#sobre-servico">Conhecer o serviço<Icon className="sv-arrow-down" /></a>}</div>
         </div>

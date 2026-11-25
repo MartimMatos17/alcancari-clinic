@@ -80,3 +80,6 @@
 .blog-prose .blog-adjusted-text--2 .rich-content { font-size: 1.75rem; }
 .blog-adjusted-text { overflow-wrap: anywhere; }
 @media print { .blog-reading-tools { display: none; } }
+
+.blog-article__cover .media-frame { width:fit-content; max-width:100%; margin-inline:auto; aspect-ratio:auto; border-radius:16px; background:transparent; }
+.blog-article__cover .media-frame img { display:block; width:auto; max-width:100%; height:auto; max-height:72svh; object-fit:contain; }

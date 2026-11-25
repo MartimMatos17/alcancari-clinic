@@ -145,3 +145,15 @@
 @media (prefers-reduced-motion: reduce) {
   .alc-tour *, .alc-tour-lightbox, .alc-tour-lightbox * { animation: none; transition: none; scroll-behavior: auto; }
 }
+
+.alc-tour__stage, .alc-tour--preview .alc-tour__stage {
+  width:fit-content; max-width:100%; margin-inline:auto; height:auto; background:transparent;
+}
+.alc-tour__stage img { display:block; max-width:100%; width:auto; height:auto; max-height:65svh; }
+.alc-tour-lightbox { width:fit-content; max-width:calc(100% - 16px); color:#20454b; background:#fffdf8; border-color:#d8e2dc; }
+.alc-tour-lightbox__image { height:auto; }
+.alc-tour-lightbox__image img { height:auto; width:auto; max-width:100%; max-height:64dvh; }
+.alc-tour-lightbox figcaption, .alc-tour-lightbox__navigation p { color:#445e62; }
+.alc-tour-lightbox button { color:inherit; }
+.alc-tour-lightbox button:hover { background:#e2eee8; }
+.alc-tour-lightbox button:focus-visible { outline-color:#126474; }
