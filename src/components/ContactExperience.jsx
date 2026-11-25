@@ -255,15 +255,6 @@ export default function ContactExperience({
             </p>
           )}
 
-          {!enabled && (
-            <p
-              className="alc-contact__notice"
-              role="status"
-            >
-              Este formulário ainda não recebe pedidos. Não é necessário preencher dados nesta demonstração; pode contactar a clínica por telefone, email ou WhatsApp.
-            </p>
-          )}
-
 {!enabled && <div className="alc-contact__alternatives" aria-label="Alternativas ao formulário">{getContactLinks(site.contacts).map(link => <a key={link.type} href={link.href} target={link.external ? '_blank' : undefined} rel={link.external ? 'noopener noreferrer' : undefined}><strong>{link.label}</strong><span>{link.type === 'whatsapp' ? 'Abrir conversa' : link.value}</span><span aria-hidden="true">↗</span></a>)}{initialSelection.service && <p>Serviço escolhido: {initialSelection.service}</p>}{initialSelection.unit && <p>Unidade escolhida: {initialSelection.unit}</p>}</div>}
 
 {status === 'sending' && (

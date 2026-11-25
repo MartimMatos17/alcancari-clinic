@@ -127,6 +127,8 @@ As associações dos retratos correspondem aos identificadores dos respetivos pr
 - [ ] **P2:** aprovar fotografias, identificação dos espaços e autorização de utilização.
 - [ ] **P3:** substituir, se disponíveis, os dois retratos com menor resolução.
 
+- [ ] **P1:** antes do lançamento, validar a informação de privacidade com a clínica e com o fornecedor de alojamento escolhido. Confirmar responsável pelo tratamento, finalidades, fundamentos, destinatários, prazos, registos do alojamento e contacto para exercício de direitos.
+
 ## 8. Âmbito da demonstração e limites desta revisão
 
 As 48 páginas estão inventariadas para revisão, com os conteúdos reais disponíveis. A análise das associações e a validação técnica permitem detetar referências quebradas ou trocas conhecidas; não certificam identidade de pessoas, consentimentos, atualidade dos horários ou exatidão clínica. Não foi realizada nesta revisão uma nova visita manual a cada página no navegador.
