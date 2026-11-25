@@ -9,7 +9,7 @@ test('o build aceita HTML e recursos estáticos públicos', () => {
 })
 
 test('o build rejeita configurações privadas, código antigo e mapas de código', () => {
-  for (const name of ['.env', 'backend/server.js', 'backups/recovery.tar.gz', 'database/schema.sql', 'assets/app.js.map', 'images/schema.sql']) {
+  for (const name of ['.env', 'backend/server.js', 'backups/recovery.tar.gz', 'copy.acbk', 'images/copy.acbk', 'database/schema.sql', 'assets/app.js.map', 'images/schema.sql']) {
     assert.throws(() => checkPublicFiles([index, { name, content: '' }]))
   }
 })

@@ -22,6 +22,9 @@ coverage/
 /test-results/
 /playwright-report/
 
+# Cópias administrativas externas cifradas (nunca versionar)
+*.acbk
+
 # Private keys and certificate bundles (public certificates may remain tracked)
 *.key
 *.pem
