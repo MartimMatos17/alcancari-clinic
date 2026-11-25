@@ -9,15 +9,17 @@ test('admin local protege login, origem, sessao, CSRF, logout e tentativas', asy
   process.env.ALCANCARI_ADMIN_PASSWORD = 'fixture-only-not-a-real-password-12345'
   const listen = Server.prototype.listen
   let server
+  let binding
   let now = Date.now()
   try {
     // Exercise the real request handler without opening a network port.
-    Server.prototype.listen = function () { return this }
+    Server.prototype.listen = function (...args) { binding = args.slice(0, 2); return this }
     server = startAdmin({ port: 4189, title: 'Test', clock: () => now, handle(req, res, security) { security.send(200, security.csrf) } })
   } finally { Server.prototype.listen = listen }
   const password = process.env.ALCANCARI_ADMIN_PASSWORD
   if (previousPassword === undefined) delete process.env.ALCANCARI_ADMIN_PASSWORD
   else process.env.ALCANCARI_ADMIN_PASSWORD = previousPassword
+  assert.deepEqual(binding, [4189, '127.0.0.1'])
   const origin = 'http://127.0.0.1:4189'
   const request = (method = 'GET', path = '/', body = {}, headers = {}) => new Promise(resolve => {
     const req = Readable.from(method === 'POST' ? [Buffer.from(new URLSearchParams(body).toString())] : [])
@@ -29,6 +31,20 @@ test('admin local protege login, origem, sessao, CSRF, logout e tentativas', asy
   assert.equal(response.headers['referrer-policy'], 'same-origin')
   assert.ok(!response.headers['content-security-policy'].includes("script-src 'unsafe-inline'"))
   const csrf = response.body.match(/name="csrf" value="([a-f0-9]+)"/)[1]
+  const navigation = { 'sec-fetch-mode': 'navigate', 'sec-fetch-dest': 'document', 'sec-fetch-user': '?1' }
+  for (const site of ['same-site', 'cross-site']) {
+    const headers = { ...navigation, 'sec-fetch-site': site }
+    const entry = await request('GET', '/', {}, headers)
+    assert.equal(entry.status, 200)
+    assert.match(entry.body, /Acesso reservado/)
+    assert.equal((await request('GET', '/?slug=fixture', {}, headers)).status, 401)
+    for (const path of ['/inventario', '/exportar', '/prever?slug=fixture', '/copias']) assert.equal((await request('GET', path, {}, headers)).status, 403)
+    assert.equal((await request('GET', '/', {}, { ...headers, 'sec-fetch-dest': 'iframe' })).status, 403)
+    assert.equal((await request('GET', '/', {}, { ...headers, 'sec-fetch-user': undefined })).status, 403)
+    assert.equal((await request('GET', '/', {}, { ...headers, 'sec-fetch-mode': 'cors' })).status, 403)
+    assert.equal((await request('POST', '/entrar', { csrf, password }, headers)).status, 403)
+  }
+
   for (const invalidOrigin of ['null', 'https://invalid.example']) assert.equal((await request('POST', '/entrar', { csrf, password }, { origin: invalidOrigin })).status, 403)
   assert.equal((await request('GET', '/', {}, { host: 'invalid.example' })).status, 403)
   response = await request('POST', '/entrar', { csrf: 'stale', password })
