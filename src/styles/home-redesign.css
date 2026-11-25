@@ -966,8 +966,7 @@
 .alc-home-units .alc-tour { margin: 32px 0 0; padding: clamp(16px, 3vw, 32px); background: #ffffff90; border-radius: 20px; }
 .alc-home-units .alc-tour__intro h2 { font-size: 1.5rem; margin-block: 10px 16px; }
 .alc-home-units .alc-tour__units { margin: 16px 0 24px; }
-.alc-home-units .alc-tour__stage { height: clamp(240px, 37vw, 440px); }
-.alc-home-visit-wrap { margin-block: 28px 0; }
+.alc-home-units .alc-tour__stage img { max-height:min(58svh,440px); }
 .alc-home-discover { margin-block: 0 48px; }
 .alc-home-discover .alc-home-atlas-link { margin-bottom: 0; padding-block: 28px; border-bottom: 0; }
 .alc-home-atlas-link h2 { font-size: clamp(2rem, 3.4vw, 3rem); margin-top: 12px; }
@@ -979,11 +978,7 @@
 .alc-home-explore-optional > summary small { font-size: .875rem; }
 .alc-home-explore-optional > summary:hover strong { color: #11677a; }
 .alc-home-explore-optional > summary:focus-visible { outline: 3px solid #11677a; outline-offset: 5px; }
-.alc-home-visit { border-block: 1px solid #cfddd5; }
-.alc-home-visit .fv { padding-block: 32px; background: transparent; }
-.alc-home-visit .fv-shell, .alc-home-discover .container-shell { width: 100%; }
-.alc-home-visit .fv-head { margin-bottom: 28px; }
-.alc-home-visit .fv-head h2 { font-size: 2rem; }
+.alc-home-discover .container-shell { width: 100%; }
 .alc-home-discover .discovery-wall { border-radius: 20px; margin-bottom: 24px; padding: clamp(20px, 4vw, 40px); }
 .alc-home-discover .ac-connect { padding-top: 24px; }
 .alc-home-cta-inner { padding-block: clamp(36px, 5vw, 64px); }

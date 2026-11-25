@@ -12,20 +12,17 @@ import VirtualTour from '../components/VirtualTour'
 
 const ClinicExplorer = lazy(() => import('../components/ClinicExplorer'))
 const DiscoveryWall = lazy(() => import('../components/DiscoveryWall'))
-const FirstVisitJourney = lazy(() => import('../components/FirstVisitJourney'))
 
 export default function HomePage() {
   usePageMeta()
   const [exploreOpened, setExploreOpened] = useState(false)
   const [wallOpened, setWallOpened] = useState(false)
-  const [visitOpened, setVisitOpened] = useState(false)
   const connectRef = useRef(null)
   const wallRef = useRef(null)
-  const visitRef = useRef(null)
 
   useEffect(() => {
     const reveal = () => {
-      const target = { '#alcancari-connect': connectRef, '#pessoas-da-alcancari': wallRef, '#primeira-visita': visitRef }[window.location.hash]?.current
+      const target = { '#alcancari-connect': connectRef, '#pessoas-da-alcancari': wallRef }[window.location.hash]?.current
       if (target) { target.open = true; target.querySelector('summary')?.focus({ preventScroll: true }); target.scrollIntoView({ block: 'start' }) }
     }
     reveal()
@@ -116,7 +113,7 @@ export default function HomePage() {
         <span>Nesta página</span>
         <a href="#a-clinica">A clínica</a><a href="#areas-de-intervencao">Serviços</a>
         <a href="#pessoas-da-alcancari">O mural</a>
-        <a href="#primeira-visita">Primeira visita</a><a href="#os-nossos-espacos">Unidades</a><a href="#ideias-e-novidades">Blog</a>
+        <a href="#os-nossos-espacos">Unidades</a><a href="#ideias-e-novidades">Blog</a>
       </nav>
 
       {/* Sobre a clínica */}
@@ -242,13 +239,6 @@ export default function HomePage() {
           />
         </div>
       </section>
-
-      <div className="container-shell alc-home-visit-wrap">
-        <details ref={visitRef} id="primeira-visita" className="alc-home-visit alc-home-explore-optional" onToggle={event => { if (event.currentTarget.open) setVisitOpened(true) }}>
-          <summary><span><strong>Preparar a primeira visita</strong><small>Um guia interativo com etapas e uma checklist para a sua visita.</small></span><span aria-hidden="true">+</span></summary>
-          <Suspense fallback={<p role="status">A preparar o guia…</p>}>{visitOpened && <FirstVisitJourney id="guia-primeira-visita" />}</Suspense>
-        </details>
-      </div>
 
       {/* Publicações do Blog */}
       <section className="container-shell alc-home-section alc-home-news" id="ideias-e-novidades">
