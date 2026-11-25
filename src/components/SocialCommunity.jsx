@@ -29,7 +29,7 @@ export default function SocialCommunity() {
   return <section className="alc-social" aria-labelledby="alc-social-heading">
     <div className="alc-social__intro">
       <div>
-        <p className="alc-social__eyebrow">Comunidade Alcançari <span aria-hidden="true">✳</span> Para além do consultório</p>
+        <p className="alc-social__eyebrow">Comunidade Alcançari</p>
         <h2 id="alc-social-heading">A nossa comunidade, <em>mais perto de si.</em></h2>
       </div>
       <p>Acompanhe os momentos, as novidades e as conversas que partilhamos nas nossas redes. Um espaço de proximidade para famílias e profissionais.</p>
@@ -39,15 +39,12 @@ export default function SocialCommunity() {
       <article className="alc-social__card alc-social__card--facebook">
         <div className="alc-social__card-head">
           <span className="alc-social__mark alc-social__mark--facebook"><PlatformIcon type="facebook" /></span>
-          <span className="alc-social__pill">Comunidade e novidades</span>
         </div>
         <div className="alc-social__card-copy">
-          <p className="alc-social__eyebrow">SIGA O NOSSO DIA A DIA</p>
-          <h3>Encontre-nos no Facebook.</h3>
+          <h3>Facebook</h3>
           <p>Publicações, atividades e novidades partilhadas pela Clínica Alcançari.</p>
         </div>
         {!showFacebook ? <div className="alc-social__preview">
-          <div className="alc-social__preview-art" aria-hidden="true"><span className="alc-social__orbit alc-social__orbit--one"/><span className="alc-social__orbit alc-social__orbit--two"/><span className="alc-social__preview-symbol"><PlatformIcon type="facebook" /></span><span className="alc-social__preview-word">Alcançari</span></div>
           <div className="alc-social__preview-copy"><strong>Veja as publicações recentes</strong><span>O conteúdo do Facebook só será carregado após a sua escolha.</span></div>
           <button className="alc-social__button alc-social__button--facebook" type="button" onClick={() => setShowFacebook(true)}>Ver cronologia do Facebook <span aria-hidden="true">↗</span></button>
         </div> : <div className="alc-social__embed">
@@ -61,20 +58,13 @@ export default function SocialCommunity() {
       <article className="alc-social__card alc-social__card--instagram">
         <div className="alc-social__card-head">
           <span className="alc-social__mark alc-social__mark--instagram"><PlatformIcon type="instagram" /></span>
-          <span className="alc-social__pill">Fotografias e momentos</span>
         </div>
         <div className="alc-social__card-copy">
-          <p className="alc-social__eyebrow">UM OLHAR SOBRE A CLÍNICA</p>
-          <h3>Pequenos momentos. Grandes descobertas.</h3>
+          <h3>Instagram</h3>
           <p>Acompanhe o nosso lado mais visual e as partilhas feitas no Instagram.</p>
         </div>
-        <div className="alc-social__instagram-art" aria-hidden="true">
-          <div className="alc-social__insta-tile"><span>01</span><svg viewBox="0 0 120 100" fill="none"><path d="M11 80Q40 10 70 60T110 30" stroke="currentColor" strokeWidth="5" strokeLinecap="round"/><circle cx="80" cy="22" r="11" stroke="currentColor" strokeWidth="4"/></svg><small>Descobrir</small></div>
-          <div className="alc-social__insta-tile"><span>02</span><span className="alc-social__flower">✳</span><small>Partilhar</small></div>
-          <div className="alc-social__insta-tile"><span>03</span><span className="alc-social__heart">♡</span><small>Acompanhar</small></div>
-        </div>
         <a className="alc-social__button alc-social__button--instagram" href={instagram} target="_blank" rel="noopener noreferrer">Explorar o Instagram <span aria-hidden="true">↗</span></a>
-        <a className="alc-social__external" href={instagram} target="_blank" rel="noopener noreferrer">@clinica.alcancari <span aria-hidden="true">↗</span></a>
+
       </article>
     </div>
 

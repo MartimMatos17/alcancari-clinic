@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import InstagramFeed from '../components/InstagramFeed'
 import SocialCommunity from '../components/SocialCommunity'
 import { content, site } from '../content/site'
@@ -19,6 +19,7 @@ export default function NewsPage() {
   const navigate = useNavigate()
 
   const posts = getPublished(site.posts)
+  const drawing = posts.find(post => post.slug === 'motricidade-fina-o-que-e-e-como-se-desenvolve')
   const categories = [...new Set(posts.flatMap(categoriesOf))]
     .sort((a, b) => a.localeCompare(b, 'pt-PT'))
   const normalizedQuery = searchable(query.trim())
@@ -51,22 +52,19 @@ export default function NewsPage() {
       <header className="be-hero">
         <div className="container-shell be-hero__inner">
           <div className="be-hero__copy">
-            <p className="be-eyebrow"><span aria-hidden="true">✳</span> ALCANÇARI / REVISTA DIGITAL</p>
-            <h1>Histórias que <em>aproximam.</em></h1>
+            <p className="be-eyebrow">Blog da Alcançari</p>
+            <h1>Crescer é <em>descobrir.</em></h1>
             <p className="be-hero__description">Ideias, novidades e pequenas descobertas sobre o desenvolvimento, o brincar e a vida em família. Um espaço para explorar ao seu ritmo.</p>
             <div className="be-hero__actions">
               <a className="be-button be-button--dark" href="#explorar-blog">Explorar artigos <span aria-hidden="true">↘</span></a>
               <button className="be-button be-button--outline" type="button" onClick={surprise} disabled={!posts.length}>Surpreenda-me <span aria-hidden="true">✦</span></button>
             </div>
           </div>
-          <div className="be-hero__art" aria-hidden="true">
-            <span className="be-orbit be-orbit--one" />
-            <span className="be-orbit be-orbit--two" />
-            <div className="be-art__center"><span>Aprender.</span><span>Descobrir.</span><strong>Crescer.</strong></div>
-            <span className="be-art__stamp">UM ESPAÇO PARA CONVERSAR •</span>
-          </div>
+          {drawing?.image && <Link className="blog-picture" to={`/novidades/${drawing.slug}`}>
+            <img src={drawing.image.src} alt="" width={drawing.image.width} height={drawing.image.height} fetchPriority="high" />
+            <span>{drawing.title} <b aria-hidden="true">↗</b></span>
+          </Link>}
         </div>
-        <div className="container-shell be-hero__foot"><span>OLHARES SOBRE O CUIDADO</span><span>{posts.length} PUBLICAÇÕES PARA EXPLORAR</span></div>
       </header>
 
       <div className="container-shell be-main">
