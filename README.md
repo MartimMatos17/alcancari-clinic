@@ -72,6 +72,50 @@ No estúdio, abra **Cópias de segurança** (`/copias`). A recuperação funcion
 
 Cópias no mesmo disco não protegem de perda do computador. Mantenha uma cópia externa cifrada e teste a recuperação. Os arquivos antigos em `backups/` são material de recuperação, não lixo, e não são removidos pela retenção do Admin.
 
+### Cópia externa cifrada do Admin
+
+A ferramenta local `scripts/admin-backup.mjs` exporta **apenas** `backups/admin-drafts/posts.json` e as cópias editoriais reconhecidas em `backups/admin-drafts/copies/`, incluindo o histórico que esses ficheiros contêm. Não inclui fotografias, conteúdos originais do projeto, arquivos antigos de `backups/`, configurações, credenciais ou sessões. Conserve também uma cópia separada do projeto para recuperar num computador novo.
+
+Usa **AES-256-GCM**, com autenticação integral do cabeçalho e conteúdo, e **scrypt** (`N=131072`, `r=8`, `p=1`, chave de 32 bytes), através de [`node:crypto`](https://nodejs.org/api/crypto.html). Cada exportação gera um novo sal de 16 bytes e nonce de 12 bytes; a tag tem 16 bytes. O formato `.acbk` versão 1 é um contentor específico desta ferramenta, não um formato de arquivo universal: mantenha este script e uma versão compatível do Node.js para a recuperação. Não há dependências adicionais nem envios pela ferramenta.
+
+#### Criar e guardar
+
+1. Guarde as alterações e encerre Dashboard e Editor com `Ctrl+C` para obter uma cópia consistente. Se ainda não existem rascunhos, não há nada para exportar. A ferramenta recusa fontes com permissões inseguras sem as corrigir ou alterar.
+2. Ligue um disco externo e escolha uma pasta já existente **fora do projeto**. Substitua os caminhos de exemplo pelos seus; use sempre um nome novo.
+
+```bash
+node scripts/admin-backup.mjs exportar "/Volumes/DiscoPrivado/Alcancari/2026-11-25.acbk"
+node scripts/admin-backup.mjs verificar "/Volumes/DiscoPrivado/Alcancari/2026-11-25.acbk"
+```
+
+3. A palavra-passe é pedida num terminal interativo, sem eco; na exportação é pedida duas vezes. Use uma palavra-passe exclusiva e longa (mínimo 20 caracteres, máximo 1024), idealmente gerada por um gestor de palavras-passe. **Não** a coloque no comando, em variáveis, ficheiros do projeto, capturas ou Git. Não é guardada pela ferramenta. Sem ela não existe recuperação.
+4. Guarde a palavra-passe num gestor de palavras-passe ou noutro local seguro separado da cópia. Confirme o sucesso de `verificar` no arquivo efetivamente guardado e faça um ensaio de recuperação. Ejete o disco com segurança e conserve cópias de datas diferentes.
+
+Os ficheiros novos têm modo `0600`. A exportação é publicada apenas depois de gravada e sincronizada, sem substituir destinos existentes. O disco deve suportar permissões POSIX, sincronização e hard links (por exemplo, APFS num Mac). Se não suportar, a operação falha; não há redução silenciosa das proteções. Em FAT/exFAT estas garantias não estão disponíveis. Um resíduo `.alcancari-*.tmp` após interrupção abrupta contém apenas dados cifrados e não deve ser considerado uma cópia concluída.
+
+**A escolha do destino é sua:** a ferramenta não contacta serviços externos. Uma pasta previamente sincronizada pelo sistema ou por outra aplicação poderá enviar ficheiros por ação dessa aplicação; prefira um disco desligado após a cópia. O nome e tamanho do arquivo não são ocultados.
+
+#### Recuperar sem substituir dados existentes
+
+1. Num computador com o projeto e Node.js compatível, escolha uma pasta **nova**, fora do projeto, dentro de uma pasta existente. Não use `public/`, `dist/` nem uma pasta sincronizada.
+
+```bash
+node scripts/admin-backup.mjs verificar "/Volumes/DiscoPrivado/Alcancari/2026-11-25.acbk"
+node scripts/admin-backup.mjs recuperar "/Volumes/DiscoPrivado/Alcancari/2026-11-25.acbk" "$HOME/Alcancari-recuperacao-2026-11-25"
+```
+
+2. Introduza a palavra-passe quando pedida. A ferramenta autentica o arquivo e valida caminhos e JSON **antes de escrever dados decifrados**. Palavra-passe incorreta, corrupção, versão desconhecida e destinos existentes são recusados. A pasta recuperada é privada (`0700`), com ficheiros `0600`; contém `posts.json` e, se disponíveis, `copies/`. Estes ficheiros são agora **dados em claro**: conserve-os apenas num disco privado e proteja a sua sessão do computador. Em caso de falha de disco durante a extração, pode restar uma pasta nova incompleta; preserve-a e repita com outro nome.
+3. Reveja a recuperação. Para a disponibilizar ao Editor, encerre os painéis e execute:
+
+```bash
+node scripts/admin-backup.mjs preparar "$HOME/Alcancari-recuperacao-2026-11-25"
+```
+
+Este passo acrescenta uma **nova** cópia candidata em `copies/`, sem substituir rascunhos nem alterar cópias existentes. Publicações desconhecidas no projeto são recusadas. Aponta apenas para `posts.json` da pasta recuperada; as cópias históricas ficam nessa pasta para revisão. O projeto tem de ter os diretórios administrativos privados já existentes; num computador novo, abra primeiro o Editor e guarde um rascunho temporário para os inicializar.
+4. Reinicie `node scripts/admin-editor.mjs`, autentique-se em `http://127.0.0.1:4175/`, abra **Cópias de segurança**, selecione o nome apresentado pelo comando e confirme a reposição. A recuperação do Editor substitui todos os rascunhos, conserva o estado anterior e aplica a retenção habitual de até 20 cópias. Não publica conteúdos. Atualize o Dashboard e confirme os rascunhos e o histórico recuperados.
+
+Para recuperar uma das cópias históricas do arquivo, preserve a extração inicial e reveja a versão pretendida numa segunda pasta privada de trabalho como `posts.json`; só depois use `preparar`. A ferramenta nunca repõe automaticamente dados no Editor. Os ensaios automatizados usam apenas diretórios temporários isolados, sem consultar nem modificar backups reais.
+
 ## Configuração opcional
 
 | Variável | Utilização | Local |
